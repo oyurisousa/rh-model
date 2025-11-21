@@ -344,29 +344,27 @@ Base = declarative_base()
           fkGroups.get(fkName)!.push(fk);
         }
 
-        // Conta nomes de relacionamentos para evitar duplicatas
-        const relNameCount = new Map<string, number>();
+        // Rastreia relacionamentos já criados para evitar duplicatas
+        const createdRelationships = new Set<string>();
 
         for (const [fkName, fkCols] of fkGroups) {
           const firstFK = fkCols[0];
-          const baseRelName = toCamelCase(firstFK.REFERENCED_TABLE);
-          const refClass = toPascalCase(firstFK.REFERENCED_TABLE);
+          const refTable = firstFK.REFERENCED_TABLE;
+          const refClass = toPascalCase(refTable);
+          const baseRelName = toCamelCase(refTable);
           const isComposite = fkCols.length > 1;
-
-          // Conta quantas vezes essa tabela já foi referenciada
-          const count = relNameCount.get(baseRelName) || 0;
-          relNameCount.set(baseRelName, count + 1);
 
           // Gera nome único para o relacionamento
           let finalRelName = baseRelName;
           const sameTables = Array.from(fkGroups.values()).filter(
-            (cols) => cols[0].REFERENCED_TABLE === firstFK.REFERENCED_TABLE
+            (cols) => cols[0].REFERENCED_TABLE === refTable
           );
 
+          // Se há múltiplos relacionamentos para a mesma tabela, adiciona sufixo
           if (sameTables.length > 1) {
-            // Múltiplos relacionamentos para a mesma tabela - usa nome da primeira coluna FK
+            // Usa a primeira coluna FK para criar sufixo descritivo
             const colSuffix = firstFK.COLUMN_NAME.replace(
-              new RegExp(`^${firstFK.REFERENCED_TABLE}_?|^T\\d+_`, "gi"),
+              new RegExp(`^${refTable}_?|^T\\d+_`, "gi"),
               ""
             )
               .split("_")
@@ -378,15 +376,24 @@ Base = declarative_base()
             finalRelName = baseRelName + "By" + colSuffix;
           }
 
+          // Verifica se já existe relacionamento com esse nome
+          let counter = 1;
+          let uniqueRelName = finalRelName;
+          while (createdRelationships.has(uniqueRelName)) {
+            uniqueRelName = finalRelName + counter;
+            counter++;
+          }
+          finalRelName = uniqueRelName;
+          createdRelationships.add(finalRelName);
+
           if (isComposite) {
             // FK Composta - usa primaryjoin explícito
             const localCols = fkCols.map((fk) => fk.COLUMN_NAME);
-            const remoteCols = fkCols.map((fk) => fk.REFERENCED_COLUMN);
 
             // Gera condições para primaryjoin
             const conditions = fkCols
               .map(
-                (fk, idx) =>
+                (fk) =>
                   `${className}.${fk.COLUMN_NAME}==${refClass}.${fk.REFERENCED_COLUMN}`
               )
               .join(", ");
@@ -395,7 +402,7 @@ Base = declarative_base()
             pythonModels += `        primaryjoin='and_(${conditions})',\n`;
             pythonModels += `        foreign_keys=[${localCols.join(", ")}])\n`;
           } else {
-            // FK Simples
+            // FK Simples - usa apenas foreign_keys
             pythonModels += `    ${finalRelName} = relationship('${refClass}', foreign_keys=[${firstFK.COLUMN_NAME}])\n`;
           }
         }
