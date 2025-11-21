@@ -344,6 +344,12 @@ Base = declarative_base()
           fkGroups.get(fkName)!.push(fk);
         }
 
+        // Cria mapa: coluna -> tabela referenciada na definição ForeignKey da Column
+        const columnFKTarget = new Map<string, string>();
+        for (const fk of foreignKeys) {
+          columnFKTarget.set(fk.COLUMN_NAME, fk.REFERENCED_TABLE);
+        }
+
         // Rastreia relacionamentos já criados para evitar duplicatas
         const createdRelationships = new Set<string>();
 
@@ -386,23 +392,31 @@ Base = declarative_base()
           finalRelName = uniqueRelName;
           createdRelationships.add(finalRelName);
 
-          if (isComposite) {
-            // FK Composta - usa primaryjoin explícito
+          // CRÍTICO: Verifica se TODAS as colunas dessa FK apontam para a tabela correta
+          // Se uma coluna tem ForeignKey para tabela X mas queremos relacionamento com tabela Y,
+          // precisamos usar primaryjoin explícito
+          const needsExplicitJoin = fkCols.some((fk) => {
+            const declaredTarget = columnFKTarget.get(fk.COLUMN_NAME);
+            return declaredTarget !== refTable;
+          });
+
+          if (isComposite || needsExplicitJoin) {
+            // FK Composta OU FK que aponta para tabela diferente - usa primaryjoin explícito
             const localCols = fkCols.map((fk) => fk.COLUMN_NAME);
 
             // Gera condições para primaryjoin
             const conditions = fkCols
               .map(
                 (fk) =>
-                  `${className}.${fk.COLUMN_NAME}==${refClass}.${fk.REFERENCED_COLUMN}`
+                  `${className}.${fk.COLUMN_NAME} == ${refClass}.${fk.REFERENCED_COLUMN}`
               )
               .join(", ");
 
-            pythonModels += `    ${finalRelName} = relationship('${refClass}', \n`;
+            pythonModels += `    ${finalRelName} = relationship('${refClass}',\n`;
             pythonModels += `        primaryjoin='and_(${conditions})',\n`;
             pythonModels += `        foreign_keys=[${localCols.join(", ")}])\n`;
           } else {
-            // FK Simples - usa apenas foreign_keys
+            // FK Simples com target correto - usa apenas foreign_keys
             pythonModels += `    ${finalRelName} = relationship('${refClass}', foreign_keys=[${firstFK.COLUMN_NAME}])\n`;
           }
         }

@@ -1,7 +1,7 @@
 """
 SQLAlchemy Models gerados automaticamente do SQL Server 2005
 Database: rh_prd
-Generated: 2025-11-21T18:31:21.431Z
+Generated: 2025-11-21T19:06:39.550Z
 Total de tabelas: 902
 """
 
@@ -129,8 +129,8 @@ class T01000Pesfisica(Base):
     t01071ItemlistaByIEstcivil = relationship('T01071Itemlista', foreign_keys=[T01000_I_ESTCIVIL])
     t01071ItemlistaByITpresid = relationship('T01071Itemlista', foreign_keys=[T01000_I_TPRESID])
     t01118Endereco = relationship('T01118Endereco', foreign_keys=[T01118_I_CDEND])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01000Pesfisica.T01000_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01000Pesfisica.T01000_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01000Pesfisica.T01000_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01000Pesfisica.T01000_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01000_I_ENTOPERADOR, T01000_I_MATOPERADOR])
 
 class T01001Servidor(Base):
@@ -217,39 +217,44 @@ class T01001Servidor(Base):
 
     # Relationships
     t01071ItemlistaByICdvinculo = relationship('T01071Itemlista', foreign_keys=[T01001_I_CDVINCULO])
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01071ItemlistaByITpatonom = relationship('T01071Itemlista', foreign_keys=[T01001_I_TPATONOM])
     t01071ItemlistaByICdtpponto = relationship('T01071Itemlista', foreign_keys=[T01001_I_CDTPPONTO])
+    t01071ItemlistaByICdturno = relationship('T01071Itemlista',
+        primaryjoin='and_(T01001Servidor.T01001_I_CDTURNO == T01071Itemlista.T01071_I_CDITEM)',
+        foreign_keys=[T01001_I_CDTURNO])
     t01071ItemlistaByITppagto = relationship('T01071Itemlista', foreign_keys=[T01001_I_TPPAGTO])
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01001Servidor.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01001Servidor.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01001Servidor.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01001Servidor.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01001Servidor.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01001Servidor.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01004Unidfunc_orglot = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01001Servidor.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01001Servidor.T01001_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01001Servidor.T01001_I_VORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01001Servidor.T01001_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01001Servidor.T01001_I_VORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_CDORGLOT, T01001_I_VORGLOT])
-    t01004Unidfunc_loctrab = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01001Servidor.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01001Servidor.T01001_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01001Servidor.T01001_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01001Servidor.T01001_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01001Servidor.T01001_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_CDLOCTRAB, T01001_I_VLOCTRAB])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01001Servidor.T01001_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01001Servidor.T01001_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01001Servidor.T01001_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01001Servidor.T01001_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01001_I_ENTOPERADOR, T01001_I_MATOPERADOR])
-    t01168Horaturno = relationship('T01168Horaturno', 
-        primaryjoin='and_(T01001Servidor.T01002_I_CDENT==T01168Horaturno.T01002_I_CDENT, T01001Servidor.T01016_I_CDCGHORA==T01168Horaturno.T01016_I_CDCGHORA, T01001Servidor.T01032_I_CDTPHORA==T01168Horaturno.T01032_I_CDTPHORA, T01001Servidor.T01001_I_CDTURNO==T01168Horaturno.T01168_I_CDTURNO)',
+    t01168Horaturno = relationship('T01168Horaturno',
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT == T01168Horaturno.T01002_I_CDENT, T01001Servidor.T01016_I_CDCGHORA == T01168Horaturno.T01016_I_CDCGHORA, T01001Servidor.T01032_I_CDTPHORA == T01168Horaturno.T01032_I_CDTPHORA, T01001Servidor.T01001_I_CDTURNO == T01168Horaturno.T01168_I_CDTURNO)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA, T01032_I_CDTPHORA, T01001_I_CDTURNO])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01001Servidor.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01001Servidor.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01001Servidor.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01001Servidor.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
-    t01026Padraoref = relationship('T01026Padraoref', 
-        primaryjoin='and_(T01001Servidor.T01002_I_CDENT==T01026Padraoref.T01002_I_CDENT, T01001Servidor.T01025_I_CDPADRAO==T01026Padraoref.T01025_I_CDPADRAO, T01001Servidor.T01015_I_CDREF==T01026Padraoref.T01015_I_CDREF)',
+    t01026Padraoref = relationship('T01026Padraoref',
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT == T01026Padraoref.T01002_I_CDENT, T01001Servidor.T01025_I_CDPADRAO == T01026Padraoref.T01025_I_CDPADRAO, T01001Servidor.T01015_I_CDREF == T01026Padraoref.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO, T01015_I_CDREF])
     t01071ItemlistaByIIndmv = relationship('T01071Itemlista', foreign_keys=[T01001_I_INDMV])
     t01071ItemlistaByIInfomvCodcateg = relationship('T01071Itemlista', foreign_keys=[T01001_I_INFOMV_CODCATEG])
-    t01639Hierarquadro = relationship('T01639Hierarquadro', 
-        primaryjoin='and_(T01001Servidor.T01002_I_CDENT==T01639Hierarquadro.T01002_I_CDENT, T01001Servidor.T01036_I_CDHIERARQ==T01639Hierarquadro.T01036_I_CDHIERARQ, T01001Servidor.T01027_I_CDQUADRO==T01639Hierarquadro.T01027_I_CDQUADRO)',
+    t01639Hierarquadro = relationship('T01639Hierarquadro',
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT == T01639Hierarquadro.T01002_I_CDENT, T01001Servidor.T01036_I_CDHIERARQ == T01639Hierarquadro.T01036_I_CDHIERARQ, T01001Servidor.T01027_I_CDQUADRO == T01639Hierarquadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ, T01027_I_CDQUADRO])
     t01901Convenios = relationship('T01901Convenios', foreign_keys=[T01901_I_CONVENIOID])
 
@@ -364,8 +369,8 @@ class T01003Dependente(Base):
     t01071ItemlistaByICaract = relationship('T01071Itemlista', foreign_keys=[T01003_I_CARACT])
     t01071ItemlistaByIOrigproc = relationship('T01071Itemlista', foreign_keys=[T01003_I_ORIGPROC])
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01003Dependente.T01003_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01003Dependente.T01003_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01003Dependente.T01003_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01003Dependente.T01003_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01003_I_ENTOPERADOR, T01003_I_MATOPERADOR])
     t01071ItemlistaByIEstcivil = relationship('T01071Itemlista', foreign_keys=[T01003_I_ESTCIVIL])
 
@@ -427,26 +432,28 @@ class T01004Unidfunc(Base):
     T01002_I_CDENTSUP = Column(Integer)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01004Unidfunc.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01071ItemlistaByINatureza = relationship('T01071Itemlista', foreign_keys=[T01004_I_NATUREZA])
     t01071ItemlistaByIFerias = relationship('T01071Itemlista', foreign_keys=[T01004_I_FERIAS])
     t01071ItemlistaByICdtpunidade = relationship('T01071Itemlista', foreign_keys=[T01004_I_CDTPUNIDADE])
     t01071ItemlistaByIIndtipo = relationship('T01071Itemlista', foreign_keys=[T01004_I_INDTIPO])
     t01118Endereco = relationship('T01118Endereco', foreign_keys=[T01118_I_CDEND])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01004Unidfunc.T01004_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01004Unidfunc.T01004_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01004Unidfunc.T01004_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01004Unidfunc.T01004_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01004_I_ENTOPERADOR, T01004_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01004Unidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01004Unidfunc.T01004_I_CDUNIDNRH==T01004Unidfunc.T01004_I_CDUNIDFUN, T01004Unidfunc.T01004_I_VERSAONRH==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01004Unidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01004Unidfunc.T01004_I_CDUNIDNRH == T01004Unidfunc.T01004_I_CDUNIDFUN, T01004Unidfunc.T01004_I_VERSAONRH == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDNRH, T01004_I_VERSAONRH])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01004Unidfunc.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01004Unidfunc.T01059_I_ANOVBORCAM==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01004Unidfunc.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01004Unidfunc.T01059_I_ANOVBORCAM == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCAM])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01004Unidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01004Unidfunc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01004Unidfunc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01004Unidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01004Unidfunc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01004Unidfunc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01004Unidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01004Unidfunc.T01004_I_CDUNIDSUB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01004Unidfunc.T01004_I_VERSAOSUB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent2 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01004Unidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01004Unidfunc.T01004_I_CDUNIDSUB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01004Unidfunc.T01004_I_VERSAOSUB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDSUB, T01004_I_VERSAOSUB])
     t01071ItemlistaByIRegiao = relationship('T01071Itemlista', foreign_keys=[T01004_I_REGIAO])
     t01071ItemlistaByITipoato = relationship('T01071Itemlista', foreign_keys=[T01004_I_TIPOATO])
@@ -654,17 +661,17 @@ class T01026Padraoref(Base):
     T01026_I_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01026Padraoref.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01026Padraoref.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01026Padraoref.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01026Padraoref.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01026Padraoref.T01026_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01026Padraoref.T01026_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01026Padraoref.T01026_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01026Padraoref.T01026_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01026_I_ENTOPERADOR, T01026_I_MATOPERADOR])
-    t01025Padrao = relationship('T01025Padrao', 
-        primaryjoin='and_(T01026Padraoref.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01026Padraoref.T01025_I_CDPADRAO==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025Padrao = relationship('T01025Padrao',
+        primaryjoin='and_(T01026Padraoref.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01026Padraoref.T01025_I_CDPADRAO == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO])
-    t01015Referencia = relationship('T01015Referencia', 
-        primaryjoin='and_(T01026Padraoref.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01026Padraoref.T01015_I_CDREF==T01015Referencia.T01015_I_CDREF)',
+    t01015Referencia = relationship('T01015Referencia',
+        primaryjoin='and_(T01026Padraoref.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01026Padraoref.T01015_I_CDREF == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01015_I_CDREF])
 
 class T01027Quadro(Base):
@@ -711,11 +718,11 @@ class T01027Quadro(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01027Quadro.T01027_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01027Quadro.T01027_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01027Quadro.T01027_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01027Quadro.T01027_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01027_I_ENTOPERADOR, T01027_I_MATOPERADOR])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01027Quadro.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01027Quadro.T01059_I_ANOVBORCAM==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01027Quadro.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01027Quadro.T01059_I_ANOVBORCAM == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCAM])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01027_I_CDCATEGORIA])
 
@@ -751,8 +758,8 @@ class T01029Telpesfis(Base):
     # Relationships
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01029_I_TPTEL])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01029Telpesfis.T01029_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01029Telpesfis.T01029_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01029Telpesfis.T01029_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01029Telpesfis.T01029_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01029_I_ENTOPERADOR, T01029_I_MATOPERADOR])
 
 class T01030Telunidfunc(Base):
@@ -769,8 +776,8 @@ class T01030Telunidfunc(Base):
     T01030_I_TPTEL = Column(Numeric(4, 0))
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01030Telunidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01030Telunidfunc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01030Telunidfunc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01030Telunidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01030Telunidfunc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01030Telunidfunc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01031Quadrmtdesl(Base):
@@ -782,8 +789,8 @@ class T01031Quadrmtdesl(Base):
     T01935_I_CODMOTIVO = Column(Integer, ForeignKey('RH.T01935_MOTIVODESLIGAMENTO.T01935_I_CODMOTIVO'), primary_key=True)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01031Quadrmtdesl.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01031Quadrmtdesl.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01031Quadrmtdesl.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01031Quadrmtdesl.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
     t01935Motivodesligamento = relationship('T01935Motivodesligamento', foreign_keys=[T01935_I_CODMOTIVO])
 
@@ -802,8 +809,8 @@ class T01032Tipohorario(Base):
     T01032_I_INDATIVO = Column(Integer)
 
     # Relationships
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01032Tipohorario.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01032Tipohorario.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01032Tipohorario.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01032Tipohorario.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
 
 class T01033Reajuste(Base):
@@ -818,8 +825,8 @@ class T01033Reajuste(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01033_I_CASASDEC])
-    t01025Padrao = relationship('T01025Padrao', 
-        primaryjoin='and_(T01033Reajuste.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01033Reajuste.T01025_I_CDPADRAO==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025Padrao = relationship('T01025Padrao',
+        primaryjoin='and_(T01033Reajuste.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01033Reajuste.T01025_I_CDPADRAO == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO])
 
 class T01035Desligserv(Base):
@@ -844,14 +851,14 @@ class T01035Desligserv(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHAACERTO])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENGACERTO])
-    t01049Mutacaoserv = relationship('T01049Mutacaoserv', 
-        primaryjoin='and_(T01035Desligserv.T01002_I_CDENT==T01049Mutacaoserv.T01002_I_CDENT, T01035Desligserv.T01001_I_MATRICULA==T01049Mutacaoserv.T01001_I_MATRICULA, T01035Desligserv.T01047_I_CDTPMUT==T01049Mutacaoserv.T01047_I_CDTPMUT, T01035Desligserv.T01049_D_DTMUTACAO==T01049Mutacaoserv.T01049_D_DTMUTACAO)',
+    t01049Mutacaoserv = relationship('T01049Mutacaoserv',
+        primaryjoin='and_(T01035Desligserv.T01002_I_CDENT == T01049Mutacaoserv.T01002_I_CDENT, T01035Desligserv.T01001_I_MATRICULA == T01049Mutacaoserv.T01001_I_MATRICULA, T01035Desligserv.T01047_I_CDTPMUT == T01049Mutacaoserv.T01047_I_CDTPMUT, T01035Desligserv.T01049_D_DTMUTACAO == T01049Mutacaoserv.T01049_D_DTMUTACAO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01047_I_CDTPMUT, T01049_D_DTMUTACAO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01035Desligserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01035Desligserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01035Desligserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01035Desligserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01035Desligserv.T01035_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01035Desligserv.T01035_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01035Desligserv.T01035_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01035Desligserv.T01035_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01035_I_ENTOPERADOR, T01035_I_MATOPERADOR])
     t01935Motivodesligamento = relationship('T01935Motivodesligamento', foreign_keys=[T01935_I_CODMOTIVO])
 
@@ -898,29 +905,31 @@ class T01036Itemhierarq(Base):
     T01036_S_NUATOCRI = Column(String(20))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01037Itemestrut = relationship('T01037Itemestrut', foreign_keys=[T01037_I_CDITEMEST])
     t01453Identtcehier = relationship('T01453Identtcehier', foreign_keys=[T01453_I_CODTCEHIER])
-    t01015ReferenciaByICdent = relationship('T01015Referencia', 
-        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01036Itemhierarq.T01015_I_CDREFINI==T01015Referencia.T01015_I_CDREF)',
+    t01015ReferenciaByICdent = relationship('T01015Referencia',
+        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01036Itemhierarq.T01015_I_CDREFINI == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01015_I_CDREFINI])
-    t01025PadraoByICdent = relationship('T01025Padrao', 
-        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01036Itemhierarq.T01025_I_CDPADRAOINI==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025PadraoByICdent = relationship('T01025Padrao',
+        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01036Itemhierarq.T01025_I_CDPADRAOINI == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAOINI])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01036Itemhierarq.T01036_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01036Itemhierarq.T01036_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01036Itemhierarq.T01036_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01036Itemhierarq.T01036_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01036_I_ENTOPERADOR, T01036_I_MATOPERADOR])
-    t01026PadraorefByICdent = relationship('T01026Padraoref', 
-        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT==T01026Padraoref.T01002_I_CDENT, T01036Itemhierarq.T01025_I_CDPADRAOCAD==T01026Padraoref.T01025_I_CDPADRAO, T01036Itemhierarq.T01015_I_CDREFCAD==T01026Padraoref.T01015_I_CDREF)',
+    t01026PadraorefByICdent = relationship('T01026Padraoref',
+        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT == T01026Padraoref.T01002_I_CDENT, T01036Itemhierarq.T01025_I_CDPADRAOCAD == T01026Padraoref.T01025_I_CDPADRAO, T01036Itemhierarq.T01015_I_CDREFCAD == T01026Padraoref.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAOCAD, T01015_I_CDREFCAD])
-    t01026PadraorefByICdent = relationship('T01026Padraoref', 
-        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT==T01026Padraoref.T01002_I_CDENT, T01036Itemhierarq.T01025_I_CDPADRAOINI==T01026Padraoref.T01025_I_CDPADRAO, T01036Itemhierarq.T01015_I_CDREFINI==T01026Padraoref.T01015_I_CDREF)',
+    t01026PadraorefByICdent1 = relationship('T01026Padraoref',
+        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT == T01026Padraoref.T01002_I_CDENT, T01036Itemhierarq.T01025_I_CDPADRAOINI == T01026Padraoref.T01025_I_CDPADRAO, T01036Itemhierarq.T01015_I_CDREFINI == T01026Padraoref.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAOINI, T01015_I_CDREFINI])
-    t01015ReferenciaByICdent = relationship('T01015Referencia', 
-        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01036Itemhierarq.T01015_I_CDREFCAD==T01015Referencia.T01015_I_CDREF)',
+    t01015ReferenciaByICdent1 = relationship('T01015Referencia',
+        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01036Itemhierarq.T01015_I_CDREFCAD == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01015_I_CDREFCAD])
-    t01025PadraoByICdent = relationship('T01025Padrao', 
-        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01036Itemhierarq.T01025_I_CDPADRAOCAD==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025PadraoByICdent1 = relationship('T01025Padrao',
+        primaryjoin='and_(T01036Itemhierarq.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01036Itemhierarq.T01025_I_CDPADRAOCAD == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAOCAD])
     t01071ItemlistaByIAcumcargo = relationship('T01071Itemlista', foreign_keys=[T01036_I_ACUMCARGO])
     t01071ItemlistaByIContespecial = relationship('T01071Itemlista', foreign_keys=[T01036_I_CONTESPECIAL])
@@ -951,8 +960,8 @@ class T01037Itemestrut(Base):
     T01037_I_SITEST = Column(Integer)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01037Itemestrut.T01037_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01037Itemestrut.T01037_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01037Itemestrut.T01037_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01037Itemestrut.T01037_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01037_I_ENTOPERADOR, T01037_I_MATOPERADOR])
 
 class T01038Refefreq(Base):
@@ -976,8 +985,8 @@ class T01038Refefreq(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01038Refefreq.T01038_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01038Refefreq.T01038_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01038Refefreq.T01038_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01038Refefreq.T01038_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01038_I_ENTOPERADOR, T01038_I_MATOPERADOR])
 
 class T01039Frequencia(Base):
@@ -1023,20 +1032,20 @@ class T01039Frequencia(Base):
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01039_I_TPATO])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01039Frequencia.T01039_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01039Frequencia.T01039_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01039Frequencia.T01039_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01039Frequencia.T01039_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01039_I_ENTOPERADOR, T01039_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01039Frequencia.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01039Frequencia.T01039_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01039Frequencia.T01039_I_VORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01039Frequencia.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01039Frequencia.T01039_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01039Frequencia.T01039_I_VORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01039_I_CDORGLOT, T01039_I_VORGLOT])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01039Frequencia.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01039Frequencia.T01039_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01039Frequencia.T01039_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01039Frequencia.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01039Frequencia.T01039_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01039Frequencia.T01039_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01039_I_CDLOCTRAB, T01039_I_VLOCTRAB])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01039Frequencia.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01039Frequencia.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01039Frequencia.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent2 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01039Frequencia.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01039Frequencia.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01039Frequencia.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01039Frequencia.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01039Frequencia.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01039Frequencia.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01039Frequencia.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01040Falta(Base):
@@ -1062,11 +1071,11 @@ class T01040Falta(Base):
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01040_I_TPFALTA])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01040Falta.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01040Falta.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01040Falta.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01040Falta.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01040Falta.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01040Falta.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01040Falta.T01040_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01040Falta.T01040_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01040Falta.T01040_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01040Falta.T01040_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01040_I_ENTOPERADOR, T01040_I_MATOPERADOR])
 
 class T01041Concurso(Base):
@@ -1141,8 +1150,8 @@ class T01041Concurso(Base):
     t01071ItemlistaByITipoato = relationship('T01071Itemlista', foreign_keys=[T01041_I_TIPOATO])
     t01047Tipomutacao = relationship('T01047Tipomutacao', foreign_keys=[T01047_I_CDTPMUT])
     t01071ItemlistaByICdtpatomutacao = relationship('T01071Itemlista', foreign_keys=[T01041_I_CDTPATOMUTACAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01041Concurso.T01041_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01041Concurso.T01041_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01041Concurso.T01041_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01041Concurso.T01041_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01041_I_ENTOPERADOR, T01041_I_MATOPERADOR])
     t01071ItemlistaByISubtpconcint = relationship('T01071Itemlista', foreign_keys=[T01041_I_SUBTPCONCINT])
 
@@ -1221,20 +1230,20 @@ class T01042Candidato(Base):
     t01071ItemlistaByICddeficie = relationship('T01071Itemlista', foreign_keys=[T01042_I_CDDEFICIE])
     t01071ItemlistaByICdmotieli = relationship('T01071Itemlista', foreign_keys=[T01042_I_CDMOTIELI])
     t01577Arcorreiosconv = relationship('T01577Arcorreiosconv', foreign_keys=[T01577_I_CODAR])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01042Candidato.T01042_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01042Candidato.T01042_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01042Candidato.T01042_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01042Candidato.T01042_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01042_I_ENTOPERADOR, T01042_I_MATOPERADOR])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01042Candidato.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01042Candidato.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01042Candidato.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01042Candidato.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01042Candidato.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01042Candidato.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01042Candidato.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01042Candidato.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01042Candidato.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01042Candidato.T01042_I_MATRICULA1==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01042Candidato.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01042Candidato.T01042_I_MATRICULA1 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01042_I_MATRICULA1])
-    t01001ServidorByIEntopeimpform = relationship('T01001Servidor', 
-        primaryjoin='and_(T01042Candidato.T01002_I_ENTOPEIMPFORM==T01001Servidor.T01002_I_CDENT, T01042Candidato.T01001_I_MATOPEIMPFORM==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntopeimpform = relationship('T01001Servidor',
+        primaryjoin='and_(T01042Candidato.T01002_I_ENTOPEIMPFORM == T01001Servidor.T01002_I_CDENT, T01042Candidato.T01001_I_MATOPEIMPFORM == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTOPEIMPFORM, T01001_I_MATOPEIMPFORM])
     t01002EntidadeByICdentnomea = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTNOMEA])
     t01002EntidadeByICdentconvoc = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTCONVOC])
@@ -1250,11 +1259,11 @@ class T01043Nucleorh(Base):
     T01043_I_VERSAO = Column(Numeric(2, 0), ForeignKey('RH.T01004_UNIDFUNC.T01004_I_VERSAO'), primary_key=True)
 
     # Relationships
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01043Nucleorh.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01043Nucleorh.T01043_I_CDUNIDNRH==T01004Unidfunc.T01004_I_CDUNIDFUN, T01043Nucleorh.T01043_I_VERSAONRH==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01043Nucleorh.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01043Nucleorh.T01043_I_CDUNIDNRH == T01004Unidfunc.T01004_I_CDUNIDFUN, T01043Nucleorh.T01043_I_VERSAONRH == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01043_I_CDUNIDNRH, T01043_I_VERSAONRH])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01043Nucleorh.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01043Nucleorh.T01043_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01043Nucleorh.T01043_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01043Nucleorh.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01043Nucleorh.T01043_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01043Nucleorh.T01043_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01043_I_CDUNIDFUN, T01043_I_VERSAO])
 
 class T01044Edital(Base):
@@ -1288,14 +1297,14 @@ class T01044Edital(Base):
     # Relationships
     t01071ItemlistaByIRespedital2 = relationship('T01071Itemlista', foreign_keys=[T01044_I_RESPEDITAL2])
     t01071ItemlistaByIRespedital1 = relationship('T01071Itemlista', foreign_keys=[T01044_I_RESPEDITAL1])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01044Edital.T01044_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01044Edital.T01044_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01044Edital.T01044_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01044Edital.T01044_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01044_I_ENTOPERADOR, T01044_I_MATOPERADOR])
-    t01001ServidorByIEntresp1 = relationship('T01001Servidor', 
-        primaryjoin='and_(T01044Edital.T01002_I_ENTRESP1==T01001Servidor.T01002_I_CDENT, T01044Edital.T01001_I_MATRESP1==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntresp1 = relationship('T01001Servidor',
+        primaryjoin='and_(T01044Edital.T01002_I_ENTRESP1 == T01001Servidor.T01002_I_CDENT, T01044Edital.T01001_I_MATRESP1 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTRESP1, T01001_I_MATRESP1])
-    t01001ServidorByIEntresp2 = relationship('T01001Servidor', 
-        primaryjoin='and_(T01044Edital.T01002_I_ENTRESP2==T01001Servidor.T01002_I_CDENT, T01044Edital.T01001_I_MATRESP2==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntresp2 = relationship('T01001Servidor',
+        primaryjoin='and_(T01044Edital.T01002_I_ENTRESP2 == T01001Servidor.T01002_I_CDENT, T01044Edital.T01001_I_MATRESP2 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTRESP2, T01001_I_MATRESP2])
 
 class T01045Itemedital(Base):
@@ -1325,14 +1334,14 @@ class T01045Itemedital(Base):
 
     # Relationships
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01045Itemedital.T01045_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01045Itemedital.T01045_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01045Itemedital.T01045_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01045Itemedital.T01045_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01045_I_ENTOPERADOR, T01045_I_MATOPERADOR])
-    t01044Edital = relationship('T01044Edital', 
-        primaryjoin='and_(T01045Itemedital.T01002_I_CDENT==T01044Edital.T01002_I_CDENT, T01045Itemedital.T01044_I_CDEDITAL==T01044Edital.T01044_I_CDEDITAL, T01045Itemedital.T01044_I_ANOEDITAL==T01044Edital.T01044_I_ANOEDITAL)',
+    t01044Edital = relationship('T01044Edital',
+        primaryjoin='and_(T01045Itemedital.T01002_I_CDENT == T01044Edital.T01002_I_CDENT, T01045Itemedital.T01044_I_CDEDITAL == T01044Edital.T01044_I_CDEDITAL, T01045Itemedital.T01044_I_ANOEDITAL == T01044Edital.T01044_I_ANOEDITAL)',
         foreign_keys=[T01002_I_CDENT, T01044_I_CDEDITAL, T01044_I_ANOEDITAL])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01045Itemedital.T01002_I_CDENTCONCURSO==T01036Itemhierarq.T01002_I_CDENT, T01045Itemedital.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01045Itemedital.T01002_I_CDENTCONCURSO == T01036Itemhierarq.T01002_I_CDENT, T01045Itemedital.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENTCONCURSO, T01036_I_CDHIERARQ])
 
 class T01046Adicservico(Base):
@@ -1354,11 +1363,11 @@ class T01046Adicservico(Base):
     T01046_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01046Adicservico.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01046Adicservico.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01046Adicservico.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01046Adicservico.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01046Adicservico.T01046_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01046Adicservico.T01046_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01046Adicservico.T01046_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01046Adicservico.T01046_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01046_I_ENTOPERADOR, T01046_I_MATOPERADOR])
 
 class T01047Tipomutacao(Base):
@@ -1397,8 +1406,8 @@ class T01047Tipomutacao(Base):
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01047_I_INDTPMUT])
     t01455Identtcemov = relationship('T01455Identtcemov', foreign_keys=[T01455_I_CODTCEMOV])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01047Tipomutacao.T01047_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01047Tipomutacao.T01047_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01047Tipomutacao.T01047_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01047Tipomutacao.T01047_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01047_I_ENTOPERADOR, T01047_I_MATOPERADOR])
 
 class T01048Tpmutquadro(Base):
@@ -1411,8 +1420,8 @@ class T01048Tpmutquadro(Base):
 
     # Relationships
     t01047Tipomutacao = relationship('T01047Tipomutacao', foreign_keys=[T01047_I_CDTPMUT])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01048Tpmutquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01048Tpmutquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01048Tpmutquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01048Tpmutquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01049Mutacaoserv(Base):
@@ -1457,38 +1466,40 @@ class T01049Mutacaoserv(Base):
     T01049_S_NRATO = Column(String(20))
 
     # Relationships
-    t01071ItemlistaByICdturno = relationship('T01071Itemlista', foreign_keys=[T01049_I_CDTURNO])
+    t01071ItemlistaByICdturno = relationship('T01071Itemlista',
+        primaryjoin='and_(T01049Mutacaoserv.T01049_I_CDTURNO == T01071Itemlista.T01071_I_CDITEM)',
+        foreign_keys=[T01049_I_CDTURNO])
     t01047Tipomutacao = relationship('T01047Tipomutacao', foreign_keys=[T01047_I_CDTPMUT])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01049Mutacaoserv.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01049Mutacaoserv.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01168Horaturno = relationship('T01168Horaturno', 
-        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT==T01168Horaturno.T01002_I_CDENT, T01049Mutacaoserv.T01016_I_CDCGHORA==T01168Horaturno.T01016_I_CDCGHORA, T01049Mutacaoserv.T01032_I_CDTPHORA==T01168Horaturno.T01032_I_CDTPHORA, T01049Mutacaoserv.T01049_I_CDTURNO==T01168Horaturno.T01168_I_CDTURNO)',
+    t01168Horaturno = relationship('T01168Horaturno',
+        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT == T01168Horaturno.T01002_I_CDENT, T01049Mutacaoserv.T01016_I_CDCGHORA == T01168Horaturno.T01016_I_CDCGHORA, T01049Mutacaoserv.T01032_I_CDTPHORA == T01168Horaturno.T01032_I_CDTPHORA, T01049Mutacaoserv.T01049_I_CDTURNO == T01168Horaturno.T01168_I_CDTURNO)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA, T01032_I_CDTPHORA, T01049_I_CDTURNO])
-    t01032Tipohorario = relationship('T01032Tipohorario', 
-        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT==T01032Tipohorario.T01002_I_CDENT, T01049Mutacaoserv.T01016_I_CDCGHORA==T01032Tipohorario.T01016_I_CDCGHORA, T01049Mutacaoserv.T01032_I_CDTPHORA==T01032Tipohorario.T01032_I_CDTPHORA)',
+    t01032Tipohorario = relationship('T01032Tipohorario',
+        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT == T01032Tipohorario.T01002_I_CDENT, T01049Mutacaoserv.T01016_I_CDCGHORA == T01032Tipohorario.T01016_I_CDCGHORA, T01049Mutacaoserv.T01032_I_CDTPHORA == T01032Tipohorario.T01032_I_CDTPHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA, T01032_I_CDTPHORA])
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01049Mutacaoserv.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01049Mutacaoserv.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01049Mutacaoserv.T01049_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01049Mutacaoserv.T01049_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01049Mutacaoserv.T01049_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01049Mutacaoserv.T01049_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01049_I_ENTOPERADOR, T01049_I_MATOPERADOR])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01049Mutacaoserv.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01049Mutacaoserv.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01049Mutacaoserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01049Mutacaoserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01071ItemlistaByICdvinculo = relationship('T01071Itemlista', foreign_keys=[T01049_I_CDVINCULO])
     t01171Mutcoletiva = relationship('T01171Mutcoletiva', foreign_keys=[T01171_I_CODMUTCOL])
-    t01639Hierarquadro = relationship('T01639Hierarquadro', 
-        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT==T01639Hierarquadro.T01002_I_CDENT, T01049Mutacaoserv.T01036_I_CDHIERARQ==T01639Hierarquadro.T01036_I_CDHIERARQ, T01049Mutacaoserv.T01027_I_CDQUADRO==T01639Hierarquadro.T01027_I_CDQUADRO)',
+    t01639Hierarquadro = relationship('T01639Hierarquadro',
+        primaryjoin='and_(T01049Mutacaoserv.T01002_I_CDENT == T01639Hierarquadro.T01002_I_CDENT, T01049Mutacaoserv.T01036_I_CDHIERARQ == T01639Hierarquadro.T01036_I_CDHIERARQ, T01049Mutacaoserv.T01027_I_CDQUADRO == T01639Hierarquadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ, T01027_I_CDQUADRO])
-    t01001ServidorByIEntopergravmut = relationship('T01001Servidor', 
-        primaryjoin='and_(T01049Mutacaoserv.T01049_I_ENTOPERGRAVMUT==T01001Servidor.T01002_I_CDENT, T01049Mutacaoserv.T01049_I_MATOPERGRAVMUT==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntopergravmut = relationship('T01001Servidor',
+        primaryjoin='and_(T01049Mutacaoserv.T01049_I_ENTOPERGRAVMUT == T01001Servidor.T01002_I_CDENT, T01049Mutacaoserv.T01049_I_MATOPERGRAVMUT == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01049_I_ENTOPERGRAVMUT, T01049_I_MATOPERGRAVMUT])
     t01071ItemlistaByICdtpreintg = relationship('T01071Itemlista', foreign_keys=[T01049_I_CDTPREINTG])
 
@@ -1540,20 +1551,20 @@ class T01052Transfrem(Base):
     t01071ItemlistaByICdmotprov = relationship('T01071Itemlista', foreign_keys=[T01052_I_CDMOTPROV])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHAGEM])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENGGEM])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01052Transfrem.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01052Transfrem.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01052Transfrem.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01052Transfrem.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01052Transfrem.T01052_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01052Transfrem.T01052_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01052Transfrem.T01052_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01052Transfrem.T01052_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01052_I_ENTOPERADOR, T01052_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01052Transfrem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01052Transfrem.T01052_I_CDLOCALTR==T01004Unidfunc.T01004_I_CDUNIDFUN, T01052Transfrem.T01052_I_VRLOCALTR==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01052Transfrem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01052Transfrem.T01052_I_CDLOCALTR == T01004Unidfunc.T01004_I_CDUNIDFUN, T01052Transfrem.T01052_I_VRLOCALTR == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01052_I_CDLOCALTR, T01052_I_VRLOCALTR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01052Transfrem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01052Transfrem.T01052_I_CDUFDEFIN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01052Transfrem.T01052_I_VRUFDEFIN==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01052Transfrem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01052Transfrem.T01052_I_CDUFDEFIN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01052Transfrem.T01052_I_VRUFDEFIN == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01052_I_CDUFDEFIN, T01052_I_VRUFDEFIN])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01052Transfrem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01052Transfrem.T01052_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01052Transfrem.T01052_I_VRORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent2 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01052Transfrem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01052Transfrem.T01052_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01052Transfrem.T01052_I_VRORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01052_I_CDORGLOT, T01052_I_VRORGLOT])
 
 class T01053Incidafast(Base):
@@ -1582,14 +1593,14 @@ class T01053Incidafast(Base):
 
     # Relationships
     t01071ItemlistaByITponus = relationship('T01071Itemlista', foreign_keys=[T01053_I_TPONUS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01053Incidafast.T01053_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01053Incidafast.T01053_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01053Incidafast.T01053_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01053Incidafast.T01053_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01053_I_ENTOPERADOR, T01053_I_MATOPERADOR])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01053Incidafast.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01053Incidafast.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01053Incidafast.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01053Incidafast.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01053Incidafast.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01053Incidafast.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01053Incidafast.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01053Incidafast.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
     t01071ItemlistaByIFruicaoferias = relationship('T01071Itemlista', foreign_keys=[T01053_I_FRUICAOFERIAS])
 
@@ -1612,15 +1623,17 @@ class T01054Reqoficio(Base):
     T01054_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01054Reqoficio.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01054Reqoficio.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01054Reqoficio.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01054Reqoficio.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01054Reqoficio.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01054Reqoficio.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01054Reqoficio.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01054Reqoficio.T01054_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01054Reqoficio.T01054_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01054Reqoficio.T01054_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01054Reqoficio.T01054_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01054_I_ENTOPERADOR, T01054_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01054Reqoficio.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01054Reqoficio.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01054Reqoficio.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01054Reqoficio.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01055Reqofhierar(Base):
@@ -1646,17 +1659,17 @@ class T01055Reqofhierar(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01055_I_TURNO])
-    t01054Reqoficio = relationship('T01054Reqoficio', 
-        primaryjoin='and_(T01055Reqofhierar.T01002_I_CDENT==T01054Reqoficio.T01002_I_CDENT, T01055Reqofhierar.T01004_I_CDUNIDFUN==T01054Reqoficio.T01004_I_CDUNIDFUN, T01055Reqofhierar.T01004_I_VERSAO==T01054Reqoficio.T01004_I_VERSAO, T01055Reqofhierar.T01054_I_NRREQOF==T01054Reqoficio.T01054_I_NRREQOF, T01055Reqofhierar.T01054_I_ANOREQOF==T01054Reqoficio.T01054_I_ANOREQOF)',
+    t01054Reqoficio = relationship('T01054Reqoficio',
+        primaryjoin='and_(T01055Reqofhierar.T01002_I_CDENT == T01054Reqoficio.T01002_I_CDENT, T01055Reqofhierar.T01004_I_CDUNIDFUN == T01054Reqoficio.T01004_I_CDUNIDFUN, T01055Reqofhierar.T01004_I_VERSAO == T01054Reqoficio.T01004_I_VERSAO, T01055Reqofhierar.T01054_I_NRREQOF == T01054Reqoficio.T01054_I_NRREQOF, T01055Reqofhierar.T01054_I_ANOREQOF == T01054Reqoficio.T01054_I_ANOREQOF)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO, T01054_I_NRREQOF, T01054_I_ANOREQOF])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01055Reqofhierar.T01055_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01055Reqofhierar.T01055_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01055Reqofhierar.T01055_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01055Reqofhierar.T01055_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01055_I_ENTOPERADOR, T01055_I_MATOPERADOR])
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01055Reqofhierar.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01055Reqofhierar.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01055Reqofhierar.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01055Reqofhierar.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01055Reqofhierar.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01055Reqofhierar.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01055Reqofhierar.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01055Reqofhierar.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01056Substituido(Base):
@@ -1672,11 +1685,11 @@ class T01056Substituido(Base):
     T01054_I_ANOREQOF = Column(Numeric(4, 0), ForeignKey('RH.T01055_REQOFHIERAR.T01054_I_ANOREQOF'), primary_key=True)
 
     # Relationships
-    t01055Reqofhierar = relationship('T01055Reqofhierar', 
-        primaryjoin='and_(T01056Substituido.T01002_I_CDENT==T01055Reqofhierar.T01002_I_CDENT, T01056Substituido.T01036_I_CDHIERARQ==T01055Reqofhierar.T01036_I_CDHIERARQ, T01056Substituido.T01004_I_CDUNIDFUN==T01055Reqofhierar.T01004_I_CDUNIDFUN, T01056Substituido.T01004_I_VERSAO==T01055Reqofhierar.T01004_I_VERSAO, T01056Substituido.T01054_I_NRREQOF==T01055Reqofhierar.T01054_I_NRREQOF, T01056Substituido.T01054_I_ANOREQOF==T01055Reqofhierar.T01054_I_ANOREQOF)',
+    t01055Reqofhierar = relationship('T01055Reqofhierar',
+        primaryjoin='and_(T01056Substituido.T01002_I_CDENT == T01055Reqofhierar.T01002_I_CDENT, T01056Substituido.T01036_I_CDHIERARQ == T01055Reqofhierar.T01036_I_CDHIERARQ, T01056Substituido.T01004_I_CDUNIDFUN == T01055Reqofhierar.T01004_I_CDUNIDFUN, T01056Substituido.T01004_I_VERSAO == T01055Reqofhierar.T01004_I_VERSAO, T01056Substituido.T01054_I_NRREQOF == T01055Reqofhierar.T01054_I_NRREQOF, T01056Substituido.T01054_I_ANOREQOF == T01055Reqofhierar.T01054_I_ANOREQOF)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ, T01004_I_CDUNIDFUN, T01004_I_VERSAO, T01054_I_NRREQOF, T01054_I_ANOREQOF])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01056Substituido.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01056Substituido.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01056Substituido.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01056Substituido.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01057Agbancaria(Base):
@@ -1747,27 +1760,29 @@ class T01058Eventosfolha(Base):
     T01964_S_COD_INCID_PIS_PASEP = Column(String(2))
 
     # Relationships
-    t01002EntidadeByICdent = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002EntidadeByICdent = relationship('T01002Entidade',
+        primaryjoin='and_(T01058Eventosfolha.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01002EntidadeByIEntcriadora = relationship('T01002Entidade', foreign_keys=[T01058_I_ENTCRIADORA])
     t01071ItemlistaByITpunidade = relationship('T01071Itemlista', foreign_keys=[T01058_I_TPUNIDADE])
     t01071ItemlistaByITporigem = relationship('T01071Itemlista', foreign_keys=[T01058_I_TPORIGEM])
     t01071ItemlistaByITpnatureza = relationship('T01071Itemlista', foreign_keys=[T01058_I_TPNATUREZA])
     t01323Funcaocalculo = relationship('T01323Funcaocalculo', foreign_keys=[T01323_I_CDFUNCCALC])
     t01454Identtceevent = relationship('T01454Identtceevent', foreign_keys=[T01454_I_CODTCEEVENT])
-    t01026Padraoref = relationship('T01026Padraoref', 
-        primaryjoin='and_(T01058Eventosfolha.T01002_I_CDENT==T01026Padraoref.T01002_I_CDENT, T01058Eventosfolha.T01025_I_CDPADRAO==T01026Padraoref.T01025_I_CDPADRAO, T01058Eventosfolha.T01015_I_CDREF==T01026Padraoref.T01015_I_CDREF)',
+    t01026Padraoref = relationship('T01026Padraoref',
+        primaryjoin='and_(T01058Eventosfolha.T01002_I_CDENT == T01026Padraoref.T01002_I_CDENT, T01058Eventosfolha.T01025_I_CDPADRAO == T01026Padraoref.T01025_I_CDPADRAO, T01058Eventosfolha.T01015_I_CDREF == T01026Padraoref.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO, T01015_I_CDREF])
-    t01285Entidadecons = relationship('T01285Entidadecons', 
-        primaryjoin='and_(T01058Eventosfolha.T01002_I_CDENT==T01285Entidadecons.T01002_I_CDENT, T01058Eventosfolha.T01285_I_CDENTCON==T01285Entidadecons.T01285_I_CDENTCON)',
+    t01285Entidadecons = relationship('T01285Entidadecons',
+        primaryjoin='and_(T01058Eventosfolha.T01002_I_CDENT == T01285Entidadecons.T01002_I_CDENT, T01058Eventosfolha.T01285_I_CDENTCON == T01285Entidadecons.T01285_I_CDENTCON)',
         foreign_keys=[T01002_I_CDENT, T01285_I_CDENTCON])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01058Eventosfolha.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01058Eventosfolha.T01058_I_EVENTOPR==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01058Eventosfolha.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01058Eventosfolha.T01058_I_EVENTOPR == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_EVENTOPR])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01058Eventosfolha.T01158_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01058Eventosfolha.T01158_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01058Eventosfolha.T01158_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01058Eventosfolha.T01158_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01158_I_ENTOPERADOR, T01158_I_MATOPERADOR])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01058Eventosfolha.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01058Eventosfolha.T01059_I_ANOVBORCAM==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01058Eventosfolha.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01058Eventosfolha.T01059_I_ANOVBORCAM == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCAM])
 
 class T01059Tpverbaorc(Base):
@@ -1864,11 +1879,11 @@ class T01064Incorpserv(Base):
     t01071ItemlistaByITpcertid = relationship('T01071Itemlista', foreign_keys=[T01064_I_TPCERTID])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01064_I_TPATO])
     t01071ItemlistaByITpefeito = relationship('T01071Itemlista', foreign_keys=[T01064_I_TPEFEITO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01064Incorpserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01064Incorpserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01064Incorpserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01064Incorpserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01064Incorpserv.T01064_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01064Incorpserv.T01064_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01064Incorpserv.T01064_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01064Incorpserv.T01064_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01064_I_ENTOPERADOR, T01064_I_MATOPERADOR])
 
 class T01065Perincorp(Base):
@@ -1887,8 +1902,8 @@ class T01065Perincorp(Base):
 
     # Relationships
     t01066Fonteincorp = relationship('T01066Fonteincorp', foreign_keys=[T01066_I_CDFONTE])
-    t01064Incorpserv = relationship('T01064Incorpserv', 
-        primaryjoin='and_(T01065Perincorp.T01002_I_CDENT==T01064Incorpserv.T01002_I_CDENT, T01065Perincorp.T01001_I_MATRICULA==T01064Incorpserv.T01001_I_MATRICULA, T01065Perincorp.T01064_I_CDINCORP==T01064Incorpserv.T01064_I_CDINCORP, T01065Perincorp.T01064_I_TPINCORP==T01064Incorpserv.T01064_I_TPINCORP)',
+    t01064Incorpserv = relationship('T01064Incorpserv',
+        primaryjoin='and_(T01065Perincorp.T01002_I_CDENT == T01064Incorpserv.T01002_I_CDENT, T01065Perincorp.T01001_I_MATRICULA == T01064Incorpserv.T01001_I_MATRICULA, T01065Perincorp.T01064_I_CDINCORP == T01064Incorpserv.T01064_I_CDINCORP, T01065Perincorp.T01064_I_TPINCORP == T01064Incorpserv.T01064_I_TPINCORP)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01064_I_CDINCORP, T01064_I_TPINCORP])
 
 class T01066Fonteincorp(Base):
@@ -1945,8 +1960,8 @@ class T01072Beneficiodep(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01072_I_CDTIPO])
-    t01003Dependente = relationship('T01003Dependente', 
-        primaryjoin='and_(T01072Beneficiodep.T01000_I_CDPESFIS==T01003Dependente.T01000_I_CDPESFIS, T01072Beneficiodep.T01003_I_CDDEP==T01003Dependente.T01003_I_CDDEP)',
+    t01003Dependente = relationship('T01003Dependente',
+        primaryjoin='and_(T01072Beneficiodep.T01000_I_CDPESFIS == T01003Dependente.T01000_I_CDPESFIS, T01072Beneficiodep.T01003_I_CDDEP == T01003Dependente.T01003_I_CDDEP)',
         foreign_keys=[T01000_I_CDPESFIS, T01003_I_CDDEP])
 
 class T01073Desigcgconf(Base):
@@ -1988,11 +2003,11 @@ class T01073Desigcgconf(Base):
     t01164Vagacgconf = relationship('T01164Vagacgconf', foreign_keys=[T01164_I_CDVGCARGO])
     t01324InterfaceByICdintereng = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
     t01324InterfaceByICdinterengexo = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENGEXO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01073Desigcgconf.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01073Desigcgconf.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01073Desigcgconf.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01073Desigcgconf.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01073Desigcgconf.T01073_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01073Desigcgconf.T01073_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01073Desigcgconf.T01073_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01073Desigcgconf.T01073_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01073_I_ENTOPERADOR, T01073_I_MATOPERADOR])
 
 class T01074Quadrotpafa(Base):
@@ -2009,14 +2024,14 @@ class T01074Quadrotpafa(Base):
     T01074_I_MAXDIASPRORROG = Column(Numeric(4, 0))
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01074Quadrotpafa.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01074Quadrotpafa.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01074Quadrotpafa.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01074Quadrotpafa.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01074Quadrotpafa.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01074Quadrotpafa.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01074Quadrotpafa.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01074Quadrotpafa.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01074Quadrotpafa.T01074_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01074Quadrotpafa.T01074_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01074Quadrotpafa.T01074_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01074Quadrotpafa.T01074_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01074_I_ENTOPERADOR, T01074_I_MATOPERADOR])
 
 class T01075Cargoconfia(Base):
@@ -2049,12 +2064,14 @@ class T01075Cargoconfia(Base):
     T01075_S_NRATOEXT = Column(String(20))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01075Cargoconfia.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01071ItemlistaByICdnivel = relationship('T01071Itemlista', foreign_keys=[T01075_I_CDNIVEL])
     t01071ItemlistaByITpatocria = relationship('T01071Itemlista', foreign_keys=[T01075_I_TPATOCRIA])
     t01071ItemlistaByITpatoext = relationship('T01071Itemlista', foreign_keys=[T01075_I_TPATOEXT])
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01075Cargoconfia.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01075Cargoconfia.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01075Cargoconfia.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01075Cargoconfia.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
     t01071ItemlistaByITpcargotce = relationship('T01071Itemlista', foreign_keys=[T01075_I_TPCARGOTCE])
 
@@ -2078,8 +2095,8 @@ class T01076Simbcgconf(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01076Simbcgconf.T01076_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01076Simbcgconf.T01076_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01076Simbcgconf.T01076_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01076Simbcgconf.T01076_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01076_I_ENTOPERADOR, T01076_I_MATOPERADOR])
 
 class T01077Criterio(Base):
@@ -2109,8 +2126,8 @@ class T01078Critestagprob(Base):
 
     # Relationships
     t01077Criterio = relationship('T01077Criterio', foreign_keys=[T01077_I_CDCRIT])
-    t01079Periodoestprob = relationship('T01079Periodoestprob', 
-        primaryjoin='and_(T01078Critestagprob.T01002_I_CDENT==T01079Periodoestprob.T01002_I_CDENT, T01078Critestagprob.T01001_I_MATRICULA==T01079Periodoestprob.T01001_I_MATRICULA, T01078Critestagprob.T01314_D_DTADMISSAO==T01079Periodoestprob.T01314_D_DTADMISSAO, T01078Critestagprob.T01079_I_PERIODO==T01079Periodoestprob.T01079_I_PERIODO, T01078Critestagprob.T01079_I_SEQSUBSID==T01079Periodoestprob.T01079_I_SEQSUBSID)',
+    t01079Periodoestprob = relationship('T01079Periodoestprob',
+        primaryjoin='and_(T01078Critestagprob.T01002_I_CDENT == T01079Periodoestprob.T01002_I_CDENT, T01078Critestagprob.T01001_I_MATRICULA == T01079Periodoestprob.T01001_I_MATRICULA, T01078Critestagprob.T01314_D_DTADMISSAO == T01079Periodoestprob.T01314_D_DTADMISSAO, T01078Critestagprob.T01079_I_PERIODO == T01079Periodoestprob.T01079_I_PERIODO, T01078Critestagprob.T01079_I_SEQSUBSID == T01079Periodoestprob.T01079_I_SEQSUBSID)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01314_D_DTADMISSAO, T01079_I_PERIODO, T01079_I_SEQSUBSID])
 
 class T01079Periodoestprob(Base):
@@ -2156,17 +2173,17 @@ class T01079Periodoestprob(Base):
     # Relationships
     t01071ItemlistaByITpresultfim = relationship('T01071Itemlista', foreign_keys=[T01079_I_TPRESULTFIM])
     t01071ItemlistaByIProcedimento = relationship('T01071Itemlista', foreign_keys=[T01079_I_PROCEDIMENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01079Periodoestprob.T01079_I_ENTOPER==T01001Servidor.T01002_I_CDENT, T01079Periodoestprob.T01079_I_MATOPER==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01079Periodoestprob.T01079_I_ENTOPER == T01001Servidor.T01002_I_CDENT, T01079Periodoestprob.T01079_I_MATOPER == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01079_I_ENTOPER, T01079_I_MATOPER])
-    t01314Avaliacaoep = relationship('T01314Avaliacaoep', 
-        primaryjoin='and_(T01079Periodoestprob.T01002_I_CDENT==T01314Avaliacaoep.T01002_I_CDENT, T01079Periodoestprob.T01001_I_MATRICULA==T01314Avaliacaoep.T01001_I_MATRICULA, T01079Periodoestprob.T01314_D_DTADMISSAO==T01314Avaliacaoep.T01314_D_DTADMISSAO)',
+    t01314Avaliacaoep = relationship('T01314Avaliacaoep',
+        primaryjoin='and_(T01079Periodoestprob.T01002_I_CDENT == T01314Avaliacaoep.T01002_I_CDENT, T01079Periodoestprob.T01001_I_MATRICULA == T01314Avaliacaoep.T01001_I_MATRICULA, T01079Periodoestprob.T01314_D_DTADMISSAO == T01314Avaliacaoep.T01314_D_DTADMISSAO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01314_D_DTADMISSAO])
-    t01052Transfrem = relationship('T01052Transfrem', 
-        primaryjoin='and_(T01079Periodoestprob.T01002_I_CDENT==T01052Transfrem.T01002_I_CDENT, T01079Periodoestprob.T01001_I_MATRICULA==T01052Transfrem.T01001_I_MATRICULA, T01079Periodoestprob.T01052_D_DTINICIO==T01052Transfrem.T01052_D_DTINICIO)',
+    t01052Transfrem = relationship('T01052Transfrem',
+        primaryjoin='and_(T01079Periodoestprob.T01002_I_CDENT == T01052Transfrem.T01002_I_CDENT, T01079Periodoestprob.T01001_I_MATRICULA == T01052Transfrem.T01001_I_MATRICULA, T01079Periodoestprob.T01052_D_DTINICIO == T01052Transfrem.T01052_D_DTINICIO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01052_D_DTINICIO])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01079Periodoestprob.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01079Periodoestprob.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01079Periodoestprob.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01079Periodoestprob.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01079Periodoestprob.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01079Periodoestprob.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01080Caracdepend(Base):
@@ -2194,8 +2211,8 @@ class T01080Caracdepend(Base):
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071ItemlistaByICdcarac = relationship('T01071Itemlista', foreign_keys=[T01080_I_CDCARAC])
     t01071ItemlistaByICddepend = relationship('T01071Itemlista', foreign_keys=[T01080_I_CDDEPEND])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01080Caracdepend.T01080_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01080Caracdepend.T01080_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01080Caracdepend.T01080_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01080Caracdepend.T01080_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01080_I_ENTOPERADOR, T01080_I_MATOPERADOR])
 
 class T01081Itempadrao(Base):
@@ -2211,14 +2228,14 @@ class T01081Itempadrao(Base):
     T01081_I_MATOPERADOR = Column(Numeric(7, 0), ForeignKey('RH.T01001_SERVIDOR.T01001_I_MATRICULA'))
 
     # Relationships
-    t01025Padrao = relationship('T01025Padrao', 
-        primaryjoin='and_(T01081Itempadrao.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01081Itempadrao.T01025_I_CDPADRAO==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025Padrao = relationship('T01025Padrao',
+        primaryjoin='and_(T01081Itempadrao.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01081Itempadrao.T01025_I_CDPADRAO == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01081Itempadrao.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01081Itempadrao.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01081Itempadrao.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01081Itempadrao.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01081Itempadrao.T01081_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01081Itempadrao.T01081_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01081Itempadrao.T01081_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01081Itempadrao.T01081_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01081_I_ENTOPERADOR, T01081_I_MATOPERADOR])
 
 class T01083Vagalegal(Base):
@@ -2234,8 +2251,8 @@ class T01083Vagalegal(Base):
     T01083_I_NUVGLIBER = Column(Integer, nullable=False)
 
     # Relationships
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01083Vagalegal.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01083Vagalegal.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01083Vagalegal.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01083Vagalegal.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01084Prorliccur(Base):
@@ -2255,11 +2272,11 @@ class T01084Prorliccur(Base):
     T01084_S_NRATO = Column(String(20))
 
     # Relationships
-    t01086Liccurso = relationship('T01086Liccurso', 
-        primaryjoin='and_(T01084Prorliccur.T01002_I_CDENT==T01086Liccurso.T01002_I_CDENT, T01084Prorliccur.T01001_I_MATRICULA==T01086Liccurso.T01001_I_MATRICULA, T01084Prorliccur.T01102_I_CDAFASTAM==T01086Liccurso.T01102_I_CDAFASTAM)',
+    t01086Liccurso = relationship('T01086Liccurso',
+        primaryjoin='and_(T01084Prorliccur.T01002_I_CDENT == T01086Liccurso.T01002_I_CDENT, T01084Prorliccur.T01001_I_MATRICULA == T01086Liccurso.T01001_I_MATRICULA, T01084Prorliccur.T01102_I_CDAFASTAM == T01086Liccurso.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01084Prorliccur.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01084Prorliccur.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01084Prorliccur.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01084Prorliccur.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01084Prorliccur.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01084Prorliccur.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01085Licdiversa(Base):
@@ -2281,8 +2298,8 @@ class T01085Licdiversa(Base):
     # Relationships
     t01071ItemlistaByITpdocini = relationship('T01071Itemlista', foreign_keys=[T01085_I_TPDOCINI])
     t01071ItemlistaByITpdocfim = relationship('T01071Itemlista', foreign_keys=[T01085_I_TPDOCFIM])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01085Licdiversa.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01085Licdiversa.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01085Licdiversa.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01085Licdiversa.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01085Licdiversa.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01085Licdiversa.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
     t01061Entidadeext = relationship('T01061Entidadeext', foreign_keys=[T01061_I_CDENTEXT])
 
@@ -2303,8 +2320,8 @@ class T01086Liccurso(Base):
     T01086_S_NRATO = Column(String(20))
 
     # Relationships
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01086Liccurso.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01086Liccurso.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01086Liccurso.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01086Liccurso.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01086Liccurso.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01086Liccurso.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
     t01583Cursopfext = relationship('T01583Cursopfext', foreign_keys=[T01583_I_CDCURSOPFEXT])
 
@@ -2320,8 +2337,8 @@ class T01087Licgala(Base):
     T01087_I_INDLICSEMDEP = Column(SmallInteger, nullable=False)
 
     # Relationships
-    t01005Conjuge = relationship('T01005Conjuge', 
-        primaryjoin='and_(T01087Licgala.T01000_I_CDPESFIS==T01005Conjuge.T01000_I_CDPESFIS, T01087Licgala.T01005_I_CDCONJUGE==T01005Conjuge.T01005_I_CDCONJUGE)',
+    t01005Conjuge = relationship('T01005Conjuge',
+        primaryjoin='and_(T01087Licgala.T01000_I_CDPESFIS == T01005Conjuge.T01000_I_CDPESFIS, T01087Licgala.T01005_I_CDCONJUGE == T01005Conjuge.T01005_I_CDCONJUGE)',
         foreign_keys=[T01000_I_CDPESFIS, T01005_I_CDCONJUGE])
 
 class T01088Licnojo(Base):
@@ -2346,8 +2363,8 @@ class T01088Licnojo(Base):
     # Relationships
     t01007Cartorio = relationship('T01007Cartorio', foreign_keys=[T01007_I_CDCART])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01088_I_TPPARENTE])
-    t01003Dependente = relationship('T01003Dependente', 
-        primaryjoin='and_(T01088Licnojo.T01000_I_CDPESFIS==T01003Dependente.T01000_I_CDPESFIS, T01088Licnojo.T01003_I_CDDEP==T01003Dependente.T01003_I_CDDEP)',
+    t01003Dependente = relationship('T01003Dependente',
+        primaryjoin='and_(T01088Licnojo.T01000_I_CDPESFIS == T01003Dependente.T01000_I_CDPESFIS, T01088Licnojo.T01003_I_CDDEP == T01003Dependente.T01003_I_CDDEP)',
         foreign_keys=[T01000_I_CDPESFIS, T01003_I_CDDEP])
 
 class T01089Afastprisao(Base):
@@ -2362,8 +2379,8 @@ class T01089Afastprisao(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01089_I_TPPRISAO])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01089Afastprisao.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01089Afastprisao.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01089Afastprisao.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01089Afastprisao.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01089Afastprisao.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01089Afastprisao.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01090Penalidserv(Base):
@@ -2395,17 +2412,17 @@ class T01090Penalidserv(Base):
     t01071ItemlistaByIMotpenal = relationship('T01071Itemlista', foreign_keys=[T01090_I_MOTPENAL])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01090_I_TPATO])
     t01071ItemlistaByITpproc = relationship('T01071Itemlista', foreign_keys=[T01090_I_TPPROC])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01090Penalidserv.T01090_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01090Penalidserv.T01090_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01090Penalidserv.T01090_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01090Penalidserv.T01090_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01090_I_ENTOPERADOR, T01090_I_MATOPERADOR])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01090Penalidserv.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01090Penalidserv.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01090Penalidserv.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01090Penalidserv.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01090Penalidserv.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01090Penalidserv.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01090Penalidserv.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01090Penalidserv.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01090Penalidserv.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01090Penalidserv.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01090Penalidserv.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01090Penalidserv.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01090Penalidserv.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01090Penalidserv.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01090Penalidserv.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01090Penalidserv.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
 
 class T01091Processoadm(Base):
@@ -2434,17 +2451,17 @@ class T01091Processoadm(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01091_I_RESULTADO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01091Processoadm.T01091_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01091Processoadm.T01091_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01091Processoadm.T01091_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01091Processoadm.T01091_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01091_I_ENTOPERADOR, T01091_I_MATOPERADOR])
-    t01049Mutacaoserv = relationship('T01049Mutacaoserv', 
-        primaryjoin='and_(T01091Processoadm.T01002_I_CDENT==T01049Mutacaoserv.T01002_I_CDENT, T01091Processoadm.T01001_I_MATRICULA==T01049Mutacaoserv.T01001_I_MATRICULA, T01091Processoadm.T01047_I_CDTPMUT==T01049Mutacaoserv.T01047_I_CDTPMUT, T01091Processoadm.T01049_D_DTMUTACAO==T01049Mutacaoserv.T01049_D_DTMUTACAO)',
+    t01049Mutacaoserv = relationship('T01049Mutacaoserv',
+        primaryjoin='and_(T01091Processoadm.T01002_I_CDENT == T01049Mutacaoserv.T01002_I_CDENT, T01091Processoadm.T01001_I_MATRICULA == T01049Mutacaoserv.T01001_I_MATRICULA, T01091Processoadm.T01047_I_CDTPMUT == T01049Mutacaoserv.T01047_I_CDTPMUT, T01091Processoadm.T01049_D_DTMUTACAO == T01049Mutacaoserv.T01049_D_DTMUTACAO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01047_I_CDTPMUT, T01049_D_DTMUTACAO])
-    t01090Penalidserv = relationship('T01090Penalidserv', 
-        primaryjoin='and_(T01091Processoadm.T01002_I_CDENT==T01090Penalidserv.T01002_I_CDENT, T01091Processoadm.T01001_I_MATRICULA==T01090Penalidserv.T01001_I_MATRICULA, T01091Processoadm.T01090_I_CDPENALID==T01090Penalidserv.T01090_I_CDPENALID)',
+    t01090Penalidserv = relationship('T01090Penalidserv',
+        primaryjoin='and_(T01091Processoadm.T01002_I_CDENT == T01090Penalidserv.T01002_I_CDENT, T01091Processoadm.T01001_I_MATRICULA == T01090Penalidserv.T01001_I_MATRICULA, T01091Processoadm.T01090_I_CDPENALID == T01090Penalidserv.T01090_I_CDPENALID)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01090_I_CDPENALID])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01091Processoadm.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01091Processoadm.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01091Processoadm.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01091Processoadm.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01092Condlicnojo(Base):
@@ -2458,8 +2475,8 @@ class T01092Condlicnojo(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01092_I_TPPARENTE])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01092Condlicnojo.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01092Condlicnojo.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01092Condlicnojo.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01092Condlicnojo.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01093Recesso(Base):
@@ -2483,11 +2500,11 @@ class T01093Recesso(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01093Recesso.T01093_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01093Recesso.T01093_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01093Recesso.T01093_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01093Recesso.T01093_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01093_I_ENTOPERADOR, T01093_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01093Recesso.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01093Recesso.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01093Recesso.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01093Recesso.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01093Recesso.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01093Recesso.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01095Tpafastam(Base):
@@ -2519,8 +2536,8 @@ class T01095Tpafastam(Base):
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071ItemlistaByITpremuner = relationship('T01071Itemlista', foreign_keys=[T01095_I_TPREMUNER])
     t01455Identtcemov = relationship('T01455Identtcemov', foreign_keys=[T01455_I_CODTCEMOV])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01095Tpafastam.T01095_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01095Tpafastam.T01095_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01095Tpafastam.T01095_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01095Tpafastam.T01095_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01095_I_ENTOPERADOR, T01095_I_MATOPERADOR])
     t01071ItemlistaByIMotafastesocial = relationship('T01071Itemlista', foreign_keys=[T01095_I_MOTAFASTESOCIAL])
 
@@ -2536,12 +2553,14 @@ class T01096Afastcoinc(Base):
     T01096_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01096Afastcoinc.T01096_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01096Afastcoinc.T01096_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01096Afastcoinc.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01096Afastcoinc.T01096_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01096Afastcoinc.T01096_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01096_I_ENTOPERADOR, T01096_I_MATOPERADOR])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01096Afastcoinc.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01096Afastcoinc.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01096Afastcoinc.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01096Afastcoinc.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
 
 class T01098Histsimbccvalor(Base):
@@ -2556,8 +2575,8 @@ class T01098Histsimbccvalor(Base):
     T01098_I_LIQCONSIG = Column(Numeric(10, 2), nullable=False)
 
     # Relationships
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01098Histsimbccvalor.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01098Histsimbccvalor.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01098Histsimbccvalor.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01098Histsimbccvalor.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
 
 class T01099Tputiliza(Base):
@@ -2587,8 +2606,8 @@ class T01100Feriado(Base):
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01100_I_TPFERIADO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01100Feriado.T01100_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01100Feriado.T01100_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01100Feriado.T01100_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01100Feriado.T01100_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01100_I_ENTOPERADOR, T01100_I_MATOPERADOR])
 
 class T01101Laudo(Base):
@@ -2645,11 +2664,11 @@ class T01101Laudo(Base):
     t01071ItemlistaByITplaudo = relationship('T01071Itemlista', foreign_keys=[T01101_I_TPLAUDO])
     t01071ItemlistaByITppedido = relationship('T01071Itemlista', foreign_keys=[T01101_I_TPPEDIDO])
     t01226Examcomplem = relationship('T01226Examcomplem', foreign_keys=[T01226_I_CDSOLIC])
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01101Laudo.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01101Laudo.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01101Laudo.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01101Laudo.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01101Laudo.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01101Laudo.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01101Laudo.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01101Laudo.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
-    t01110Acidente = relationship('T01110Acidente', 
-        primaryjoin='and_(T01101Laudo.T01110_I_CDCAT==T01110Acidente.T01110_I_CDCAT, T01101Laudo.T01110_I_ANOCAT==T01110Acidente.T01110_I_ANOCAT)',
+    t01110Acidente = relationship('T01110Acidente',
+        primaryjoin='and_(T01101Laudo.T01110_I_CDCAT == T01110Acidente.T01110_I_CDCAT, T01101Laudo.T01110_I_ANOCAT == T01110Acidente.T01110_I_ANOCAT)',
         foreign_keys=[T01110_I_CDCAT, T01110_I_ANOCAT])
 
 class T01102Afastamento(Base):
@@ -2683,17 +2702,17 @@ class T01102Afastamento(Base):
     # Relationships
     t01071ItemlistaByITpremun = relationship('T01071Itemlista', foreign_keys=[T01102_I_TPREMUN])
     t01071ItemlistaByIPeriodo = relationship('T01071Itemlista', foreign_keys=[T01102_I_PERIODO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01102Afastamento.T01102_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01102Afastamento.T01102_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01102Afastamento.T01102_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01102Afastamento.T01102_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01102_I_ENTOPERADOR, T01102_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01102Afastamento.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01102Afastamento.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01102Afastamento.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01102Afastamento.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01102Afastamento.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01102Afastamento.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01102Afastamento.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01102Afastamento.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
-    t01141Itemferias = relationship('T01141Itemferias', 
-        primaryjoin='and_(T01102Afastamento.T01002_I_CDENT==T01141Itemferias.T01002_I_CDENT, T01102Afastamento.T01001_I_MATRICULA==T01141Itemferias.T01001_I_MATRICULA, T01102Afastamento.T01141_I_CDFERIAS==T01141Itemferias.T01141_I_CDFERIAS)',
+    t01141Itemferias = relationship('T01141Itemferias',
+        primaryjoin='and_(T01102Afastamento.T01002_I_CDENT == T01141Itemferias.T01002_I_CDENT, T01102Afastamento.T01001_I_MATRICULA == T01141Itemferias.T01001_I_MATRICULA, T01102Afastamento.T01141_I_CDFERIAS == T01141Itemferias.T01141_I_CDFERIAS)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01141_I_CDFERIAS])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01102_I_TPATO])
     t01104Cid10 = relationship('T01104Cid10', foreign_keys=[T01104_I_CID])
@@ -2710,8 +2729,8 @@ class T01103Atestado(Base):
     T01103_D_DTFIM = Column(DateTime)
 
     # Relationships
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01103Atestado.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01103Atestado.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01103Atestado.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01103Atestado.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01103Atestado.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01103Atestado.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01103Atestado.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01103Atestado.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
 
 class T01104Cid10(Base):
@@ -2750,8 +2769,8 @@ class T01107Apresmedic(Base):
 
     # Relationships
     t01106Apres = relationship('T01106Apres', foreign_keys=[T01106_I_CDAPRES])
-    t01105Medicam = relationship('T01105Medicam', 
-        primaryjoin='and_(T01107Apresmedic.T01105_I_CDMEDICAM==T01105Medicam.T01105_I_CDMEDICAM, T01107Apresmedic.T01108_I_CDSAL==T01105Medicam.T01108_I_CDSAL)',
+    t01105Medicam = relationship('T01105Medicam',
+        primaryjoin='and_(T01107Apresmedic.T01105_I_CDMEDICAM == T01105Medicam.T01105_I_CDMEDICAM, T01107Apresmedic.T01108_I_CDSAL == T01105Medicam.T01108_I_CDSAL)',
         foreign_keys=[T01105_I_CDMEDICAM, T01108_I_CDSAL])
 
 class T01108Sal(Base):
@@ -2773,8 +2792,8 @@ class T01109Medicserv(Base):
 
     # Relationships
     t01108Sal = relationship('T01108Sal', foreign_keys=[T01108_I_CDSAL])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01109Medicserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01109Medicserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01109Medicserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01109Medicserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01110Acidente(Base):
@@ -2793,8 +2812,8 @@ class T01110Acidente(Base):
     T01110_I_MIG = Column(Numeric(1, 0))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01110Acidente.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01110Acidente.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01110Acidente.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01110Acidente.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01111Lesao(Base):
@@ -2809,8 +2828,8 @@ class T01111Lesao(Base):
     # Relationships
     t01113Tipolesao = relationship('T01113Tipolesao', foreign_keys=[T01113_I_CDTIPO])
     t01112Locallesao = relationship('T01112Locallesao', foreign_keys=[T01112_I_CDLOCAL])
-    t01110Acidente = relationship('T01110Acidente', 
-        primaryjoin='and_(T01111Lesao.T01110_I_CDCAT==T01110Acidente.T01110_I_CDCAT, T01111Lesao.T01110_I_ANOCAT==T01110Acidente.T01110_I_ANOCAT)',
+    t01110Acidente = relationship('T01110Acidente',
+        primaryjoin='and_(T01111Lesao.T01110_I_CDCAT == T01110Acidente.T01110_I_CDCAT, T01111Lesao.T01110_I_ANOCAT == T01110Acidente.T01110_I_ANOCAT)',
         foreign_keys=[T01110_I_CDCAT, T01110_I_ANOCAT])
 
 class T01112Locallesao(Base):
@@ -2842,8 +2861,8 @@ class T01114Agendaacl(Base):
     T01114_D_DTRETORNO = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01114Agendaacl.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01114Agendaacl.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01114Agendaacl.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01114Agendaacl.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01115Licamamenta(Base):
@@ -2865,8 +2884,8 @@ class T01115Licamamenta(Base):
     T01115_D_SAIDAVES = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01115Licamamenta.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01115Licamamenta.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01115Licamamenta.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01115Licamamenta.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01116Incorplicpre(Base):
@@ -2883,11 +2902,11 @@ class T01116Incorplicpre(Base):
     T01116_I_DIAUTILIZADO = Column(Numeric(2, 0))
 
     # Relationships
-    t01064Incorpserv = relationship('T01064Incorpserv', 
-        primaryjoin='and_(T01116Incorplicpre.T01002_I_CDENT==T01064Incorpserv.T01002_I_CDENT, T01116Incorplicpre.T01001_I_MATRICULA==T01064Incorpserv.T01001_I_MATRICULA, T01116Incorplicpre.T01064_I_CDINCORP==T01064Incorpserv.T01064_I_CDINCORP, T01116Incorplicpre.T01064_I_TPINCORP==T01064Incorpserv.T01064_I_TPINCORP)',
+    t01064Incorpserv = relationship('T01064Incorpserv',
+        primaryjoin='and_(T01116Incorplicpre.T01002_I_CDENT == T01064Incorpserv.T01002_I_CDENT, T01116Incorplicpre.T01001_I_MATRICULA == T01064Incorpserv.T01001_I_MATRICULA, T01116Incorplicpre.T01064_I_CDINCORP == T01064Incorpserv.T01064_I_CDINCORP, T01116Incorplicpre.T01064_I_TPINCORP == T01064Incorpserv.T01064_I_TPINCORP)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01064_I_CDINCORP, T01064_I_TPINCORP])
-    t01178Licpremio = relationship('T01178Licpremio', 
-        primaryjoin='and_(T01116Incorplicpre.T01002_I_CDENT==T01178Licpremio.T01002_I_CDENT, T01116Incorplicpre.T01001_I_MATRICULA==T01178Licpremio.T01001_I_MATRICULA, T01116Incorplicpre.T01178_I_CDLICPRE==T01178Licpremio.T01178_I_CDLICPRE)',
+    t01178Licpremio = relationship('T01178Licpremio',
+        primaryjoin='and_(T01116Incorplicpre.T01002_I_CDENT == T01178Licpremio.T01002_I_CDENT, T01116Incorplicpre.T01001_I_MATRICULA == T01178Licpremio.T01001_I_MATRICULA, T01116Incorplicpre.T01178_I_CDLICPRE == T01178Licpremio.T01178_I_CDLICPRE)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01178_I_CDLICPRE])
 
 class T01117Homologacao(Base):
@@ -2904,8 +2923,8 @@ class T01117Homologacao(Base):
 
     # Relationships
     t01265Funcpericia = relationship('T01265Funcpericia', foreign_keys=[T01265_I_CDFUNCIONARIO])
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01117Homologacao.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01117Homologacao.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01117Homologacao.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01117Homologacao.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01117Homologacao.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01117Homologacao.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01117Homologacao.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01117Homologacao.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
 
 class T01118Endereco(Base):
@@ -2926,8 +2945,8 @@ class T01118Endereco(Base):
     T01118_S_PONTOREFERENCIA = Column(String(255))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01118Endereco.T01118_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01118Endereco.T01118_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01118Endereco.T01118_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01118Endereco.T01118_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01118_I_ENTOPERADOR, T01118_I_MATOPERADOR])
 
 class T01119Cepctba(Base):
@@ -3012,7 +3031,7 @@ class T01125Localext(Base):
 
     # Relationships
     t01650PaisByICdpais = relationship('T01650Pais', foreign_keys=[T01650_I_CDPAIS])
-    t01650PaisByICdpais = relationship('T01650Pais', foreign_keys=[T01650_I_CDPAIS])
+    t01650PaisByICdpais1 = relationship('T01650Pais', foreign_keys=[T01650_I_CDPAIS])
 
 class T01126Bairroext(Base):
     __tablename__ = 'T01126_BAIRROEXT'
@@ -3060,7 +3079,7 @@ class T01128Logradext(Base):
     # Relationships
     t01127TipoextByICdtipo = relationship('T01127Tipoext', foreign_keys=[T01127_I_CDTIPO])
     t01125Localext = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
-    t01127TipoextByICdtipo = relationship('T01127Tipoext', foreign_keys=[T01127_I_CDTIPO])
+    t01127TipoextByICdtipo1 = relationship('T01127Tipoext', foreign_keys=[T01127_I_CDTIPO])
 
 class T01129Cepespext(Base):
     __tablename__ = 'T01129_CEPESPEXT'
@@ -3078,15 +3097,17 @@ class T01129Cepespext(Base):
     T01129_D_DTATUALIZ = Column(DateTime, nullable=False)
 
     # Relationships
-    t01128LogradextByICdlograd = relationship('T01128Logradext', 
-        primaryjoin='and_(T01129Cepespext.T01128_I_CDLOGRAD==T01128Logradext.T01128_I_CDLOGRAD, T01129Cepespext.T01125_I_CDLOCAL==T01128Logradext.T01125_I_CDLOCAL)',
+    t01128LogradextByICdlograd = relationship('T01128Logradext',
+        primaryjoin='and_(T01129Cepespext.T01128_I_CDLOGRAD == T01128Logradext.T01128_I_CDLOGRAD, T01129Cepespext.T01125_I_CDLOCAL == T01128Logradext.T01125_I_CDLOCAL)',
         foreign_keys=[T01128_I_CDLOGRAD, T01125_I_CDLOCAL])
-    t01125Localext = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
-    t01126Bairroext = relationship('T01126Bairroext', 
-        primaryjoin='and_(T01129Cepespext.T01127_I_CDBAIRRO==T01126Bairroext.T01126_I_CDBAIRRO, T01129Cepespext.T01125_I_CDLOCAL==T01126Bairroext.T01125_I_CDLOCAL)',
+    t01125Localext = relationship('T01125Localext',
+        primaryjoin='and_(T01129Cepespext.T01125_I_CDLOCAL == T01125Localext.T01125_I_CDLOCAL)',
+        foreign_keys=[T01125_I_CDLOCAL])
+    t01126Bairroext = relationship('T01126Bairroext',
+        primaryjoin='and_(T01129Cepespext.T01127_I_CDBAIRRO == T01126Bairroext.T01126_I_CDBAIRRO, T01129Cepespext.T01125_I_CDLOCAL == T01126Bairroext.T01125_I_CDLOCAL)',
         foreign_keys=[T01127_I_CDBAIRRO, T01125_I_CDLOCAL])
-    t01128LogradextByICdlograd = relationship('T01128Logradext', 
-        primaryjoin='and_(T01129Cepespext.T01128_I_CDLOGRAD==T01128Logradext.T01128_I_CDLOGRAD, T01129Cepespext.T01125_I_CDLOCAL==T01128Logradext.T01125_I_CDLOCAL)',
+    t01128LogradextByICdlograd1 = relationship('T01128Logradext',
+        primaryjoin='and_(T01129Cepespext.T01128_I_CDLOGRAD == T01128Logradext.T01128_I_CDLOGRAD, T01129Cepespext.T01125_I_CDLOCAL == T01128Logradext.T01125_I_CDLOCAL)',
         foreign_keys=[T01128_I_CDLOGRAD, T01125_I_CDLOCAL])
 
 class T01130Cadlograd(Base):
@@ -3103,7 +3124,7 @@ class T01130Cadlograd(Base):
     # Relationships
     t01127TipoextByICdtipo = relationship('T01127Tipoext', foreign_keys=[T01127_I_CDTIPO])
     t01125Localext = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
-    t01127TipoextByICdtipo = relationship('T01127Tipoext', foreign_keys=[T01127_I_CDTIPO])
+    t01127TipoextByICdtipo1 = relationship('T01127Tipoext', foreign_keys=[T01127_I_CDTIPO])
 
 class T01131Nomeacao(Base):
     __tablename__ = 'T01131_NOMEACAO'
@@ -3129,16 +3150,18 @@ class T01131Nomeacao(Base):
     T01131_S_NRATONOME = Column(String(20))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01131Nomeacao.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01131_I_TPATO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01131Nomeacao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01131Nomeacao.T01131_I_MATRICDES==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01131Nomeacao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01131Nomeacao.T01131_I_MATRICDES == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01131_I_MATRICDES])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01131Nomeacao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01131Nomeacao.T01131_I_MATRICREM==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent1 = relationship('T01001Servidor',
+        primaryjoin='and_(T01131Nomeacao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01131Nomeacao.T01131_I_MATRICREM == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01131_I_MATRICREM])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01131Nomeacao.T01131_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01131Nomeacao.T01131_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01131Nomeacao.T01131_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01131Nomeacao.T01131_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01131_I_ENTOPERADOR, T01131_I_MATOPERADOR])
 
 class T01132Itemnomeacao(Base):
@@ -3159,11 +3182,11 @@ class T01132Itemnomeacao(Base):
 
     # Relationships
     t01131Nomeacao = relationship('T01131Nomeacao', foreign_keys=[T01131_I_CDNOMEACAO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01132Itemnomeacao.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01132Itemnomeacao.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01132Itemnomeacao.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01132Itemnomeacao.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01054Reqoficio = relationship('T01054Reqoficio', 
-        primaryjoin='and_(T01132Itemnomeacao.T01002_I_CDENT==T01054Reqoficio.T01002_I_CDENT, T01132Itemnomeacao.T01004_I_CDUNIDFUN==T01054Reqoficio.T01004_I_CDUNIDFUN, T01132Itemnomeacao.T01004_I_VERSAO==T01054Reqoficio.T01004_I_VERSAO, T01132Itemnomeacao.T01054_I_NRREQOF==T01054Reqoficio.T01054_I_NRREQOF, T01132Itemnomeacao.T01054_I_ANOREQOF==T01054Reqoficio.T01054_I_ANOREQOF)',
+    t01054Reqoficio = relationship('T01054Reqoficio',
+        primaryjoin='and_(T01132Itemnomeacao.T01002_I_CDENT == T01054Reqoficio.T01002_I_CDENT, T01132Itemnomeacao.T01004_I_CDUNIDFUN == T01054Reqoficio.T01004_I_CDUNIDFUN, T01132Itemnomeacao.T01004_I_VERSAO == T01054Reqoficio.T01004_I_VERSAO, T01132Itemnomeacao.T01054_I_NRREQOF == T01054Reqoficio.T01054_I_NRREQOF, T01132Itemnomeacao.T01054_I_ANOREQOF == T01054Reqoficio.T01054_I_ANOREQOF)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO, T01054_I_NRREQOF, T01054_I_ANOREQOF])
 
 class T01133Candnomeado(Base):
@@ -3183,17 +3206,17 @@ class T01133Candnomeado(Base):
 
     # Relationships
     t01488Memorandocanc = relationship('T01488Memorandocanc', foreign_keys=[T01488_I_CDMEMORANDOCANC])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01133Candnomeado.T01133_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01133Candnomeado.T01133_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01133Candnomeado.T01133_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01133Candnomeado.T01133_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01133_I_ENTOPERADOR, T01133_I_MATOPERADOR])
-    t01132Itemnomeacao = relationship('T01132Itemnomeacao', 
-        primaryjoin='and_(T01133Candnomeado.T01131_I_CDNOMEACAO==T01132Itemnomeacao.T01131_I_CDNOMEACAO, T01133Candnomeado.T01132_I_CDITEMNOME==T01132Itemnomeacao.T01132_I_CDITEMNOME)',
+    t01132Itemnomeacao = relationship('T01132Itemnomeacao',
+        primaryjoin='and_(T01133Candnomeado.T01131_I_CDNOMEACAO == T01132Itemnomeacao.T01131_I_CDNOMEACAO, T01133Candnomeado.T01132_I_CDITEMNOME == T01132Itemnomeacao.T01132_I_CDITEMNOME)',
         foreign_keys=[T01131_I_CDNOMEACAO, T01132_I_CDITEMNOME])
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01133Candnomeado.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01133Candnomeado.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01133Candnomeado.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01133Candnomeado.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01133Candnomeado.T01133_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01133Candnomeado.T01133_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador1 = relationship('T01001Servidor',
+        primaryjoin='and_(T01133Candnomeado.T01133_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01133Candnomeado.T01133_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01133_I_ENTOPERADOR, T01133_I_MATOPERADOR])
 
 class T01134Tppenalid(Base):
@@ -3205,8 +3228,8 @@ class T01134Tppenalid(Base):
     T01134_I_GERAFAST = Column(SmallInteger, nullable=False)
 
     # Relationships
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01134Tppenalid.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01134Tppenalid.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01134Tppenalid.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01134Tppenalid.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
 
 class T01135Lts(Base):
@@ -3247,14 +3270,14 @@ class T01135Lts(Base):
     t01071ItemlistaByISituacao = relationship('T01071Itemlista', foreign_keys=[T01135_I_SITUACAO])
     t01071ItemlistaByITpdoc = relationship('T01071Itemlista', foreign_keys=[T01135_I_TPDOC])
     t01071ItemlistaByITpconclusao = relationship('T01071Itemlista', foreign_keys=[T01135_I_TPCONCLUSAO])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01135Lts.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01135Lts.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01135Lts.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01135Lts.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01135Lts.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01135Lts.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01135Lts.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01135Lts.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01135Lts.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01135Lts.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01003Dependente = relationship('T01003Dependente', 
-        primaryjoin='and_(T01135Lts.T01000_I_CDPESFIS==T01003Dependente.T01000_I_CDPESFIS, T01135Lts.T01003_I_CDDEP==T01003Dependente.T01003_I_CDDEP)',
+    t01003Dependente = relationship('T01003Dependente',
+        primaryjoin='and_(T01135Lts.T01000_I_CDPESFIS == T01003Dependente.T01000_I_CDPESFIS, T01135Lts.T01003_I_CDDEP == T01003Dependente.T01003_I_CDDEP)',
         foreign_keys=[T01000_I_CDPESFIS, T01003_I_CDDEP])
 
 class T01136Licdepend(Base):
@@ -3267,8 +3290,8 @@ class T01136Licdepend(Base):
 
     # Relationships
     t01206Licpatern = relationship('T01206Licpatern', foreign_keys=[T01206_I_CDLICPATERN])
-    t01003Dependente = relationship('T01003Dependente', 
-        primaryjoin='and_(T01136Licdepend.T01000_I_CDPESFIS==T01003Dependente.T01000_I_CDPESFIS, T01136Licdepend.T01003_I_CDDEP==T01003Dependente.T01003_I_CDDEP)',
+    t01003Dependente = relationship('T01003Dependente',
+        primaryjoin='and_(T01136Licdepend.T01000_I_CDPESFIS == T01003Dependente.T01000_I_CDPESFIS, T01136Licdepend.T01003_I_CDDEP == T01003Dependente.T01003_I_CDDEP)',
         foreign_keys=[T01000_I_CDPESFIS, T01003_I_CDDEP])
 
 class T01137Condlicgala(Base):
@@ -3280,8 +3303,8 @@ class T01137Condlicgala(Base):
     T01137_I_NUMDIALIC = Column(Integer, nullable=False)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01137Condlicgala.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01137Condlicgala.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01137Condlicgala.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01137Condlicgala.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01138Laudconclu(Base):
@@ -3325,17 +3348,17 @@ class T01139Desigesp(Base):
     # Relationships
     t01071ItemlistaByITpequipe = relationship('T01071Itemlista', foreign_keys=[T01139_I_TPEQUIPE])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01139_I_TPATO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01139Desigesp.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01139Desigesp.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01139Desigesp.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01139Desigesp.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01139Desigesp.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01139Desigesp.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01139Desigesp.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01139Desigesp.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001ServidorByIEntavaliador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01139Desigesp.T01139_I_ENTAVALIADOR==T01001Servidor.T01002_I_CDENT, T01139Desigesp.T01139_I_MATAVALIADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntavaliador = relationship('T01001Servidor',
+        primaryjoin='and_(T01139Desigesp.T01139_I_ENTAVALIADOR == T01001Servidor.T01002_I_CDENT, T01139Desigesp.T01139_I_MATAVALIADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01139_I_ENTAVALIADOR, T01139_I_MATAVALIADOR])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01139Desigesp.T01139_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01139Desigesp.T01139_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01139Desigesp.T01139_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01139Desigesp.T01139_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01139_I_ENTOPERADOR, T01139_I_MATOPERADOR])
 
 class T01140Elogioserv(Base):
@@ -3354,8 +3377,8 @@ class T01140Elogioserv(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01140_I_TPATO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01140Elogioserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01140Elogioserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01140Elogioserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01140Elogioserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01141Itemferias(Base):
@@ -3391,17 +3414,17 @@ class T01141Itemferias(Base):
 
     # Relationships
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01141_I_TPATO])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01141Itemferias.T01141_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01141Itemferias.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01141Itemferias.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01141Itemferias.T01141_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01141Itemferias.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01141Itemferias.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01141_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01141Itemferias.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01141Itemferias.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01141Itemferias.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01141Itemferias.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01141Itemferias.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01141Itemferias.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01141Itemferias.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01141Itemferias.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01141Itemferias.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01141Itemferias.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByICdentchefia = relationship('T01001Servidor', 
-        primaryjoin='and_(T01141Itemferias.T01002_I_CDENTCHEFIA==T01001Servidor.T01002_I_CDENT, T01141Itemferias.T01001_I_MATCHEFIA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdentchefia = relationship('T01001Servidor',
+        primaryjoin='and_(T01141Itemferias.T01002_I_CDENTCHEFIA == T01001Servidor.T01002_I_CDENT, T01141Itemferias.T01001_I_MATCHEFIA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENTCHEFIA, T01001_I_MATCHEFIA])
     t01071ItemlistaByIStatus = relationship('T01071Itemlista', foreign_keys=[T01141_I_STATUS])
 
@@ -3431,14 +3454,14 @@ class T01142Ocorrencia(Base):
     # Relationships
     t01071ItemlistaByITpocorren = relationship('T01071Itemlista', foreign_keys=[T01142_I_TPOCORREN])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01142_I_TPATO])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01142Ocorrencia.T01142_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01142Ocorrencia.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01142Ocorrencia.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01142Ocorrencia.T01142_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01142Ocorrencia.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01142Ocorrencia.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01142_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01141Itemferias = relationship('T01141Itemferias', 
-        primaryjoin='and_(T01142Ocorrencia.T01002_I_CDENT==T01141Itemferias.T01002_I_CDENT, T01142Ocorrencia.T01001_I_MATRICULA==T01141Itemferias.T01001_I_MATRICULA, T01142Ocorrencia.T01141_I_CDFERIAS==T01141Itemferias.T01141_I_CDFERIAS)',
+    t01141Itemferias = relationship('T01141Itemferias',
+        primaryjoin='and_(T01142Ocorrencia.T01002_I_CDENT == T01141Itemferias.T01002_I_CDENT, T01142Ocorrencia.T01001_I_MATRICULA == T01141Itemferias.T01001_I_MATRICULA, T01142Ocorrencia.T01141_I_CDFERIAS == T01141Itemferias.T01141_I_CDFERIAS)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01141_I_CDFERIAS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01142Ocorrencia.T01142_I_CDENTOPER==T01001Servidor.T01002_I_CDENT, T01142Ocorrencia.T01142_I_MATRICULAOPER==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01142Ocorrencia.T01142_I_CDENTOPER == T01001Servidor.T01002_I_CDENT, T01142Ocorrencia.T01142_I_MATRICULAOPER == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01142_I_CDENTOPER, T01142_I_MATRICULAOPER])
 
 class T01144Feriasclt(Base):
@@ -3454,8 +3477,8 @@ class T01144Feriasclt(Base):
     T01144_I_PARSALFER = Column(SmallInteger)
 
     # Relationships
-    t01141Itemferias = relationship('T01141Itemferias', 
-        primaryjoin='and_(T01144Feriasclt.T01002_I_CDENT==T01141Itemferias.T01002_I_CDENT, T01144Feriasclt.T01001_I_MATRICULA==T01141Itemferias.T01001_I_MATRICULA, T01144Feriasclt.T01141_I_CDFERIAS==T01141Itemferias.T01141_I_CDFERIAS)',
+    t01141Itemferias = relationship('T01141Itemferias',
+        primaryjoin='and_(T01144Feriasclt.T01002_I_CDENT == T01141Itemferias.T01002_I_CDENT, T01144Feriasclt.T01001_I_MATRICULA == T01141Itemferias.T01001_I_MATRICULA, T01144Feriasclt.T01141_I_CDFERIAS == T01141Itemferias.T01141_I_CDFERIAS)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01141_I_CDFERIAS])
 
 class T01145Interrfer(Base):
@@ -3480,17 +3503,17 @@ class T01145Interrfer(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01145_I_TPATO])
-    t01102AfastamentoByICdent = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01145Interrfer.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01145Interrfer.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01145Interrfer.T01145_I_CDAFASTORIG==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102AfastamentoByICdent = relationship('T01102Afastamento',
+        primaryjoin='and_(T01145Interrfer.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01145Interrfer.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01145Interrfer.T01145_I_CDAFASTORIG == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01145_I_CDAFASTORIG])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01145Interrfer.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01145Interrfer.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01145Interrfer.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01145Interrfer.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01145Interrfer.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01145Interrfer.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01102AfastamentoByICdent = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01145Interrfer.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01145Interrfer.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01145Interrfer.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102AfastamentoByICdent1 = relationship('T01102Afastamento',
+        primaryjoin='and_(T01145Interrfer.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01145Interrfer.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01145Interrfer.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01141Itemferias = relationship('T01141Itemferias', 
-        primaryjoin='and_(T01145Interrfer.T01002_I_CDENT==T01141Itemferias.T01002_I_CDENT, T01145Interrfer.T01001_I_MATRICULA==T01141Itemferias.T01001_I_MATRICULA, T01145Interrfer.T01141_I_CDFERIAS==T01141Itemferias.T01141_I_CDFERIAS)',
+    t01141Itemferias = relationship('T01141Itemferias',
+        primaryjoin='and_(T01145Interrfer.T01002_I_CDENT == T01141Itemferias.T01002_I_CDENT, T01145Interrfer.T01001_I_MATRICULA == T01141Itemferias.T01001_I_MATRICULA, T01145Interrfer.T01141_I_CDFERIAS == T01141Itemferias.T01141_I_CDFERIAS)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01141_I_CDFERIAS])
 
 class T01146Itemfercol(Base):
@@ -3514,8 +3537,8 @@ class T01146Itemfercol(Base):
 
     # Relationships
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01146_I_TPATO])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01146Itemfercol.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01146Itemfercol.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01146Itemfercol.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01146Itemfercol.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01146Itemfercol.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01146Itemfercol.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01071ItemlistaByITipocoletiva = relationship('T01071Itemlista', foreign_keys=[T01146_I_TIPOCOLETIVA])
 
@@ -3539,8 +3562,8 @@ class T01147Reajsalarial(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01147Reajsalarial.T01147_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01147Reajsalarial.T01147_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01147Reajsalarial.T01147_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01147Reajsalarial.T01147_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01147_I_ENTOPERADOR, T01147_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01147_I_STATUS])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
@@ -3564,11 +3587,11 @@ class T01148Histespelho(Base):
     T01148_I_INDIHABI = Column(Integer, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01148Histespelho.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01148Histespelho.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01148Histespelho.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01148Histespelho.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01148Histespelho.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01148Histespelho.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01148Histespelho.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01148Histespelho.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01148Histespelho.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01148Histespelho.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01149Histespmat(Base):
@@ -3581,11 +3604,11 @@ class T01149Histespmat(Base):
     T01149_I_SITUACAO = Column(Integer, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01149Histespmat.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01149Histespmat.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01149Histespmat.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01149Histespmat.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01148Histespelho = relationship('T01148Histespelho', 
-        primaryjoin='and_(T01149Histespmat.T01002_I_CDENT==T01148Histespelho.T01002_I_CDENT, T01149Histespmat.T01148_D_DTHREMIS==T01148Histespelho.T01148_D_DTHREMIS)',
+    t01148Histespelho = relationship('T01148Histespelho',
+        primaryjoin='and_(T01149Histespmat.T01002_I_CDENT == T01148Histespelho.T01002_I_CDENT, T01149Histespmat.T01148_D_DTHREMIS == T01148Histespelho.T01148_D_DTHREMIS)',
         foreign_keys=[T01002_I_CDENT, T01148_D_DTHREMIS])
 
 class T01150Histespuni(Base):
@@ -3599,11 +3622,11 @@ class T01150Histespuni(Base):
     T01150_I_TOTESP = Column(Integer, nullable=False)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01150Histespuni.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01150Histespuni.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01150Histespuni.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01150Histespuni.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01150Histespuni.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01150Histespuni.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01148Histespelho = relationship('T01148Histespelho', 
-        primaryjoin='and_(T01150Histespuni.T01002_I_CDENT==T01148Histespelho.T01002_I_CDENT, T01150Histespuni.T01148_D_DTHREMIS==T01148Histespelho.T01148_D_DTHREMIS)',
+    t01148Histespelho = relationship('T01148Histespelho',
+        primaryjoin='and_(T01150Histespuni.T01002_I_CDENT == T01148Histespelho.T01002_I_CDENT, T01150Histespuni.T01148_D_DTHREMIS == T01148Histespelho.T01148_D_DTHREMIS)',
         foreign_keys=[T01002_I_CDENT, T01148_D_DTHREMIS])
 
 class T01152Espeparam(Base):
@@ -3641,8 +3664,8 @@ class T01154Altverborc(Base):
     T01154_I_ALTEFETU = Column(SmallInteger, nullable=False)
 
     # Relationships
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01154Altverborc.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01154Altverborc.T01059_I_ANOVBORCA==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01154Altverborc.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01154Altverborc.T01059_I_ANOVBORCA == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCA])
 
 class T01158Abertfolha(Base):
@@ -3687,8 +3710,8 @@ class T01159Pgtounidfun(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01159Pgtounidfun.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01159Pgtounidfun.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01159Pgtounidfun.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01159Pgtounidfun.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01159Pgtounidfun.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01159Pgtounidfun.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01160Pgtoquadro(Base):
@@ -3702,8 +3725,8 @@ class T01160Pgtoquadro(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01160Pgtoquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01160Pgtoquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01160Pgtoquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01160Pgtoquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01161Logfolha(Base):
@@ -3718,8 +3741,8 @@ class T01161Logfolha(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01161Logfolha.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01161Logfolha.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01161Logfolha.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01161Logfolha.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01162Pgtocargo(Base):
@@ -3733,8 +3756,8 @@ class T01162Pgtocargo(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01162Pgtocargo.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01162Pgtocargo.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01162Pgtocargo.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01162Pgtocargo.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01163Pgtorg(Base):
@@ -3776,14 +3799,14 @@ class T01164Vagacgconf(Base):
     # Relationships
     t01071ItemlistaByITpatoext = relationship('T01071Itemlista', foreign_keys=[T01164_I_TPATOEXT])
     t01071ItemlistaByITpatocria = relationship('T01071Itemlista', foreign_keys=[T01164_I_TPATOCRIA])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01164Vagacgconf.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01164Vagacgconf.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01164Vagacgconf.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01164Vagacgconf.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01164Vagacgconf.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01164Vagacgconf.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01164Vagacgconf.T01164_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01164Vagacgconf.T01164_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01164Vagacgconf.T01164_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01164Vagacgconf.T01164_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01164_I_ENTOPERADOR, T01164_I_MATOPERADOR])
-    t01075Cargoconfia = relationship('T01075Cargoconfia', 
-        primaryjoin='and_(T01164Vagacgconf.T01002_I_CDENT==T01075Cargoconfia.T01002_I_CDENT, T01164Vagacgconf.T01075_I_CDCGCONF==T01075Cargoconfia.T01075_I_CDCGCONF)',
+    t01075Cargoconfia = relationship('T01075Cargoconfia',
+        primaryjoin='and_(T01164Vagacgconf.T01002_I_CDENT == T01075Cargoconfia.T01002_I_CDENT, T01164Vagacgconf.T01075_I_CDCGCONF == T01075Cargoconfia.T01075_I_CDCGCONF)',
         foreign_keys=[T01002_I_CDENT, T01075_I_CDCGCONF])
 
 class T01166Quadrvinc(Base):
@@ -3796,8 +3819,8 @@ class T01166Quadrvinc(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01166_I_CDVINCULO])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01166Quadrvinc.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01166Quadrvinc.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01166Quadrvinc.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01166Quadrvinc.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01167Tpservquadr(Base):
@@ -3809,8 +3832,8 @@ class T01167Tpservquadr(Base):
     T01167_I_TPSERVID = Column(Integer, primary_key=True)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01167Tpservquadr.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01167Tpservquadr.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01167Tpservquadr.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01167Tpservquadr.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01168Horaturno(Base):
@@ -3825,11 +3848,11 @@ class T01168Horaturno(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01168_I_CDTURNO])
-    t01032Tipohorario = relationship('T01032Tipohorario', 
-        primaryjoin='and_(T01168Horaturno.T01002_I_CDENT==T01032Tipohorario.T01002_I_CDENT, T01168Horaturno.T01016_I_CDCGHORA==T01032Tipohorario.T01016_I_CDCGHORA, T01168Horaturno.T01032_I_CDTPHORA==T01032Tipohorario.T01032_I_CDTPHORA)',
+    t01032Tipohorario = relationship('T01032Tipohorario',
+        primaryjoin='and_(T01168Horaturno.T01002_I_CDENT == T01032Tipohorario.T01002_I_CDENT, T01168Horaturno.T01016_I_CDCGHORA == T01032Tipohorario.T01016_I_CDCGHORA, T01168Horaturno.T01032_I_CDTPHORA == T01032Tipohorario.T01032_I_CDTPHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA, T01032_I_CDTPHORA])
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01168Horaturno.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01168Horaturno.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01168Horaturno.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01168Horaturno.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
 
 class T01169Reatcandid(Base):
@@ -3853,23 +3876,23 @@ class T01169Reatcandid(Base):
     T01169_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01042CandidatoByIConcurso = relationship('T01042Candidato', 
-        primaryjoin='and_(T01169Reatcandid.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01169Reatcandid.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042CandidatoByIConcurso = relationship('T01042Candidato',
+        primaryjoin='and_(T01169Reatcandid.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01169Reatcandid.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
-    t01054ReqoficioByICdent = relationship('T01054Reqoficio', 
-        primaryjoin='and_(T01169Reatcandid.T01002_I_CDENT==T01054Reqoficio.T01002_I_CDENT, T01169Reatcandid.T01004_I_CDUNIDFUN==T01054Reqoficio.T01004_I_CDUNIDFUN, T01169Reatcandid.T01004_I_VERSAO==T01054Reqoficio.T01004_I_VERSAO, T01169Reatcandid.T01054_I_NRREQOF==T01054Reqoficio.T01054_I_NRREQOF, T01169Reatcandid.T01054_I_ANOREQOF==T01054Reqoficio.T01054_I_ANOREQOF)',
+    t01054ReqoficioByICdent = relationship('T01054Reqoficio',
+        primaryjoin='and_(T01169Reatcandid.T01002_I_CDENT == T01054Reqoficio.T01002_I_CDENT, T01169Reatcandid.T01004_I_CDUNIDFUN == T01054Reqoficio.T01004_I_CDUNIDFUN, T01169Reatcandid.T01004_I_VERSAO == T01054Reqoficio.T01004_I_VERSAO, T01169Reatcandid.T01054_I_NRREQOF == T01054Reqoficio.T01054_I_NRREQOF, T01169Reatcandid.T01054_I_ANOREQOF == T01054Reqoficio.T01054_I_ANOREQOF)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO, T01054_I_NRREQOF, T01054_I_ANOREQOF])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01169Reatcandid.T01169_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01169Reatcandid.T01169_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01169Reatcandid.T01169_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01169Reatcandid.T01169_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01169_I_ENTOPERADOR, T01169_I_MATOPERADOR])
-    t01042CandidatoByIConcurso = relationship('T01042Candidato', 
-        primaryjoin='and_(T01169Reatcandid.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01169Reatcandid.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042CandidatoByIConcurso1 = relationship('T01042Candidato',
+        primaryjoin='and_(T01169Reatcandid.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01169Reatcandid.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
-    t01054ReqoficioByICdent = relationship('T01054Reqoficio', 
-        primaryjoin='and_(T01169Reatcandid.T01002_I_CDENT==T01054Reqoficio.T01002_I_CDENT, T01169Reatcandid.T01004_I_CDUNIDFUN==T01054Reqoficio.T01004_I_CDUNIDFUN, T01169Reatcandid.T01004_I_VERSAO==T01054Reqoficio.T01004_I_VERSAO, T01169Reatcandid.T01054_I_NRREQOF==T01054Reqoficio.T01054_I_NRREQOF, T01169Reatcandid.T01054_I_ANOREQOF==T01054Reqoficio.T01054_I_ANOREQOF)',
+    t01054ReqoficioByICdent1 = relationship('T01054Reqoficio',
+        primaryjoin='and_(T01169Reatcandid.T01002_I_CDENT == T01054Reqoficio.T01002_I_CDENT, T01169Reatcandid.T01004_I_CDUNIDFUN == T01054Reqoficio.T01004_I_CDUNIDFUN, T01169Reatcandid.T01004_I_VERSAO == T01054Reqoficio.T01004_I_VERSAO, T01169Reatcandid.T01054_I_NRREQOF == T01054Reqoficio.T01054_I_NRREQOF, T01169Reatcandid.T01054_I_ANOREQOF == T01054Reqoficio.T01054_I_ANOREQOF)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO, T01054_I_NRREQOF, T01054_I_ANOREQOF])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01169Reatcandid.T01169_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01169Reatcandid.T01169_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador1 = relationship('T01001Servidor',
+        primaryjoin='and_(T01169Reatcandid.T01169_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01169Reatcandid.T01169_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01169_I_ENTOPERADOR, T01169_I_MATOPERADOR])
 
 class T01170Conjdepend(Base):
@@ -3881,11 +3904,11 @@ class T01170Conjdepend(Base):
     T01003_I_CDDEP = Column(Numeric(2, 0), ForeignKey('RH.T01003_DEPENDENTE.T01003_I_CDDEP'), primary_key=True)
 
     # Relationships
-    t01003Dependente = relationship('T01003Dependente', 
-        primaryjoin='and_(T01170Conjdepend.T01000_I_CDPESFIS==T01003Dependente.T01000_I_CDPESFIS, T01170Conjdepend.T01003_I_CDDEP==T01003Dependente.T01003_I_CDDEP)',
+    t01003Dependente = relationship('T01003Dependente',
+        primaryjoin='and_(T01170Conjdepend.T01000_I_CDPESFIS == T01003Dependente.T01000_I_CDPESFIS, T01170Conjdepend.T01003_I_CDDEP == T01003Dependente.T01003_I_CDDEP)',
         foreign_keys=[T01000_I_CDPESFIS, T01003_I_CDDEP])
-    t01005Conjuge = relationship('T01005Conjuge', 
-        primaryjoin='and_(T01170Conjdepend.T01000_I_CDPESFIS==T01005Conjuge.T01000_I_CDPESFIS, T01170Conjdepend.T01005_I_CDCONJUGE==T01005Conjuge.T01005_I_CDCONJUGE)',
+    t01005Conjuge = relationship('T01005Conjuge',
+        primaryjoin='and_(T01170Conjdepend.T01000_I_CDPESFIS == T01005Conjuge.T01000_I_CDPESFIS, T01170Conjdepend.T01005_I_CDCONJUGE == T01005Conjuge.T01005_I_CDCONJUGE)',
         foreign_keys=[T01000_I_CDPESFIS, T01005_I_CDCONJUGE])
 
 class T01171Mutcoletiva(Base):
@@ -3925,43 +3948,45 @@ class T01171Mutcoletiva(Base):
 
     # Relationships
     t01047Tipomutacao = relationship('T01047Tipomutacao', foreign_keys=[T01047_I_CDTPMUT])
-    t01071ItemlistaByICdturno = relationship('T01071Itemlista', foreign_keys=[T01171_I_CDTURNO])
+    t01071ItemlistaByICdturno = relationship('T01071Itemlista',
+        primaryjoin='and_(T01171Mutcoletiva.T01171_I_CDTURNO == T01071Itemlista.T01071_I_CDITEM)',
+        foreign_keys=[T01171_I_CDTURNO])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01171_I_TPATO])
-    t01168Horaturno = relationship('T01168Horaturno', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01168Horaturno.T01002_I_CDENT, T01171Mutcoletiva.T01016_I_CDCGHORA==T01168Horaturno.T01016_I_CDCGHORA, T01171Mutcoletiva.T01032_I_CDTPHORA==T01168Horaturno.T01032_I_CDTPHORA, T01171Mutcoletiva.T01171_I_CDTURNO==T01168Horaturno.T01168_I_CDTURNO)',
+    t01168Horaturno = relationship('T01168Horaturno',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01168Horaturno.T01002_I_CDENT, T01171Mutcoletiva.T01016_I_CDCGHORA == T01168Horaturno.T01016_I_CDCGHORA, T01171Mutcoletiva.T01032_I_CDTPHORA == T01168Horaturno.T01032_I_CDTPHORA, T01171Mutcoletiva.T01171_I_CDTURNO == T01168Horaturno.T01168_I_CDTURNO)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA, T01032_I_CDTPHORA, T01171_I_CDTURNO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01171Mutcoletiva.T01171_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01171Mutcoletiva.T01171_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01171_I_ENTOPERADOR, T01171_I_MATOPERADOR])
-    t01032Tipohorario = relationship('T01032Tipohorario', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01032Tipohorario.T01002_I_CDENT, T01171Mutcoletiva.T01016_I_CDCGHORA==T01032Tipohorario.T01016_I_CDCGHORA, T01171Mutcoletiva.T01032_I_CDTPHORA==T01032Tipohorario.T01032_I_CDTPHORA)',
+    t01032Tipohorario = relationship('T01032Tipohorario',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01032Tipohorario.T01002_I_CDENT, T01171Mutcoletiva.T01016_I_CDCGHORA == T01032Tipohorario.T01016_I_CDCGHORA, T01171Mutcoletiva.T01032_I_CDTPHORA == T01032Tipohorario.T01032_I_CDTPHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA, T01032_I_CDTPHORA])
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01171Mutcoletiva.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01171Mutcoletiva.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
-    t01027QuadroByICdent = relationship('T01027Quadro', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_QUAMUTAC==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027QuadroByICdent = relationship('T01027Quadro',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_QUAMUTAC == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01171_I_QUAMUTAC])
-    t01027QuadroByICdent = relationship('T01027Quadro', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_QUAFILTRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027QuadroByICdent1 = relationship('T01027Quadro',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_QUAFILTRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01171_I_QUAFILTRO])
-    t01025PadraoByICdent = relationship('T01025Padrao', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_PADRMUTAC==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025PadraoByICdent = relationship('T01025Padrao',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_PADRMUTAC == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01171_I_PADRMUTAC])
-    t01015ReferenciaByICdent = relationship('T01015Referencia', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_REFMUTAC==T01015Referencia.T01015_I_CDREF)',
+    t01015ReferenciaByICdent = relationship('T01015Referencia',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_REFMUTAC == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01171_I_REFMUTAC])
-    t01015ReferenciaByICdent = relationship('T01015Referencia', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_REFFILTRO==T01015Referencia.T01015_I_CDREF)',
+    t01015ReferenciaByICdent1 = relationship('T01015Referencia',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_REFFILTRO == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01171_I_REFFILTRO])
-    t01036ItemhierarqByICdent = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_HIEFILTRO==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036ItemhierarqByICdent = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_HIEFILTRO == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01171_I_HIEFILTRO])
-    t01025PadraoByICdent = relationship('T01025Padrao', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_PADFILTRO==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025PadraoByICdent1 = relationship('T01025Padrao',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_PADFILTRO == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01171_I_PADFILTRO])
-    t01036ItemhierarqByICdent = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_HIEMUTAC==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036ItemhierarqByICdent1 = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01171Mutcoletiva.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01171Mutcoletiva.T01171_I_HIEMUTAC == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01171_I_HIEMUTAC])
     t01071ItemlistaByIVincfiltro = relationship('T01071Itemlista', foreign_keys=[T01171_I_VINCFILTRO])
     t01071ItemlistaByIVincmutac = relationship('T01071Itemlista', foreign_keys=[T01171_I_VINCMUTAC])
@@ -3980,8 +4005,8 @@ class T01172Histmutcol(Base):
     # Relationships
     t01171Mutcoletiva = relationship('T01171Mutcoletiva', foreign_keys=[T01171_I_CODMUTCOL])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01172_I_MOTIVO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01172Histmutcol.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01172Histmutcol.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01172Histmutcol.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01172Histmutcol.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01175Atovglegal(Base):
@@ -4005,8 +4030,8 @@ class T01175Atovglegal(Base):
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01175_I_TPATO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01175Atovglegal.T01175_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01175Atovglegal.T01175_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01175Atovglegal.T01175_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01175Atovglegal.T01175_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01175_I_ENTOPERADOR, T01175_I_MATOPERADOR])
 
 class T01176Carrvglegal(Base):
@@ -4021,11 +4046,11 @@ class T01176Carrvglegal(Base):
     T01176_I_NUVGLEGAL = Column(SmallInteger)
 
     # Relationships
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01176Carrvglegal.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01176Carrvglegal.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01176Carrvglegal.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01176Carrvglegal.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01175Atovglegal = relationship('T01175Atovglegal', 
-        primaryjoin='and_(T01176Carrvglegal.T01002_I_CDENT==T01175Atovglegal.T01002_I_CDENT, T01176Carrvglegal.T01175_I_CDALTATO==T01175Atovglegal.T01175_I_CDALTATO)',
+    t01175Atovglegal = relationship('T01175Atovglegal',
+        primaryjoin='and_(T01176Carrvglegal.T01002_I_CDENT == T01175Atovglegal.T01002_I_CDENT, T01176Carrvglegal.T01175_I_CDALTATO == T01175Atovglegal.T01175_I_CDALTATO)',
         foreign_keys=[T01002_I_CDENT, T01175_I_CDALTATO])
 
 class T01177Histvgocup(Base):
@@ -4039,8 +4064,8 @@ class T01177Histvgocup(Base):
     T01177_I_NUVGOCUP = Column(Integer)
 
     # Relationships
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01177Histvgocup.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01177Histvgocup.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01177Histvgocup.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01177Histvgocup.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01178Licpremio(Base):
@@ -4068,11 +4093,11 @@ class T01178Licpremio(Base):
     T01178_S_OBSERVACAO = Column(String(200))
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01178Licpremio.T01178_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01178Licpremio.T01178_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01178Licpremio.T01178_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01178Licpremio.T01178_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01178_I_ENTOPERADOR, T01178_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01178Licpremio.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01178Licpremio.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01178Licpremio.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01178Licpremio.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01178_I_TPATOPRESC])
     t01583Cursopfext = relationship('T01583Cursopfext', foreign_keys=[T01583_I_CDCURSOPFEXT])
@@ -4091,11 +4116,11 @@ class T01179Peraquislp(Base):
     T01179_I_AFASCONGPADRAO = Column(Numeric(1, 0), nullable=False)
 
     # Relationships
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01179Peraquislp.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01179Peraquislp.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01179Peraquislp.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01179Peraquislp.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01179Peraquislp.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01179Peraquislp.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01178Licpremio = relationship('T01178Licpremio', 
-        primaryjoin='and_(T01179Peraquislp.T01002_I_CDENT==T01178Licpremio.T01002_I_CDENT, T01179Peraquislp.T01001_I_MATRICULA==T01178Licpremio.T01001_I_MATRICULA, T01179Peraquislp.T01178_I_CDLICPRE==T01178Licpremio.T01178_I_CDLICPRE)',
+    t01178Licpremio = relationship('T01178Licpremio',
+        primaryjoin='and_(T01179Peraquislp.T01002_I_CDENT == T01178Licpremio.T01002_I_CDENT, T01179Peraquislp.T01001_I_MATRICULA == T01178Licpremio.T01001_I_MATRICULA, T01179Peraquislp.T01178_I_CDLICPRE == T01178Licpremio.T01178_I_CDLICPRE)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01178_I_CDLICPRE])
 
 class T01180Concessaolp(Base):
@@ -4116,11 +4141,11 @@ class T01180Concessaolp(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01180_I_TPATOCONC])
-    t01178Licpremio = relationship('T01178Licpremio', 
-        primaryjoin='and_(T01180Concessaolp.T01002_I_CDENT==T01178Licpremio.T01002_I_CDENT, T01180Concessaolp.T01001_I_MATRICULA==T01178Licpremio.T01001_I_MATRICULA, T01180Concessaolp.T01178_I_CDLICPRE==T01178Licpremio.T01178_I_CDLICPRE)',
+    t01178Licpremio = relationship('T01178Licpremio',
+        primaryjoin='and_(T01180Concessaolp.T01002_I_CDENT == T01178Licpremio.T01002_I_CDENT, T01180Concessaolp.T01001_I_MATRICULA == T01178Licpremio.T01001_I_MATRICULA, T01180Concessaolp.T01178_I_CDLICPRE == T01178Licpremio.T01178_I_CDLICPRE)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01178_I_CDLICPRE])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01180Concessaolp.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01180Concessaolp.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01180Concessaolp.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01180Concessaolp.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01180Concessaolp.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01180Concessaolp.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01181Interrulp(Base):
@@ -4139,8 +4164,8 @@ class T01181Interrulp(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01181_I_TPATOINT])
-    t01180Concessaolp = relationship('T01180Concessaolp', 
-        primaryjoin='and_(T01181Interrulp.T01002_I_CDENT==T01180Concessaolp.T01002_I_CDENT, T01181Interrulp.T01001_I_MATRICULA==T01180Concessaolp.T01001_I_MATRICULA, T01181Interrulp.T01178_I_CDLICPRE==T01180Concessaolp.T01178_I_CDLICPRE, T01181Interrulp.T01180_I_CDCONCELP==T01180Concessaolp.T01180_I_CDCONCELP)',
+    t01180Concessaolp = relationship('T01180Concessaolp',
+        primaryjoin='and_(T01181Interrulp.T01002_I_CDENT == T01180Concessaolp.T01002_I_CDENT, T01181Interrulp.T01001_I_MATRICULA == T01180Concessaolp.T01001_I_MATRICULA, T01181Interrulp.T01178_I_CDLICPRE == T01180Concessaolp.T01178_I_CDLICPRE, T01181Interrulp.T01180_I_CDCONCELP == T01180Concessaolp.T01180_I_CDCONCELP)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01178_I_CDLICPRE, T01180_I_CDCONCELP])
 
 class T01182Remanejatua(Base):
@@ -4153,11 +4178,11 @@ class T01182Remanejatua(Base):
     T01052_D_DTINICIO = Column(DateTime, ForeignKey('RH.T01052_TRANSFREM.T01052_D_DTINICIO'), primary_key=True)
 
     # Relationships
-    t01052Transfrem = relationship('T01052Transfrem', 
-        primaryjoin='and_(T01182Remanejatua.T01002_I_CDENT==T01052Transfrem.T01002_I_CDENT, T01182Remanejatua.T01001_I_MATRICULA==T01052Transfrem.T01001_I_MATRICULA, T01182Remanejatua.T01052_D_DTINICIO==T01052Transfrem.T01052_D_DTINICIO)',
+    t01052Transfrem = relationship('T01052Transfrem',
+        primaryjoin='and_(T01182Remanejatua.T01002_I_CDENT == T01052Transfrem.T01002_I_CDENT, T01182Remanejatua.T01001_I_MATRICULA == T01052Transfrem.T01001_I_MATRICULA, T01182Remanejatua.T01052_D_DTINICIO == T01052Transfrem.T01052_D_DTINICIO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01052_D_DTINICIO])
-    t01715Servatuacao = relationship('T01715Servatuacao', 
-        primaryjoin='and_(T01182Remanejatua.T01002_I_CDENT==T01715Servatuacao.T01002_I_CDENT, T01182Remanejatua.T01001_I_MATRICULA==T01715Servatuacao.T01001_I_MATRICULA, T01182Remanejatua.T01715_D_DTCADAS==T01715Servatuacao.T01715_D_DTCADAS)',
+    t01715Servatuacao = relationship('T01715Servatuacao',
+        primaryjoin='and_(T01182Remanejatua.T01002_I_CDENT == T01715Servatuacao.T01002_I_CDENT, T01182Remanejatua.T01001_I_MATRICULA == T01715Servatuacao.T01001_I_MATRICULA, T01182Remanejatua.T01715_D_DTCADAS == T01715Servatuacao.T01715_D_DTCADAS)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01715_D_DTCADAS])
 
 class T01183Matrdiversa(Base):
@@ -4185,17 +4210,17 @@ class T01183Matrdiversa(Base):
 
     # Relationships
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01183Matrdiversa.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01183Matrdiversa.T01183_I_LOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01183Matrdiversa.T01183_I_VERLOCTRA==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01183Matrdiversa.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01183Matrdiversa.T01183_I_LOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01183Matrdiversa.T01183_I_VERLOCTRA == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01183_I_LOCTRAB, T01183_I_VERLOCTRA])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01183Matrdiversa.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01183Matrdiversa.T01183_I_ORGLOTAC==T01004Unidfunc.T01004_I_CDUNIDFUN, T01183Matrdiversa.T01183_I_VERORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01183Matrdiversa.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01183Matrdiversa.T01183_I_ORGLOTAC == T01004Unidfunc.T01004_I_CDUNIDFUN, T01183Matrdiversa.T01183_I_VERORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01183_I_ORGLOTAC, T01183_I_VERORGLOT])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01183Matrdiversa.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01183Matrdiversa.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01183Matrdiversa.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01183Matrdiversa.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01183Matrdiversa.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01183Matrdiversa.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01183Matrdiversa.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01183Matrdiversa.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
 
 class T01184Histcgbanc(Base):
@@ -4209,8 +4234,8 @@ class T01184Histcgbanc(Base):
     T01184_I_TOTAREJEI = Column(Integer)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01184Histcgbanc.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01184Histcgbanc.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01184Histcgbanc.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01184Histcgbanc.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01186Grupfundef(Base):
@@ -4227,8 +4252,8 @@ class T01186Grupfundef(Base):
     T01186_I_INDSALA = Column(Boolean)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01186Grupfundef.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01186Grupfundef.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01186Grupfundef.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01186Grupfundef.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01186Grupfundef.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01186Grupfundef.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01186_I_INDTIPOUNIDADE])
 
@@ -4248,8 +4273,8 @@ class T01187Tpatuacao(Base):
     T01187_I_INTEGRAGED = Column(Boolean)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01187Tpatuacao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01187Tpatuacao.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01187Tpatuacao.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01187Tpatuacao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01187Tpatuacao.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01187Tpatuacao.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01187_I_INDTIPOATUA])
 
@@ -4269,8 +4294,8 @@ class T01188Tpatividade(Base):
     T01188_I_INDATIVO = Column(Boolean)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01188Tpatividade.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01188Tpatividade.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01188Tpatividade.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01188Tpatividade.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01188Tpatividade.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01188Tpatividade.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01189Servatuacao(Base):
@@ -4303,37 +4328,39 @@ class T01189Servatuacao(Base):
     # Relationships
     t01071ItemlistaByITpturnovaga = relationship('T01071Itemlista', foreign_keys=[T01189_I_TPTURNOVAGA])
     t01071ItemlistaByIHrperman = relationship('T01071Itemlista', foreign_keys=[T01189_I_HRPERMAN])
-    t01071ItemlistaByITpturno = relationship('T01071Itemlista', foreign_keys=[T01189_I_TPTURNO])
+    t01071ItemlistaByITpturno = relationship('T01071Itemlista',
+        primaryjoin='and_(T01189Servatuacao.T01189_I_TPTURNO == T01071Itemlista.T01071_I_CDITEM)',
+        foreign_keys=[T01189_I_TPTURNO])
     t01071ItemlistaByITpvaga = relationship('T01071Itemlista', foreign_keys=[T01189_I_TPVAGA])
-    t01168Horaturno = relationship('T01168Horaturno', 
-        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT==T01168Horaturno.T01002_I_CDENT, T01189Servatuacao.T01016_I_CDCGHORA==T01168Horaturno.T01016_I_CDCGHORA, T01189Servatuacao.T01032_I_CDTPHORA==T01168Horaturno.T01032_I_CDTPHORA, T01189Servatuacao.T01189_I_TPTURNO==T01168Horaturno.T01168_I_CDTURNO)',
+    t01168Horaturno = relationship('T01168Horaturno',
+        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT == T01168Horaturno.T01002_I_CDENT, T01189Servatuacao.T01016_I_CDCGHORA == T01168Horaturno.T01016_I_CDCGHORA, T01189Servatuacao.T01032_I_CDTPHORA == T01168Horaturno.T01032_I_CDTPHORA, T01189Servatuacao.T01189_I_TPTURNO == T01168Horaturno.T01168_I_CDTURNO)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA, T01032_I_CDTPHORA, T01189_I_TPTURNO])
-    t01191Atuativid = relationship('T01191Atuativid', 
-        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT==T01191Atuativid.T01002_I_CDENT, T01189Servatuacao.T01187_I_CDTPATUA==T01191Atuativid.T01187_I_CDTPATUA, T01189Servatuacao.T01188_I_CDTPATIVI==T01191Atuativid.T01188_I_CDTPATIVI)',
+    t01191Atuativid = relationship('T01191Atuativid',
+        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT == T01191Atuativid.T01002_I_CDENT, T01189Servatuacao.T01187_I_CDTPATUA == T01191Atuativid.T01187_I_CDTPATUA, T01189Servatuacao.T01188_I_CDTPATIVI == T01191Atuativid.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA, T01188_I_CDTPATIVI])
-    t01188Tpatividade = relationship('T01188Tpatividade', 
-        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT==T01188Tpatividade.T01002_I_CDENT, T01189Servatuacao.T01188_I_CDTPATIVI==T01188Tpatividade.T01188_I_CDTPATIVI)',
+    t01188Tpatividade = relationship('T01188Tpatividade',
+        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT == T01188Tpatividade.T01002_I_CDENT, T01189Servatuacao.T01188_I_CDTPATIVI == T01188Tpatividade.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01188_I_CDTPATIVI])
-    t01032Tipohorario = relationship('T01032Tipohorario', 
-        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT==T01032Tipohorario.T01002_I_CDENT, T01189Servatuacao.T01016_I_CDCGHORA==T01032Tipohorario.T01016_I_CDCGHORA, T01189Servatuacao.T01032_I_CDTPHORA==T01032Tipohorario.T01032_I_CDTPHORA)',
+    t01032Tipohorario = relationship('T01032Tipohorario',
+        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT == T01032Tipohorario.T01002_I_CDENT, T01189Servatuacao.T01016_I_CDCGHORA == T01032Tipohorario.T01016_I_CDCGHORA, T01189Servatuacao.T01032_I_CDTPHORA == T01032Tipohorario.T01032_I_CDTPHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA, T01032_I_CDTPHORA])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01189Servatuacao.T01189_I_CDUNIDVAGA==T01004Unidfunc.T01004_I_CDUNIDFUN, T01189Servatuacao.T01189_I_VERSAOVAGA==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01189Servatuacao.T01189_I_CDUNIDVAGA == T01004Unidfunc.T01004_I_CDUNIDFUN, T01189Servatuacao.T01189_I_VERSAOVAGA == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01189_I_CDUNIDVAGA, T01189_I_VERSAOVAGA])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01189Servatuacao.T01189_I_CDLOCINF==T01004Unidfunc.T01004_I_CDUNIDFUN, T01189Servatuacao.T01189_I_VERSAOLOCINF==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01189Servatuacao.T01189_I_CDLOCINF == T01004Unidfunc.T01004_I_CDUNIDFUN, T01189Servatuacao.T01189_I_VERSAOLOCINF == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01189_I_CDLOCINF, T01189_I_VERSAOLOCINF])
-    t01187Tpatuacao = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01189Servatuacao.T01187_I_CDTPATUA==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187Tpatuacao = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01189Servatuacao.T01187_I_CDTPATUA == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA])
-    t01186Grupfundef = relationship('T01186Grupfundef', 
-        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT==T01186Grupfundef.T01002_I_CDENT, T01189Servatuacao.T01186_I_CDGRUPO==T01186Grupfundef.T01186_I_CDGRUPO)',
+    t01186Grupfundef = relationship('T01186Grupfundef',
+        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT == T01186Grupfundef.T01002_I_CDENT, T01189Servatuacao.T01186_I_CDGRUPO == T01186Grupfundef.T01186_I_CDGRUPO)',
         foreign_keys=[T01002_I_CDENT, T01186_I_CDGRUPO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01189Servatuacao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01189Servatuacao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01189Servatuacao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoper = relationship('T01001Servidor', 
-        primaryjoin='and_(T01189Servatuacao.T01189_I_ENTOPER==T01001Servidor.T01002_I_CDENT, T01189Servatuacao.T01189_I_MATRICOPER==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoper = relationship('T01001Servidor',
+        primaryjoin='and_(T01189Servatuacao.T01189_I_ENTOPER == T01001Servidor.T01002_I_CDENT, T01189Servatuacao.T01189_I_MATRICOPER == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01189_I_ENTOPER, T01189_I_MATRICOPER])
 
 class T01190Dimloctrab(Base):
@@ -4360,17 +4387,17 @@ class T01190Dimloctrab(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01190_I_TURNO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01190Dimloctrab.T01190_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01190Dimloctrab.T01190_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01190Dimloctrab.T01190_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01190Dimloctrab.T01190_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01190_I_ENTOPERADOR, T01190_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01190Dimloctrab.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01190Dimloctrab.T01190_I_UNIDLOCAL==T01004Unidfunc.T01004_I_CDUNIDFUN, T01190Dimloctrab.T01190_I_VERLOCAL==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01190Dimloctrab.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01190Dimloctrab.T01190_I_UNIDLOCAL == T01004Unidfunc.T01004_I_CDUNIDFUN, T01190Dimloctrab.T01190_I_VERLOCAL == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01190_I_UNIDLOCAL, T01190_I_VERLOCAL])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01190Dimloctrab.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01190Dimloctrab.T01190_I_UNIDLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01190Dimloctrab.T01190_I_VERSAOLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01190Dimloctrab.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01190Dimloctrab.T01190_I_UNIDLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01190Dimloctrab.T01190_I_VERSAOLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01190_I_UNIDLOT, T01190_I_VERSAOLOT])
-    t01188Tpatividade = relationship('T01188Tpatividade', 
-        primaryjoin='and_(T01190Dimloctrab.T01002_I_CDENT==T01188Tpatividade.T01002_I_CDENT, T01190Dimloctrab.T01188_I_CDTPATIVI==T01188Tpatividade.T01188_I_CDTPATIVI)',
+    t01188Tpatividade = relationship('T01188Tpatividade',
+        primaryjoin='and_(T01190Dimloctrab.T01002_I_CDENT == T01188Tpatividade.T01002_I_CDENT, T01190Dimloctrab.T01188_I_CDTPATIVI == T01188Tpatividade.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01188_I_CDTPATIVI])
 
 class T01191Atuativid(Base):
@@ -4382,11 +4409,11 @@ class T01191Atuativid(Base):
     T01188_I_CDTPATIVI = Column(Integer, ForeignKey('RH.T01188_TPATIVIDADE.T01188_I_CDTPATIVI'), primary_key=True)
 
     # Relationships
-    t01187Tpatuacao = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01191Atuativid.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01191Atuativid.T01187_I_CDTPATUA==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187Tpatuacao = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01191Atuativid.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01191Atuativid.T01187_I_CDTPATUA == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA])
-    t01188Tpatividade = relationship('T01188Tpatividade', 
-        primaryjoin='and_(T01191Atuativid.T01002_I_CDENT==T01188Tpatividade.T01002_I_CDENT, T01191Atuativid.T01188_I_CDTPATIVI==T01188Tpatividade.T01188_I_CDTPATIVI)',
+    t01188Tpatividade = relationship('T01188Tpatividade',
+        primaryjoin='and_(T01191Atuativid.T01002_I_CDENT == T01188Tpatividade.T01002_I_CDENT, T01191Atuativid.T01188_I_CDTPATIVI == T01188Tpatividade.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01188_I_CDTPATIVI])
 
 class T01192Fundefativi(Base):
@@ -4406,17 +4433,17 @@ class T01192Fundefativi(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01192_I_INDICATIVO])
-    t01186Grupfundef = relationship('T01186Grupfundef', 
-        primaryjoin='and_(T01192Fundefativi.T01002_I_CDENT==T01186Grupfundef.T01002_I_CDENT, T01192Fundefativi.T01186_I_CDGRUPO==T01186Grupfundef.T01186_I_CDGRUPO)',
+    t01186Grupfundef = relationship('T01186Grupfundef',
+        primaryjoin='and_(T01192Fundefativi.T01002_I_CDENT == T01186Grupfundef.T01002_I_CDENT, T01192Fundefativi.T01186_I_CDGRUPO == T01186Grupfundef.T01186_I_CDGRUPO)',
         foreign_keys=[T01002_I_CDENT, T01186_I_CDGRUPO])
-    t01188Tpatividade = relationship('T01188Tpatividade', 
-        primaryjoin='and_(T01192Fundefativi.T01002_I_CDENT==T01188Tpatividade.T01002_I_CDENT, T01192Fundefativi.T01188_I_CDTPATIVI==T01188Tpatividade.T01188_I_CDTPATIVI)',
+    t01188Tpatividade = relationship('T01188Tpatividade',
+        primaryjoin='and_(T01192Fundefativi.T01002_I_CDENT == T01188Tpatividade.T01002_I_CDENT, T01192Fundefativi.T01188_I_CDTPATIVI == T01188Tpatividade.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01188_I_CDTPATIVI])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01192Fundefativi.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01192Fundefativi.T01192_I_CDUNIDTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01192Fundefativi.T01192_I_VERSAOTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01192Fundefativi.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01192Fundefativi.T01192_I_CDUNIDTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01192Fundefativi.T01192_I_VERSAOTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01192_I_CDUNIDTRAB, T01192_I_VERSAOTRAB])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01192Fundefativi.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01192Fundefativi.T01192_I_CDUNIDLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01192Fundefativi.T01192_I_VERSAOLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01192Fundefativi.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01192Fundefativi.T01192_I_CDUNIDLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01192Fundefativi.T01192_I_VERSAOLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01192_I_CDUNIDLOT, T01192_I_VERSAOLOT])
 
 class T01193Rit(Base):
@@ -4458,17 +4485,17 @@ class T01193Rit(Base):
     t01071ItemlistaByICdturno = relationship('T01071Itemlista', foreign_keys=[T01193_I_CDTURNO])
     t01324InterfaceByICdinterengint = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENGINT])
     t01324InterfaceByICdintereng = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01193Rit.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01193Rit.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01193Rit.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01193Rit.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01193Rit.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01193Rit.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01195Motinterrit = relationship('T01195Motinterrit', 
-        primaryjoin='and_(T01193Rit.T01195_I_CDMOTIVO==T01195Motinterrit.T01195_I_CDMOTIVO, T01193Rit.T01002_I_CDENT==T01195Motinterrit.T01002_I_CDENT)',
+    t01195Motinterrit = relationship('T01195Motinterrit',
+        primaryjoin='and_(T01193Rit.T01195_I_CDMOTIVO == T01195Motinterrit.T01195_I_CDMOTIVO, T01193Rit.T01002_I_CDENT == T01195Motinterrit.T01002_I_CDENT)',
         foreign_keys=[T01195_I_CDMOTIVO, T01002_I_CDENT])
-    t01194Motivorit = relationship('T01194Motivorit', 
-        primaryjoin='and_(T01193Rit.T01194_I_CDMOTIVO==T01194Motivorit.T01194_I_CDMOTIVO, T01193Rit.T01002_I_CDENT==T01194Motivorit.T01002_I_CDENT)',
+    t01194Motivorit = relationship('T01194Motivorit',
+        primaryjoin='and_(T01193Rit.T01194_I_CDMOTIVO == T01194Motivorit.T01194_I_CDMOTIVO, T01193Rit.T01002_I_CDENT == T01194Motivorit.T01002_I_CDENT)',
         foreign_keys=[T01194_I_CDMOTIVO, T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01193Rit.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01193Rit.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01193Rit.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01193Rit.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01193_I_TPATO])
 
@@ -4529,8 +4556,8 @@ class T01197Telsegurad(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01197_I_TPTEL])
-    t01196Seguradora = relationship('T01196Seguradora', 
-        primaryjoin='and_(T01197Telsegurad.T01002_I_CDENT==T01196Seguradora.T01002_I_CDENT, T01197Telsegurad.T01196_I_CDSEG==T01196Seguradora.T01196_I_CDSEG)',
+    t01196Seguradora = relationship('T01196Seguradora',
+        primaryjoin='and_(T01197Telsegurad.T01002_I_CDENT == T01196Seguradora.T01002_I_CDENT, T01197Telsegurad.T01196_I_CDSEG == T01196Seguradora.T01196_I_CDSEG)',
         foreign_keys=[T01002_I_CDENT, T01196_I_CDSEG])
 
 class T01198Tpseguro(Base):
@@ -4575,11 +4602,11 @@ class T01200Seguroserv(Base):
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01198Tpseguro = relationship('T01198Tpseguro', foreign_keys=[T01198_I_CDSEGURO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01200_I_MTCANCELA])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01200Seguroserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01200Seguroserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01200Seguroserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01200Seguroserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01200Seguroserv.T01200_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01200Seguroserv.T01200_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01200Seguroserv.T01200_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01200Seguroserv.T01200_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01200_I_ENTOPERADOR, T01200_I_MATOPERADOR])
 
 class T01201Benefsegu(Base):
@@ -4599,8 +4626,8 @@ class T01201Benefsegu(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01201_I_GRAUPAREN])
-    t01200Seguroserv = relationship('T01200Seguroserv', 
-        primaryjoin='and_(T01201Benefsegu.T01002_I_CDENT==T01200Seguroserv.T01002_I_CDENT, T01201Benefsegu.T01001_I_MATRICULA==T01200Seguroserv.T01001_I_MATRICULA, T01201Benefsegu.T01200_D_DTINICIO==T01200Seguroserv.T01200_D_DTINICIO)',
+    t01200Seguroserv = relationship('T01200Seguroserv',
+        primaryjoin='and_(T01201Benefsegu.T01002_I_CDENT == T01200Seguroserv.T01002_I_CDENT, T01201Benefsegu.T01001_I_MATRICULA == T01200Seguroserv.T01001_I_MATRICULA, T01201Benefsegu.T01200_D_DTINICIO == T01200Seguroserv.T01200_D_DTINICIO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01200_D_DTINICIO])
 
 class T01202Tpcobersegu(Base):
@@ -4629,11 +4656,11 @@ class T01203Trremantigo(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01203_I_TPATO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01203Trremantigo.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01203Trremantigo.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01203Trremantigo.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01203Trremantigo.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01203Trremantigo.T01203_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01203Trremantigo.T01203_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01203Trremantigo.T01203_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01203Trremantigo.T01203_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01203_I_ENTOPERADOR, T01203_I_MATOPERADOR])
 
 class T01204Orgsolicit(Base):
@@ -4672,11 +4699,11 @@ class T01205Paramaposen(Base):
     t01071ItemlistaByICritapos = relationship('T01071Itemlista', foreign_keys=[T01205_I_CRITAPOS])
     t01071ItemlistaByIRegraapos = relationship('T01071Itemlista', foreign_keys=[T01205_I_REGRAAPOS])
     t01071ItemlistaByICdtermo = relationship('T01071Itemlista', foreign_keys=[T01205_I_CDTERMO])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01205Paramaposen.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01205Paramaposen.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01205Paramaposen.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01205Paramaposen.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01205Paramaposen.T01205_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01205Paramaposen.T01205_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01205Paramaposen.T01205_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01205Paramaposen.T01205_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01205_I_ENTOPERADOR, T01205_I_MATOPERADOR])
 
 class T01206Licpatern(Base):
@@ -4708,8 +4735,8 @@ class T01207Freqimport(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01207Freqimport.T01207_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01207Freqimport.T01207_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01207Freqimport.T01207_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01207Freqimport.T01207_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01207_I_ENTOPERADOR, T01207_I_MATOPERADOR])
 
 class T01208Linhafreimp(Base):
@@ -4725,11 +4752,11 @@ class T01208Linhafreimp(Base):
     T01208_I_HRATRASO = Column(Numeric(5, 2))
 
     # Relationships
-    t01207Freqimport = relationship('T01207Freqimport', 
-        primaryjoin='and_(T01208Linhafreimp.T01002_I_CDENT==T01207Freqimport.T01002_I_CDENT, T01208Linhafreimp.T01207_I_CDFREQIMP==T01207Freqimport.T01207_I_CDFREQIMP)',
+    t01207Freqimport = relationship('T01207Freqimport',
+        primaryjoin='and_(T01208Linhafreimp.T01002_I_CDENT == T01207Freqimport.T01002_I_CDENT, T01208Linhafreimp.T01207_I_CDFREQIMP == T01207Freqimport.T01207_I_CDFREQIMP)',
         foreign_keys=[T01002_I_CDENT, T01207_I_CDFREQIMP])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01208Linhafreimp.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01208Linhafreimp.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01208Linhafreimp.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01208Linhafreimp.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01209Linhafalta(Base):
@@ -4743,8 +4770,8 @@ class T01209Linhafalta(Base):
     T01209_D_DTFALTA = Column(DateTime, nullable=False)
 
     # Relationships
-    t01208Linhafreimp = relationship('T01208Linhafreimp', 
-        primaryjoin='and_(T01209Linhafalta.T01002_I_CDENT==T01208Linhafreimp.T01002_I_CDENT, T01209Linhafalta.T01001_I_MATRICULA==T01208Linhafreimp.T01001_I_MATRICULA, T01209Linhafalta.T01207_I_CDFREQIMP==T01208Linhafreimp.T01207_I_CDFREQIMP)',
+    t01208Linhafreimp = relationship('T01208Linhafreimp',
+        primaryjoin='and_(T01209Linhafalta.T01002_I_CDENT == T01208Linhafreimp.T01002_I_CDENT, T01209Linhafalta.T01001_I_MATRICULA == T01208Linhafreimp.T01001_I_MATRICULA, T01209Linhafalta.T01207_I_CDFREQIMP == T01208Linhafreimp.T01207_I_CDFREQIMP)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01207_I_CDFREQIMP])
 
 class T01210Critentidad(Base):
@@ -4780,12 +4807,14 @@ class T01212Critvigente(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01210Critentidad = relationship('T01210Critentidad', foreign_keys=[T01210_I_CDCRIT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01212Critvigente.T01212_I_ENTOPER==T01001Servidor.T01002_I_CDENT, T01212Critvigente.T01212_I_MATROPER==T01001Servidor.T01001_I_MATRICULA)',
+    t01210Critentidad = relationship('T01210Critentidad',
+        primaryjoin='and_(T01212Critvigente.T01210_I_CDCRIT == T01210Critentidad.T01210_I_CDCRIT)',
+        foreign_keys=[T01210_I_CDCRIT])
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01212Critvigente.T01212_I_ENTOPER == T01001Servidor.T01002_I_CDENT, T01212Critvigente.T01212_I_MATROPER == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01212_I_ENTOPER, T01212_I_MATROPER])
-    t01211Opcaocrit = relationship('T01211Opcaocrit', 
-        primaryjoin='and_(T01212Critvigente.T01210_I_CDCRIT==T01211Opcaocrit.T01210_I_CDCRIT, T01212Critvigente.T01211_I_CDOPCAO==T01211Opcaocrit.T01211_I_CDOPCAO)',
+    t01211Opcaocrit = relationship('T01211Opcaocrit',
+        primaryjoin='and_(T01212Critvigente.T01210_I_CDCRIT == T01211Opcaocrit.T01210_I_CDCRIT, T01212Critvigente.T01211_I_CDOPCAO == T01211Opcaocrit.T01211_I_CDOPCAO)',
         foreign_keys=[T01210_I_CDCRIT, T01211_I_CDOPCAO])
 
 class T01213Paramentid(Base):
@@ -4813,8 +4842,8 @@ class T01214Valovigente(Base):
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01213Paramentid = relationship('T01213Paramentid', foreign_keys=[T01213_I_CDPARAM])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01214Valovigente.T01214_I_ENTOPER==T01001Servidor.T01002_I_CDENT, T01214Valovigente.T01214_I_MATROPER==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01214Valovigente.T01214_I_ENTOPER == T01001Servidor.T01002_I_CDENT, T01214Valovigente.T01214_I_MATROPER == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01214_I_ENTOPER, T01214_I_MATROPER])
 
 class T01215Prgespecial(Base):
@@ -4835,8 +4864,8 @@ class T01216Medicotrab(Base):
     T01216_D_DTTERMINO = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01216Medicotrab.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01216Medicotrab.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01216Medicotrab.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01216Medicotrab.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01217Dispagenmed(Base):
@@ -4866,8 +4895,8 @@ class T01218Agemedunidf(Base):
 
     # Relationships
     t01217Dispagenmed = relationship('T01217Dispagenmed', foreign_keys=[T01217_I_CDAGEMED])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01218Agemedunidf.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01218Agemedunidf.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01218Agemedunidf.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01218Agemedunidf.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01218Agemedunidf.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01218Agemedunidf.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01219Restrserv(Base):
@@ -4904,14 +4933,14 @@ class T01220Agendmedica(Base):
     t01071ItemlistaByIStatus = relationship('T01071Itemlista', foreign_keys=[T01220_I_STATUS])
     t01223FichamedicaByICdficha = relationship('T01223Fichamedica', foreign_keys=[T01223_I_CDFICHA])
     t01071ItemlistaByICdtipoex = relationship('T01071Itemlista', foreign_keys=[T01220_I_CDTIPOEX])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01220Agendmedica.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01220Agendmedica.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01220Agendmedica.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01220Agendmedica.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01220Agendmedica.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01220Agendmedica.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01220Agendmedica.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01220Agendmedica.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01220Agendmedica.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01220Agendmedica.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01220Agendmedica.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01220Agendmedica.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01220Agendmedica.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01220Agendmedica.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01221Reabocupac(Base):
@@ -4942,14 +4971,14 @@ class T01221Reabocupac(Base):
     t01104Cid10BySCid3 = relationship('T01104Cid10', foreign_keys=[T01221_S_CID3])
     t01104Cid10BySCid2 = relationship('T01104Cid10', foreign_keys=[T01221_S_CID2])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01221_I_CONCLUSAO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01221Reabocupac.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01221Reabocupac.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01221Reabocupac.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01221Reabocupac.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01221Reabocupac.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01221Reabocupac.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01221Reabocupac.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01221Reabocupac.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01221Reabocupac.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01221Reabocupac.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01221Reabocupac.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01221Reabocupac.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01221Reabocupac.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01221Reabocupac.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01222Resreabocup(Base):
@@ -5021,11 +5050,11 @@ class T01223Fichamedica(Base):
     t01071ItemlistaByICdbiotipo = relationship('T01071Itemlista', foreign_keys=[T01223_I_CDBIOTIPO])
     t01071ItemlistaByICdtipoex = relationship('T01071Itemlista', foreign_keys=[T01223_I_CDTIPOEX])
     t01226Examcomplem = relationship('T01226Examcomplem', foreign_keys=[T01226_I_CDSOLIC])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01223Fichamedica.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01223Fichamedica.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01223Fichamedica.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01223Fichamedica.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01223Fichamedica.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01223Fichamedica.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01223Fichamedica.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01223Fichamedica.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
 
 class T01224Examdiverso(Base):
@@ -5072,8 +5101,8 @@ class T01227Afastrecesso(Base):
 
     # Relationships
     t01093Recesso = relationship('T01093Recesso', foreign_keys=[T01093_I_CDRECESSO])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01227Afastrecesso.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01227Afastrecesso.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01227Afastrecesso.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01227Afastrecesso.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01227Afastrecesso.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01227Afastrecesso.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01228Desigccant(Base):
@@ -5096,11 +5125,11 @@ class T01228Desigccant(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01228_I_TPATO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01228Desigccant.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01228Desigccant.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01228Desigccant.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01228Desigccant.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01228Desigccant.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01228Desigccant.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01228Desigccant.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01228Desigccant.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
 
 class T01229Pensionista(Base):
@@ -5140,19 +5169,21 @@ class T01229Pensionista(Base):
     T01229_I_TPPENSAO = Column(Integer)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01229Pensionista.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01229_I_MOTIVOINA])
-    t01003Dependente = relationship('T01003Dependente', 
-        primaryjoin='and_(T01229Pensionista.T01000_I_CDPESFIS==T01003Dependente.T01000_I_CDPESFIS, T01229Pensionista.T01003_I_CDDEP==T01003Dependente.T01003_I_CDDEP)',
+    t01003Dependente = relationship('T01003Dependente',
+        primaryjoin='and_(T01229Pensionista.T01000_I_CDPESFIS == T01003Dependente.T01000_I_CDPESFIS, T01229Pensionista.T01003_I_CDDEP == T01003Dependente.T01003_I_CDDEP)',
         foreign_keys=[T01000_I_CDPESFIS, T01003_I_CDDEP])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01229Pensionista.T01229_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01229Pensionista.T01229_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01229Pensionista.T01229_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01229Pensionista.T01229_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01229_I_ENTOPERADOR, T01229_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01229Pensionista.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01229Pensionista.T01229_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01229Pensionista.T01229_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01229Pensionista.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01229Pensionista.T01229_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01229Pensionista.T01229_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01229_I_CDLOCTRAB, T01229_I_VLOCTRAB])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01229Pensionista.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01229Pensionista.T01229_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01229Pensionista.T01229_I_VORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01229Pensionista.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01229Pensionista.T01229_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01229Pensionista.T01229_I_VORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01229_I_CDORGLOT, T01229_I_VORGLOT])
 
 class T01230Pensiotutor(Base):
@@ -5174,8 +5205,8 @@ class T01230Pensiotutor(Base):
 
     # Relationships
     t01125Localext = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01230Pensiotutor.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01230Pensiotutor.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01230Pensiotutor.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01230Pensiotutor.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
 
 class T01231Pensiotelef(Base):
@@ -5191,8 +5222,8 @@ class T01231Pensiotelef(Base):
     T01231_S_COMPLEM = Column(String(70))
 
     # Relationships
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01231Pensiotelef.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01231Pensiotelef.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01231Pensiotelef.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01231Pensiotelef.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01231_I_TPTELEF])
 
@@ -5233,17 +5264,17 @@ class T01232Pensdetalhe(Base):
     t01125Localext = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
     t01071ItemlistaByITipodef = relationship('T01071Itemlista', foreign_keys=[T01232_I_TIPODEF])
     t01071ItemlistaByIEscolarid = relationship('T01071Itemlista', foreign_keys=[T01232_I_ESCOLARID])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01232Pensdetalhe.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01232Pensdetalhe.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01232Pensdetalhe.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01232Pensdetalhe.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01232Pensdetalhe.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01232Pensdetalhe.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01232Pensdetalhe.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01232Pensdetalhe.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
-    t01232Pensdetalhe = relationship('T01232Pensdetalhe', 
-        primaryjoin='and_(T01232Pensdetalhe.T01002_I_CDENT==T01232Pensdetalhe.T01002_I_CDENT, T01232Pensdetalhe.T01232_I_MATRICULAMAE==T01232Pensdetalhe.T01229_I_MATRICULA)',
+    t01232Pensdetalhe = relationship('T01232Pensdetalhe',
+        primaryjoin='and_(T01232Pensdetalhe.T01002_I_CDENT == T01232Pensdetalhe.T01002_I_CDENT, T01232Pensdetalhe.T01232_I_MATRICULAMAE == T01232Pensdetalhe.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01232_I_MATRICULAMAE])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01232Pensdetalhe.T01232_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01232Pensdetalhe.T01232_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01232Pensdetalhe.T01232_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01232Pensdetalhe.T01232_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01232_I_ENTOPERADOR, T01232_I_MATOPERADOR])
     t01071ItemlistaByIFormapgto = relationship('T01071Itemlista', foreign_keys=[T01232_I_FORMAPGTO])
     t01071ItemlistaByITpresid = relationship('T01071Itemlista', foreign_keys=[T01232_I_TPRESID])
@@ -5277,11 +5308,11 @@ class T01233Cessao(Base):
     t01071ItemlistaByITpatocria = relationship('T01071Itemlista', foreign_keys=[T01233_I_TPATOCRIA])
     t01071ItemlistaByITpcessao = relationship('T01071Itemlista', foreign_keys=[T01233_I_TPCESSAO])
     t01236Entformarem = relationship('T01236Entformarem', foreign_keys=[T01236_I_CDENTFORMAREM])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01233Cessao.T01233_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01233Cessao.T01233_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01233Cessao.T01233_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01233Cessao.T01233_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01233_I_ENTOPERADOR, T01233_I_MATOPERADOR])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01233Cessao.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01233Cessao.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01233Cessao.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01233Cessao.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01233Cessao.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01233Cessao.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01234Prorrogacao(Base):
@@ -5300,11 +5331,11 @@ class T01234Prorrogacao(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01234_I_TPATO])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01234Prorrogacao.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01234Prorrogacao.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01234Prorrogacao.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01234Prorrogacao.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01234Prorrogacao.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01234Prorrogacao.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01233Cessao = relationship('T01233Cessao', 
-        primaryjoin='and_(T01234Prorrogacao.T01002_I_CDENT==T01233Cessao.T01002_I_CDENT, T01234Prorrogacao.T01001_I_MATRICULA==T01233Cessao.T01001_I_MATRICULA, T01234Prorrogacao.T01102_I_CDAFASTAM==T01233Cessao.T01102_I_CDAFASTAM)',
+    t01233Cessao = relationship('T01233Cessao',
+        primaryjoin='and_(T01234Prorrogacao.T01002_I_CDENT == T01233Cessao.T01002_I_CDENT, T01234Prorrogacao.T01001_I_MATRICULA == T01233Cessao.T01001_I_MATRICULA, T01234Prorrogacao.T01102_I_CDAFASTAM == T01233Cessao.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01235Recepcao(Base):
@@ -5348,20 +5379,20 @@ class T01235Recepcao(Base):
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
     t01071ItemlistaByITpremun = relationship('T01071Itemlista', foreign_keys=[T01235_I_TPREMUN])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01235_I_TPATO])
-    t01233Cessao = relationship('T01233Cessao', 
-        primaryjoin='and_(T01235Recepcao.T01235_I_CDENTORI==T01233Cessao.T01002_I_CDENT, T01235Recepcao.T01235_I_MATORIGEM==T01233Cessao.T01001_I_MATRICULA, T01235Recepcao.T01235_I_CDAFASTOR==T01233Cessao.T01102_I_CDAFASTAM)',
+    t01233Cessao = relationship('T01233Cessao',
+        primaryjoin='and_(T01235Recepcao.T01235_I_CDENTORI == T01233Cessao.T01002_I_CDENT, T01235Recepcao.T01235_I_MATORIGEM == T01233Cessao.T01001_I_MATRICULA, T01235Recepcao.T01235_I_CDAFASTOR == T01233Cessao.T01102_I_CDAFASTAM)',
         foreign_keys=[T01235_I_CDENTORI, T01235_I_MATORIGEM, T01235_I_CDAFASTOR])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01235Recepcao.T01235_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01235Recepcao.T01235_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01235Recepcao.T01235_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01235Recepcao.T01235_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01235_I_ENTOPERADOR, T01235_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01235Recepcao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01235Recepcao.T01235_I_LOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01235Recepcao.T01235_I_VERLOCTRA==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01235Recepcao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01235Recepcao.T01235_I_LOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01235Recepcao.T01235_I_VERLOCTRA == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01235_I_LOCTRAB, T01235_I_VERLOCTRA])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01235Recepcao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01235Recepcao.T01235_I_ORGLOTAC==T01004Unidfunc.T01004_I_CDUNIDFUN, T01235Recepcao.T01235_I_VERORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01235Recepcao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01235Recepcao.T01235_I_ORGLOTAC == T01004Unidfunc.T01004_I_CDUNIDFUN, T01235Recepcao.T01235_I_VERORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01235_I_ORGLOTAC, T01235_I_VERORGLOT])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01235Recepcao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01235Recepcao.T01235_I_MATRRECEP==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01235Recepcao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01235Recepcao.T01235_I_MATRRECEP == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01235_I_MATRRECEP])
     t01071ItemlistaByITpatoconclu = relationship('T01071Itemlista', foreign_keys=[T01235_I_TPATOCONCLU])
     t01071ItemlistaByITpcessao = relationship('T01071Itemlista', foreign_keys=[T01235_I_TPCESSAO])
@@ -5426,8 +5457,8 @@ class T01241Tarifa(Base):
     T01241_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01241Tarifa.T01241_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01241Tarifa.T01241_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01241Tarifa.T01241_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01241Tarifa.T01241_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01241_I_ENTOPERADOR, T01241_I_MATOPERADOR])
 
 class T01242Linha(Base):
@@ -5447,8 +5478,8 @@ class T01242Linha(Base):
     # Relationships
     t01243Catlinha = relationship('T01243Catlinha', foreign_keys=[T01243_I_CDCATLIN])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01242_I_CDTPTRANS])
-    t01241Tarifa = relationship('T01241Tarifa', 
-        primaryjoin='and_(T01242Linha.T01241_I_CDTARIFA==T01241Tarifa.T01241_I_CDTARIFA, T01242Linha.T01241_D_DTVIGTAR==T01241Tarifa.T01241_D_DTVIGTAR)',
+    t01241Tarifa = relationship('T01241Tarifa',
+        primaryjoin='and_(T01242Linha.T01241_I_CDTARIFA == T01241Tarifa.T01241_I_CDTARIFA, T01242Linha.T01241_D_DTVIGTAR == T01241Tarifa.T01241_D_DTVIGTAR)',
         foreign_keys=[T01241_I_CDTARIFA, T01241_D_DTVIGTAR])
 
 class T01243Catlinha(Base):
@@ -5469,8 +5500,8 @@ class T01244Emprlinha(Base):
 
     # Relationships
     t01240Emprtransp = relationship('T01240Emprtransp', foreign_keys=[T01240_I_CDEMPR])
-    t01242Linha = relationship('T01242Linha', 
-        primaryjoin='and_(T01244Emprlinha.T01242_I_CDLINHA==T01242Linha.T01242_I_CDLINHA, T01244Emprlinha.T01242_D_DTVIGLIN==T01242Linha.T01242_D_DTVIGLIN)',
+    t01242Linha = relationship('T01242Linha',
+        primaryjoin='and_(T01244Emprlinha.T01242_I_CDLINHA == T01242Linha.T01242_I_CDLINHA, T01244Emprlinha.T01242_D_DTVIGLIN == T01242Linha.T01242_D_DTVIGLIN)',
         foreign_keys=[T01242_I_CDLINHA, T01242_D_DTVIGLIN])
 
 class T01245Solicvt(Base):
@@ -5489,14 +5520,14 @@ class T01245Solicvt(Base):
     T01245_I_TPQTDESOLIC = Column(SmallInteger)
 
     # Relationships
-    t01242Linha = relationship('T01242Linha', 
-        primaryjoin='and_(T01245Solicvt.T01242_I_CDLINHA==T01242Linha.T01242_I_CDLINHA, T01245Solicvt.T01242_D_DTVIGLIN==T01242Linha.T01242_D_DTVIGLIN)',
+    t01242Linha = relationship('T01242Linha',
+        primaryjoin='and_(T01245Solicvt.T01242_I_CDLINHA == T01242Linha.T01242_I_CDLINHA, T01245Solicvt.T01242_D_DTVIGLIN == T01242Linha.T01242_D_DTVIGLIN)',
         foreign_keys=[T01242_I_CDLINHA, T01242_D_DTVIGLIN])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01245Solicvt.T01245_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01245Solicvt.T01245_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01245Solicvt.T01245_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01245Solicvt.T01245_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01245_I_ENTOPERADOR, T01245_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01245Solicvt.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01245Solicvt.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01245Solicvt.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01245Solicvt.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01246Geracaovt(Base):
@@ -5519,17 +5550,17 @@ class T01246Geracaovt(Base):
     T01246_I_MATOPERADOR = Column(Numeric(7, 0), ForeignKey('RH.T01001_SERVIDOR.T01001_I_MATRICULA'), nullable=False)
 
     # Relationships
-    t01241Tarifa = relationship('T01241Tarifa', 
-        primaryjoin='and_(T01246Geracaovt.T01241_I_CDTARIFA==T01241Tarifa.T01241_I_CDTARIFA, T01246Geracaovt.T01241_D_DTVIGTAR==T01241Tarifa.T01241_D_DTVIGTAR)',
+    t01241Tarifa = relationship('T01241Tarifa',
+        primaryjoin='and_(T01246Geracaovt.T01241_I_CDTARIFA == T01241Tarifa.T01241_I_CDTARIFA, T01246Geracaovt.T01241_D_DTVIGTAR == T01241Tarifa.T01241_D_DTVIGTAR)',
         foreign_keys=[T01241_I_CDTARIFA, T01241_D_DTVIGTAR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01246Geracaovt.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01246Geracaovt.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01246Geracaovt.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01246Geracaovt.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01242Linha = relationship('T01242Linha', 
-        primaryjoin='and_(T01246Geracaovt.T01242_I_CDLINHA==T01242Linha.T01242_I_CDLINHA, T01246Geracaovt.T01242_D_DTVIGLIN==T01242Linha.T01242_D_DTVIGLIN)',
+    t01242Linha = relationship('T01242Linha',
+        primaryjoin='and_(T01246Geracaovt.T01242_I_CDLINHA == T01242Linha.T01242_I_CDLINHA, T01246Geracaovt.T01242_D_DTVIGLIN == T01242Linha.T01242_D_DTVIGLIN)',
         foreign_keys=[T01242_I_CDLINHA, T01242_D_DTVIGLIN])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01246Geracaovt.T01246_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01246Geracaovt.T01246_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01246Geracaovt.T01246_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01246Geracaovt.T01246_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01246_I_ENTOPERADOR, T01246_I_MATOPERADOR])
 
 class T01247Freqrit(Base):
@@ -5554,8 +5585,8 @@ class T01247Freqrit(Base):
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01193Rit = relationship('T01193Rit', foreign_keys=[T01193_I_CDCONTRIT])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01247Freqrit.T01247_I_ENTOPER==T01001Servidor.T01002_I_CDENT, T01247Freqrit.T01247_I_MATRICOPER==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01247Freqrit.T01247_I_ENTOPER == T01001Servidor.T01002_I_CDENT, T01247Freqrit.T01247_I_MATRICOPER == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01247_I_ENTOPER, T01247_I_MATRICOPER])
 
 class T01248Linfreqrit(Base):
@@ -5580,8 +5611,8 @@ class T01248Linfreqrit(Base):
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01248_I_TPOCORR])
     t01247Freqrit = relationship('T01247Freqrit', foreign_keys=[T01247_I_CDFREQRIT])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01248Linfreqrit.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01248Linfreqrit.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01248Linfreqrit.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01248Linfreqrit.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01248Linfreqrit.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01248Linfreqrit.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01249Permutserv(Base):
@@ -5603,14 +5634,14 @@ class T01249Permutserv(Base):
     T01249_I_TPLOCAL = Column(Numeric(4, 0), ForeignKey('RH.T01071_ITEMLISTA.T01071_I_CDITEM'))
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01249Permutserv.T01249_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01249Permutserv.T01249_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01249Permutserv.T01249_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01249Permutserv.T01249_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01249_I_ENTOPERADOR, T01249_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01249Permutserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01249Permutserv.T01249_I_MATRIC1==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01249Permutserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01249Permutserv.T01249_I_MATRIC1 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01249_I_MATRIC1])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01249Permutserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01249Permutserv.T01249_I_MATRIC2==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent1 = relationship('T01001Servidor',
+        primaryjoin='and_(T01249Permutserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01249Permutserv.T01249_I_MATRIC2 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01249_I_MATRIC2])
     t01071ItemlistaByICdtpdoc = relationship('T01071Itemlista', foreign_keys=[T01249_I_CDTPDOC])
     t01071ItemlistaByITplocal = relationship('T01071Itemlista', foreign_keys=[T01249_I_TPLOCAL])
@@ -5638,12 +5669,12 @@ class T01250Publicserv(Base):
     T01250_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01250Publicserv.T01250_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01250Publicserv.T01250_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01250Publicserv.T01250_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01250Publicserv.T01250_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01250_I_ENTOPERADOR, T01250_I_MATOPERADOR])
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01001ServidorByIEntavaliador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01250Publicserv.T01250_I_ENTAVALIADOR==T01001Servidor.T01002_I_CDENT, T01250Publicserv.T01250_I_MATAVALIADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntavaliador = relationship('T01001Servidor',
+        primaryjoin='and_(T01250Publicserv.T01250_I_ENTAVALIADOR == T01001Servidor.T01002_I_CDENT, T01250Publicserv.T01250_I_MATAVALIADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01250_I_ENTAVALIADOR, T01250_I_MATAVALIADOR])
     t01071ItemlistaByICdclasse = relationship('T01071Itemlista', foreign_keys=[T01250_I_CDCLASSE])
     t01071ItemlistaByICdnivel = relationship('T01071Itemlista', foreign_keys=[T01250_I_CDNIVEL])
@@ -5673,8 +5704,8 @@ class T01252Valoresir(Base):
     T01252_I_DEDUCAO = Column(Numeric(19, 4), nullable=False)
 
     # Relationships
-    t01251Tabelair = relationship('T01251Tabelair', 
-        primaryjoin='and_(T01252Valoresir.T01002_I_CDENT==T01251Tabelair.T01002_I_CDENT, T01252Valoresir.T01251_D_DTINICVIG==T01251Tabelair.T01251_D_DTINICVIG)',
+    t01251Tabelair = relationship('T01251Tabelair',
+        primaryjoin='and_(T01252Valoresir.T01002_I_CDENT == T01251Tabelair.T01002_I_CDENT, T01252Valoresir.T01251_D_DTINICVIG == T01251Tabelair.T01251_D_DTINICVIG)',
         foreign_keys=[T01002_I_CDENT, T01251_D_DTINICVIG])
 
 class T01253Offruicaolp(Base):
@@ -5691,8 +5722,8 @@ class T01253Offruicaolp(Base):
     T01253_I_NUMERO = Column(Integer)
 
     # Relationships
-    t01180Concessaolp = relationship('T01180Concessaolp', 
-        primaryjoin='and_(T01253Offruicaolp.T01002_I_CDENT==T01180Concessaolp.T01002_I_CDENT, T01253Offruicaolp.T01001_I_MATRICULA==T01180Concessaolp.T01001_I_MATRICULA, T01253Offruicaolp.T01178_I_CDLICPRE==T01180Concessaolp.T01178_I_CDLICPRE, T01253Offruicaolp.T01180_I_CDCONCELP==T01180Concessaolp.T01180_I_CDCONCELP)',
+    t01180Concessaolp = relationship('T01180Concessaolp',
+        primaryjoin='and_(T01253Offruicaolp.T01002_I_CDENT == T01180Concessaolp.T01002_I_CDENT, T01253Offruicaolp.T01001_I_MATRICULA == T01180Concessaolp.T01001_I_MATRICULA, T01253Offruicaolp.T01178_I_CDLICPRE == T01180Concessaolp.T01178_I_CDLICPRE, T01253Offruicaolp.T01180_I_CDCONCELP == T01180Concessaolp.T01180_I_CDCONCELP)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01178_I_CDLICPRE, T01180_I_CDCONCELP])
 
 class T01254Relinspecao(Base):
@@ -5713,14 +5744,14 @@ class T01254Relinspecao(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01254_I_CATEGORIA])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01254Relinspecao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01254Relinspecao.T01004_I_CDUNIDNUCLEO==T01004Unidfunc.T01004_I_CDUNIDFUN, T01254Relinspecao.T01004_I_VERSAONUCLEO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01254Relinspecao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01254Relinspecao.T01004_I_CDUNIDNUCLEO == T01004Unidfunc.T01004_I_CDUNIDFUN, T01254Relinspecao.T01004_I_VERSAONUCLEO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDNUCLEO, T01004_I_VERSAONUCLEO])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01254Relinspecao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01254Relinspecao.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01254Relinspecao.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01254Relinspecao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01254Relinspecao.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01254Relinspecao.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01254Relinspecao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01254Relinspecao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01254Relinspecao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01254Relinspecao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01255Gratriscovd(Base):
@@ -5751,11 +5782,11 @@ class T01255Gratriscovd(Base):
     t01071ItemlistaByIParecertc = relationship('T01071Itemlista', foreign_keys=[T01255_I_PARECERTC])
     t01071ItemlistaByIStatus = relationship('T01071Itemlista', foreign_keys=[T01255_I_STATUS])
     t01071ItemlistaByIIndfimcongel = relationship('T01071Itemlista', foreign_keys=[T01255_I_INDFIMCONGEL])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01255Gratriscovd.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01255Gratriscovd.T01255_I_MATMEDICO==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01255Gratriscovd.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01255Gratriscovd.T01255_I_MATMEDICO == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01255_I_MATMEDICO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01255Gratriscovd.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01255Gratriscovd.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent1 = relationship('T01001Servidor',
+        primaryjoin='and_(T01255Gratriscovd.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01255Gratriscovd.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01256Reatriscovd(Base):
@@ -5774,8 +5805,8 @@ class T01256Reatriscovd(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01256_I_TPATO])
-    t01255Gratriscovd = relationship('T01255Gratriscovd', 
-        primaryjoin='and_(T01256Reatriscovd.T01255_I_NUMPROT==T01255Gratriscovd.T01255_I_NUMPROT, T01256Reatriscovd.T01255_I_ANOPROT==T01255Gratriscovd.T01255_I_ANOPROT)',
+    t01255Gratriscovd = relationship('T01255Gratriscovd',
+        primaryjoin='and_(T01256Reatriscovd.T01255_I_NUMPROT == T01255Gratriscovd.T01255_I_NUMPROT, T01256Reatriscovd.T01255_I_ANOPROT == T01255Gratriscovd.T01255_I_ANOPROT)',
         foreign_keys=[T01255_I_NUMPROT, T01255_I_ANOPROT])
 
 class T01257Suprriscovd(Base):
@@ -5797,8 +5828,8 @@ class T01257Suprriscovd(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01257_I_TPATO])
-    t01255Gratriscovd = relationship('T01255Gratriscovd', 
-        primaryjoin='and_(T01257Suprriscovd.T01255_I_NUMPROT==T01255Gratriscovd.T01255_I_NUMPROT, T01257Suprriscovd.T01255_I_ANOPROT==T01255Gratriscovd.T01255_I_ANOPROT)',
+    t01255Gratriscovd = relationship('T01255Gratriscovd',
+        primaryjoin='and_(T01257Suprriscovd.T01255_I_NUMPROT == T01255Gratriscovd.T01255_I_NUMPROT, T01257Suprriscovd.T01255_I_ANOPROT == T01255Gratriscovd.T01255_I_ANOPROT)',
         foreign_keys=[T01255_I_NUMPROT, T01255_I_ANOPROT])
 
 class T01258Complemcat(Base):
@@ -5828,14 +5859,14 @@ class T01258Complemcat(Base):
     t01071ItemlistaByIDanoprop = relationship('T01071Itemlista', foreign_keys=[T01258_I_DANOPROP])
     t01071ItemlistaByIFreqocor = relationship('T01071Itemlista', foreign_keys=[T01258_I_FREQOCOR])
     t01071ItemlistaByICdconclu = relationship('T01071Itemlista', foreign_keys=[T01258_I_CDCONCLU])
-    t01110Acidente = relationship('T01110Acidente', 
-        primaryjoin='and_(T01258Complemcat.T01110_I_CDCAT==T01110Acidente.T01110_I_CDCAT, T01258Complemcat.T01110_I_ANOCAT==T01110Acidente.T01110_I_ANOCAT)',
+    t01110Acidente = relationship('T01110Acidente',
+        primaryjoin='and_(T01258Complemcat.T01110_I_CDCAT == T01110Acidente.T01110_I_CDCAT, T01258Complemcat.T01110_I_ANOCAT == T01110Acidente.T01110_I_ANOCAT)',
         foreign_keys=[T01110_I_CDCAT, T01110_I_ANOCAT])
-    t01001ServidorByIEntlabres = relationship('T01001Servidor', 
-        primaryjoin='and_(T01258Complemcat.T01258_I_ENTLABRES==T01001Servidor.T01002_I_CDENT, T01258Complemcat.T01258_I_MATLABRES==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntlabres = relationship('T01001Servidor',
+        primaryjoin='and_(T01258Complemcat.T01258_I_ENTLABRES == T01001Servidor.T01002_I_CDENT, T01258Complemcat.T01258_I_MATLABRES == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01258_I_ENTLABRES, T01258_I_MATLABRES])
-    t01001ServidorByIEntsegtr = relationship('T01001Servidor', 
-        primaryjoin='and_(T01258Complemcat.T01258_I_ENTSEGTR==T01001Servidor.T01002_I_CDENT, T01258Complemcat.T01258_I_MATRSEGTR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntsegtr = relationship('T01001Servidor',
+        primaryjoin='and_(T01258Complemcat.T01258_I_ENTSEGTR == T01001Servidor.T01002_I_CDENT, T01258Complemcat.T01258_I_MATRSEGTR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01258_I_ENTSEGTR, T01258_I_MATRSEGTR])
 
 class T01259Atestadoclt(Base):
@@ -5853,11 +5884,11 @@ class T01259Atestadoclt(Base):
     T01110_I_ANOCAT = Column(Numeric(4, 0), ForeignKey('RH.T01110_ACIDENTE.T01110_I_ANOCAT'))
 
     # Relationships
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01259Atestadoclt.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01259Atestadoclt.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01259Atestadoclt.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01259Atestadoclt.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01259Atestadoclt.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01259Atestadoclt.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01259Atestadoclt.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01259Atestadoclt.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
-    t01110Acidente = relationship('T01110Acidente', 
-        primaryjoin='and_(T01259Atestadoclt.T01110_I_CDCAT==T01110Acidente.T01110_I_CDCAT, T01259Atestadoclt.T01110_I_ANOCAT==T01110Acidente.T01110_I_ANOCAT)',
+    t01110Acidente = relationship('T01110Acidente',
+        primaryjoin='and_(T01259Atestadoclt.T01110_I_CDCAT == T01110Acidente.T01110_I_CDCAT, T01259Atestadoclt.T01110_I_ANOCAT == T01110Acidente.T01110_I_ANOCAT)',
         foreign_keys=[T01110_I_CDCAT, T01110_I_ANOCAT])
 
 class T01260Revisaoapo(Base):
@@ -5893,8 +5924,8 @@ class T01260Revisaoapo(Base):
     t01071ItemlistaByITppedido = relationship('T01071Itemlista', foreign_keys=[T01260_I_TPPEDIDO])
     t01071ItemlistaByIBiotipo = relationship('T01071Itemlista', foreign_keys=[T01260_I_BIOTIPO])
     t01071ItemlistaByILocalexam = relationship('T01071Itemlista', foreign_keys=[T01260_I_LOCALEXAM])
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01260Revisaoapo.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01260Revisaoapo.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01260Revisaoapo.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01260Revisaoapo.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01260Revisaoapo.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01260Revisaoapo.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01260Revisaoapo.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01260Revisaoapo.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
 
 class T01261Examrevapo(Base):
@@ -5911,8 +5942,8 @@ class T01261Examrevapo(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01261_I_CDEXAME])
-    t01260Revisaoapo = relationship('T01260Revisaoapo', 
-        primaryjoin='and_(T01261Examrevapo.T01135_I_CDLTS==T01260Revisaoapo.T01135_I_CDLTS, T01261Examrevapo.T01135_I_ANO==T01260Revisaoapo.T01135_I_ANO, T01261Examrevapo.T01135_I_SEQUENCIA==T01260Revisaoapo.T01135_I_SEQUENCIA, T01261Examrevapo.T01135_I_TPDOC==T01260Revisaoapo.T01135_I_TPDOC)',
+    t01260Revisaoapo = relationship('T01260Revisaoapo',
+        primaryjoin='and_(T01261Examrevapo.T01135_I_CDLTS == T01260Revisaoapo.T01135_I_CDLTS, T01261Examrevapo.T01135_I_ANO == T01260Revisaoapo.T01135_I_ANO, T01261Examrevapo.T01135_I_SEQUENCIA == T01260Revisaoapo.T01135_I_SEQUENCIA, T01261Examrevapo.T01135_I_TPDOC == T01260Revisaoapo.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
 
 class T01262Histcongela(Base):
@@ -5926,8 +5957,8 @@ class T01262Histcongela(Base):
 
     # Relationships
     t01073Desigcgconf = relationship('T01073Desigcgconf', foreign_keys=[T01073_I_CDDESIG])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01262Histcongela.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01262Histcongela.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01262Histcongela.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01262Histcongela.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01265Funcpericia(Base):
@@ -5946,8 +5977,8 @@ class T01265Funcpericia(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01265_I_CDFUNCAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01265Funcpericia.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01265Funcpericia.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01265Funcpericia.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01265Funcpericia.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01266Filaespera(Base):
@@ -5968,8 +5999,8 @@ class T01266Filaespera(Base):
     # Relationships
     t01265FuncpericiaByICdmednaoperm = relationship('T01265Funcpericia', foreign_keys=[T01266_I_CDMEDNAOPERM])
     t01265FuncpericiaByICdfuncionario = relationship('T01265Funcpericia', foreign_keys=[T01265_I_CDFUNCIONARIO])
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01266Filaespera.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01266Filaespera.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01266Filaespera.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01266Filaespera.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01266Filaespera.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01266Filaespera.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01266Filaespera.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01266Filaespera.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
 
 class T01267Especialidade(Base):
@@ -6081,8 +6112,8 @@ class T01275Procedexame(Base):
 
     # Relationships
     t01226Examcomplem = relationship('T01226Examcomplem', foreign_keys=[T01226_I_CDSOLIC])
-    t01274Procedcreden = relationship('T01274Procedcreden', 
-        primaryjoin='and_(T01275Procedexame.T01270_I_CDCREDEN==T01274Procedcreden.T01270_I_CDCREDEN, T01275Procedexame.T01273_I_CDPROCED==T01274Procedcreden.T01273_I_CDPROCED)',
+    t01274Procedcreden = relationship('T01274Procedcreden',
+        primaryjoin='and_(T01275Procedexame.T01270_I_CDCREDEN == T01274Procedcreden.T01270_I_CDCREDEN, T01275Procedexame.T01273_I_CDPROCED == T01274Procedcreden.T01273_I_CDPROCED)',
         foreign_keys=[T01270_I_CDCREDEN, T01273_I_CDPROCED])
 
 class T01276Minutaoficio(Base):
@@ -6097,8 +6128,8 @@ class T01276Minutaoficio(Base):
     T01276_S_CABECALHO = Column(String(250), nullable=False)
 
     # Relationships
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01276Minutaoficio.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01276Minutaoficio.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01276Minutaoficio.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01276Minutaoficio.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01276Minutaoficio.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01276Minutaoficio.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01276Minutaoficio.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01276Minutaoficio.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
 
 class T01277Convocacaoacl(Base):
@@ -6112,8 +6143,8 @@ class T01277Convocacaoacl(Base):
     T01277_S_OBSERVACAO = Column(String(500), nullable=False)
 
     # Relationships
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01277Convocacaoacl.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01277Convocacaoacl.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01277Convocacaoacl.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01277Convocacaoacl.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01277Convocacaoacl.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01277Convocacaoacl.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01277Convocacaoacl.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01277Convocacaoacl.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
 
 class T01278Fluxohomolog(Base):
@@ -6165,8 +6196,8 @@ class T01280Itemcancdep(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01280_I_CDMOTIVO])
-    t01072Beneficiodep = relationship('T01072Beneficiodep', 
-        primaryjoin='and_(T01280Itemcancdep.T01000_I_CDPESFIS==T01072Beneficiodep.T01000_I_CDPESFIS, T01280Itemcancdep.T01003_I_CDDEP==T01072Beneficiodep.T01003_I_CDDEP, T01280Itemcancdep.T01072_I_CDTIPO==T01072Beneficiodep.T01072_I_CDTIPO, T01280Itemcancdep.T01072_D_DTINCLUSAO==T01072Beneficiodep.T01072_D_DTINCLUSAO)',
+    t01072Beneficiodep = relationship('T01072Beneficiodep',
+        primaryjoin='and_(T01280Itemcancdep.T01000_I_CDPESFIS == T01072Beneficiodep.T01000_I_CDPESFIS, T01280Itemcancdep.T01003_I_CDDEP == T01072Beneficiodep.T01003_I_CDDEP, T01280Itemcancdep.T01072_I_CDTIPO == T01072Beneficiodep.T01072_I_CDTIPO, T01280Itemcancdep.T01072_D_DTINCLUSAO == T01072Beneficiodep.T01072_D_DTINCLUSAO)',
         foreign_keys=[T01000_I_CDPESFIS, T01003_I_CDDEP, T01072_I_CDTIPO, T01072_D_DTINCLUSAO])
 
 class T01281Histpadraoref(Base):
@@ -6182,11 +6213,11 @@ class T01281Histpadraoref(Base):
     T01281_I_SEQUENCIA = Column(Numeric(3, 0), primary_key=True)
 
     # Relationships
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01281Histpadraoref.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01281Histpadraoref.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01281Histpadraoref.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01281Histpadraoref.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
-    t01026Padraoref = relationship('T01026Padraoref', 
-        primaryjoin='and_(T01281Histpadraoref.T01002_I_CDENT==T01026Padraoref.T01002_I_CDENT, T01281Histpadraoref.T01025_I_CDPADRAO==T01026Padraoref.T01025_I_CDPADRAO, T01281Histpadraoref.T01015_I_CDREF==T01026Padraoref.T01015_I_CDREF)',
+    t01026Padraoref = relationship('T01026Padraoref',
+        primaryjoin='and_(T01281Histpadraoref.T01002_I_CDENT == T01026Padraoref.T01002_I_CDENT, T01281Histpadraoref.T01025_I_CDPADRAO == T01026Padraoref.T01025_I_CDPADRAO, T01281Histpadraoref.T01015_I_CDREF == T01026Padraoref.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO, T01015_I_CDREF])
 
 class T01282Incorpadicional(Base):
@@ -6203,11 +6234,11 @@ class T01282Incorpadicional(Base):
     T01282_I_DIAUTILIZADO = Column(Numeric(2, 0))
 
     # Relationships
-    t01046Adicservico = relationship('T01046Adicservico', 
-        primaryjoin='and_(T01282Incorpadicional.T01002_I_CDENT==T01046Adicservico.T01002_I_CDENT, T01282Incorpadicional.T01001_I_MATRICULA==T01046Adicservico.T01001_I_MATRICULA, T01282Incorpadicional.T01046_I_CDADIC==T01046Adicservico.T01046_I_CDADIC)',
+    t01046Adicservico = relationship('T01046Adicservico',
+        primaryjoin='and_(T01282Incorpadicional.T01002_I_CDENT == T01046Adicservico.T01002_I_CDENT, T01282Incorpadicional.T01001_I_MATRICULA == T01046Adicservico.T01001_I_MATRICULA, T01282Incorpadicional.T01046_I_CDADIC == T01046Adicservico.T01046_I_CDADIC)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01046_I_CDADIC])
-    t01064Incorpserv = relationship('T01064Incorpserv', 
-        primaryjoin='and_(T01282Incorpadicional.T01002_I_CDENT==T01064Incorpserv.T01002_I_CDENT, T01282Incorpadicional.T01001_I_MATRICULA==T01064Incorpserv.T01001_I_MATRICULA, T01282Incorpadicional.T01064_I_CDINCORP==T01064Incorpserv.T01064_I_CDINCORP, T01282Incorpadicional.T01064_I_TPINCORP==T01064Incorpserv.T01064_I_TPINCORP)',
+    t01064Incorpserv = relationship('T01064Incorpserv',
+        primaryjoin='and_(T01282Incorpadicional.T01002_I_CDENT == T01064Incorpserv.T01002_I_CDENT, T01282Incorpadicional.T01001_I_MATRICULA == T01064Incorpserv.T01001_I_MATRICULA, T01282Incorpadicional.T01064_I_CDINCORP == T01064Incorpserv.T01064_I_CDINCORP, T01282Incorpadicional.T01064_I_TPINCORP == T01064Incorpserv.T01064_I_TPINCORP)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01064_I_CDINCORP, T01064_I_TPINCORP])
 
 class T01283Afastatuacao(Base):
@@ -6220,11 +6251,11 @@ class T01283Afastatuacao(Base):
     T01715_D_DTCADAS = Column(DateTime, ForeignKey('RH.T01715_SERVATUACAO.T01715_D_DTCADAS'), primary_key=True)
 
     # Relationships
-    t01715Servatuacao = relationship('T01715Servatuacao', 
-        primaryjoin='and_(T01283Afastatuacao.T01002_I_CDENT==T01715Servatuacao.T01002_I_CDENT, T01283Afastatuacao.T01001_I_MATRICULA==T01715Servatuacao.T01001_I_MATRICULA, T01283Afastatuacao.T01715_D_DTCADAS==T01715Servatuacao.T01715_D_DTCADAS)',
+    t01715Servatuacao = relationship('T01715Servatuacao',
+        primaryjoin='and_(T01283Afastatuacao.T01002_I_CDENT == T01715Servatuacao.T01002_I_CDENT, T01283Afastatuacao.T01001_I_MATRICULA == T01715Servatuacao.T01001_I_MATRICULA, T01283Afastatuacao.T01715_D_DTCADAS == T01715Servatuacao.T01715_D_DTCADAS)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01715_D_DTCADAS])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01283Afastatuacao.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01283Afastatuacao.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01283Afastatuacao.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01283Afastatuacao.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01283Afastatuacao.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01283Afastatuacao.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01284Mutacatuacao(Base):
@@ -6238,11 +6269,11 @@ class T01284Mutacatuacao(Base):
     T01715_D_DTCADAS = Column(DateTime, ForeignKey('RH.T01715_SERVATUACAO.T01715_D_DTCADAS'), primary_key=True)
 
     # Relationships
-    t01049Mutacaoserv = relationship('T01049Mutacaoserv', 
-        primaryjoin='and_(T01284Mutacatuacao.T01002_I_CDENT==T01049Mutacaoserv.T01002_I_CDENT, T01284Mutacatuacao.T01001_I_MATRICULA==T01049Mutacaoserv.T01001_I_MATRICULA, T01284Mutacatuacao.T01047_I_CDTPMUT==T01049Mutacaoserv.T01047_I_CDTPMUT, T01284Mutacatuacao.T01049_D_DTMUTACAO==T01049Mutacaoserv.T01049_D_DTMUTACAO)',
+    t01049Mutacaoserv = relationship('T01049Mutacaoserv',
+        primaryjoin='and_(T01284Mutacatuacao.T01002_I_CDENT == T01049Mutacaoserv.T01002_I_CDENT, T01284Mutacatuacao.T01001_I_MATRICULA == T01049Mutacaoserv.T01001_I_MATRICULA, T01284Mutacatuacao.T01047_I_CDTPMUT == T01049Mutacaoserv.T01047_I_CDTPMUT, T01284Mutacatuacao.T01049_D_DTMUTACAO == T01049Mutacaoserv.T01049_D_DTMUTACAO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01047_I_CDTPMUT, T01049_D_DTMUTACAO])
-    t01715Servatuacao = relationship('T01715Servatuacao', 
-        primaryjoin='and_(T01284Mutacatuacao.T01002_I_CDENT==T01715Servatuacao.T01002_I_CDENT, T01284Mutacatuacao.T01001_I_MATRICULA==T01715Servatuacao.T01001_I_MATRICULA, T01284Mutacatuacao.T01715_D_DTCADAS==T01715Servatuacao.T01715_D_DTCADAS)',
+    t01715Servatuacao = relationship('T01715Servatuacao',
+        primaryjoin='and_(T01284Mutacatuacao.T01002_I_CDENT == T01715Servatuacao.T01002_I_CDENT, T01284Mutacatuacao.T01001_I_MATRICULA == T01715Servatuacao.T01001_I_MATRICULA, T01284Mutacatuacao.T01715_D_DTCADAS == T01715Servatuacao.T01715_D_DTCADAS)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01715_D_DTCADAS])
 
 class T01285Entidadecons(Base):
@@ -6276,8 +6307,8 @@ class T01286Telentcons(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01286_I_TPTEL])
-    t01285Entidadecons = relationship('T01285Entidadecons', 
-        primaryjoin='and_(T01286Telentcons.T01002_I_CDENT==T01285Entidadecons.T01002_I_CDENT, T01286Telentcons.T01285_I_CDENTCON==T01285Entidadecons.T01285_I_CDENTCON)',
+    t01285Entidadecons = relationship('T01285Entidadecons',
+        primaryjoin='and_(T01286Telentcons.T01002_I_CDENT == T01285Entidadecons.T01002_I_CDENT, T01286Telentcons.T01285_I_CDENTCON == T01285Entidadecons.T01285_I_CDENTCON)',
         foreign_keys=[T01002_I_CDENT, T01285_I_CDENTCON])
 
 class T01287Faixasinss(Base):
@@ -6311,14 +6342,14 @@ class T01288Eventosimbolo(Base):
     T01288_I_PERCENTUAL = Column(Numeric(6, 2))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01288Eventosimbolo.T01288_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01288Eventosimbolo.T01288_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01288Eventosimbolo.T01288_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01288Eventosimbolo.T01288_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01288_I_ENTOPERADOR, T01288_I_MATOPERADOR])
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01288Eventosimbolo.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01288Eventosimbolo.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01288Eventosimbolo.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01288Eventosimbolo.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01288Eventosimbolo.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01288Eventosimbolo.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01288Eventosimbolo.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01288Eventosimbolo.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01289Relpendentes(Base):
@@ -6351,14 +6382,14 @@ class T01290Eventocarreira(Base):
     T01290_I_PERCENTUAL = Column(Numeric(10, 2), nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01290Eventocarreira.T01290_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01290Eventocarreira.T01290_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01290Eventocarreira.T01290_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01290Eventocarreira.T01290_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01290_I_ENTOPERADOR, T01290_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01290Eventocarreira.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01290Eventocarreira.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01290Eventocarreira.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01290Eventocarreira.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01290Eventocarreira.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01290Eventocarreira.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01290Eventocarreira.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01290Eventocarreira.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01291Salfamilia(Base):
@@ -6392,8 +6423,8 @@ class T01292Mensagem(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01292Mensagem.T01292_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01292Mensagem.T01292_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01292Mensagem.T01292_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01292Mensagem.T01292_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01292_I_ENTOPERADOR, T01292_I_MATOPERADOR])
 
 class T01293Menservidor(Base):
@@ -6406,8 +6437,8 @@ class T01293Menservidor(Base):
 
     # Relationships
     t01292Mensagem = relationship('T01292Mensagem', foreign_keys=[T01292_I_CDMENSAGEM])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01293Menservidor.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01293Menservidor.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01293Menservidor.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01293Menservidor.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01294Mencarreira(Base):
@@ -6420,8 +6451,8 @@ class T01294Mencarreira(Base):
 
     # Relationships
     t01292Mensagem = relationship('T01292Mensagem', foreign_keys=[T01292_I_CDMENSAGEM])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01294Mencarreira.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01294Mencarreira.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01294Mencarreira.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01294Mencarreira.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01295Menquadro(Base):
@@ -6434,8 +6465,8 @@ class T01295Menquadro(Base):
 
     # Relationships
     t01292Mensagem = relationship('T01292Mensagem', foreign_keys=[T01292_I_CDMENSAGEM])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01295Menquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01295Menquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01295Menquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01295Menquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01296Menunidfunc(Base):
@@ -6449,8 +6480,8 @@ class T01296Menunidfunc(Base):
 
     # Relationships
     t01292Mensagem = relationship('T01292Mensagem', foreign_keys=[T01292_I_CDMENSAGEM])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01296Menunidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01296Menunidfunc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01296Menunidfunc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01296Menunidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01296Menunidfunc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01296Menunidfunc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01297Eventobase(Base):
@@ -6468,11 +6499,11 @@ class T01297Eventobase(Base):
     T01297_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01297Eventobase.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01297Eventobase.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01297Eventobase.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01297Eventobase.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01297Eventobase.T01297_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01297Eventobase.T01297_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01297Eventobase.T01297_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01297Eventobase.T01297_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01297_I_ENTOPERADOR, T01297_I_MATOPERADOR])
 
 class T01298Reajsimbolo(Base):
@@ -6497,8 +6528,8 @@ class T01298Reajsimbolo(Base):
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01147Reajsalarial = relationship('T01147Reajsalarial', foreign_keys=[T01147_I_CDREAJUSTE])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01298Reajsimbolo.T01298_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01298Reajsimbolo.T01298_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01298Reajsimbolo.T01298_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01298Reajsimbolo.T01298_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01298_I_ENTOPERADOR, T01298_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01298_I_STATUS])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
@@ -6518,8 +6549,8 @@ class T01299Reajsimbitem(Base):
 
     # Relationships
     t01298Reajsimbolo = relationship('T01298Reajsimbolo', foreign_keys=[T01298_I_CDREAJSIMB])
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01299Reajsimbitem.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01299Reajsimbitem.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01299Reajsimbitem.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01299Reajsimbitem.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
 
 class T01300Pensiopensao(Base):
@@ -6547,17 +6578,19 @@ class T01300Pensiopensao(Base):
     T01300_D_DTNASCPENSIONISTA = Column(DateTime)
 
     # Relationships
-    t01021Banco = relationship('T01021Banco', foreign_keys=[T01021_I_CDBANCO])
+    t01021Banco = relationship('T01021Banco',
+        primaryjoin='and_(T01300Pensiopensao.T01021_I_CDBANCO == T01021Banco.T01021_I_CDBANCO)',
+        foreign_keys=[T01021_I_CDBANCO])
     t01118Endereco = relationship('T01118Endereco', foreign_keys=[T01118_I_CDEND])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01300_I_TPPAGTO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01300Pensiopensao.T01300_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01300Pensiopensao.T01300_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01300Pensiopensao.T01300_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01300Pensiopensao.T01300_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01300_I_ENTOPERADOR, T01300_I_MATOPERADOR])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01300Pensiopensao.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01300Pensiopensao.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01300Pensiopensao.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01300Pensiopensao.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01300Pensiopensao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01300Pensiopensao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01300Pensiopensao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01300Pensiopensao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01301Sentenca(Base):
@@ -6592,8 +6625,8 @@ class T01301Sentenca(Base):
     t01071ItemlistaByICritreajuste = relationship('T01071Itemlista', foreign_keys=[T01301_I_CRITREAJUSTE])
     t01300Pensiopensao = relationship('T01300Pensiopensao', foreign_keys=[T01300_I_CDPENSIONISTA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01301Sentenca.T01301_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01301Sentenca.T01301_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01301Sentenca.T01301_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01301Sentenca.T01301_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01301_I_ENTOPERADOR, T01301_I_MATOPERADOR])
     t01071ItemlistaByITipoato = relationship('T01071Itemlista', foreign_keys=[T01301_I_TIPOATO])
 
@@ -6628,14 +6661,14 @@ class T01303Eventosentenca(Base):
     T01303_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01303Eventosentenca.T01303_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01303Eventosentenca.T01303_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01303Eventosentenca.T01303_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01303Eventosentenca.T01303_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01303_I_ENTOPERADOR, T01303_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01303Eventosentenca.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01303Eventosentenca.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01303Eventosentenca.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01303Eventosentenca.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01301Sentenca = relationship('T01301Sentenca', 
-        primaryjoin='and_(T01303Eventosentenca.T01300_I_CDPENSIONISTA==T01301Sentenca.T01300_I_CDPENSIONISTA, T01303Eventosentenca.T01301_I_CDSENTENCA==T01301Sentenca.T01301_I_CDSENTENCA, T01303Eventosentenca.T01301_D_DTINICVIG==T01301Sentenca.T01301_D_DTINICVIG)',
+    t01301Sentenca = relationship('T01301Sentenca',
+        primaryjoin='and_(T01303Eventosentenca.T01300_I_CDPENSIONISTA == T01301Sentenca.T01300_I_CDPENSIONISTA, T01303Eventosentenca.T01301_I_CDSENTENCA == T01301Sentenca.T01301_I_CDSENTENCA, T01303Eventosentenca.T01301_D_DTINICVIG == T01301Sentenca.T01301_D_DTINICVIG)',
         foreign_keys=[T01300_I_CDPENSIONISTA, T01301_I_CDSENTENCA, T01301_D_DTINICVIG])
 
 class T01304Telpenpensao(Base):
@@ -6664,8 +6697,8 @@ class T01305Matrecesso(Base):
     T01305_I_CDRECESSO = Column(Integer, primary_key=True, autoincrement=True)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01305Matrecesso.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01305Matrecesso.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01305Matrecesso.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01305Matrecesso.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01306Eventoexcecao(Base):
@@ -6683,14 +6716,14 @@ class T01306Eventoexcecao(Base):
     T01306_S_MOTIVO = Column(String(100))
 
     # Relationships
-    t01383Isencaoexcserv = relationship('T01383Isencaoexcserv', 
-        primaryjoin='and_(T01306Eventoexcecao.T01002_I_CDENT==T01383Isencaoexcserv.T01002_I_CDENT, T01306Eventoexcecao.T01001_I_MATRICULA==T01383Isencaoexcserv.T01001_I_MATRICULA)',
+    t01383Isencaoexcserv = relationship('T01383Isencaoexcserv',
+        primaryjoin='and_(T01306Eventoexcecao.T01002_I_CDENT == T01383Isencaoexcserv.T01002_I_CDENT, T01306Eventoexcecao.T01001_I_MATRICULA == T01383Isencaoexcserv.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01306Eventoexcecao.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01306Eventoexcecao.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01306Eventoexcecao.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01306Eventoexcecao.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01306Eventoexcecao.T01306_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01306Eventoexcecao.T01306_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01306Eventoexcecao.T01306_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01306Eventoexcecao.T01306_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01306_I_ENTOPERADOR, T01306_I_MATOPERADOR])
 
 class T01307Eventounidfunc(Base):
@@ -6707,11 +6740,11 @@ class T01307Eventounidfunc(Base):
     T01307_I_PERCENTUAL = Column(Numeric(5, 2), nullable=False)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01307Eventounidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01307Eventounidfunc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01307Eventounidfunc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01307Eventounidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01307Eventounidfunc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01307Eventounidfunc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01307Eventounidfunc.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01307Eventounidfunc.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01307Eventounidfunc.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01307Eventounidfunc.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01308Freqretroativa(Base):
@@ -6732,8 +6765,8 @@ class T01308Freqretroativa(Base):
 
     # Relationships
     t01039Frequencia = relationship('T01039Frequencia', foreign_keys=[T01039_I_CDFREQ])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01308Freqretroativa.T01308_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01308Freqretroativa.T01308_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01308Freqretroativa.T01308_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01308Freqretroativa.T01308_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01308_I_ENTOPERADOR, T01308_I_MATOPERADOR])
 
 class T01309Detalheferias(Base):
@@ -6768,8 +6801,8 @@ class T01310Perdadsr(Base):
     t01039Frequencia = relationship('T01039Frequencia', foreign_keys=[T01039_I_CDFREQ])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01310Perdadsr.T01310_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01310Perdadsr.T01310_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01310Perdadsr.T01310_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01310Perdadsr.T01310_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01310_I_ENTOPERADOR, T01310_I_MATOPERADOR])
 
 class T01311Reajsalaritem(Base):
@@ -6785,8 +6818,8 @@ class T01311Reajsalaritem(Base):
 
     # Relationships
     t01147Reajsalarial = relationship('T01147Reajsalarial', foreign_keys=[T01147_I_CDREAJUSTE])
-    t01026Padraoref = relationship('T01026Padraoref', 
-        primaryjoin='and_(T01311Reajsalaritem.T01002_I_CDENT==T01026Padraoref.T01002_I_CDENT, T01311Reajsalaritem.T01025_I_CDPADRAO==T01026Padraoref.T01025_I_CDPADRAO, T01311Reajsalaritem.T01015_I_CDREF==T01026Padraoref.T01015_I_CDREF)',
+    t01026Padraoref = relationship('T01026Padraoref',
+        primaryjoin='and_(T01311Reajsalaritem.T01002_I_CDENT == T01026Padraoref.T01002_I_CDENT, T01311Reajsalaritem.T01025_I_CDPADRAO == T01026Padraoref.T01025_I_CDPADRAO, T01311Reajsalaritem.T01015_I_CDREF == T01026Padraoref.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO, T01015_I_CDREF])
 
 class T01312Fichadeficiencia(Base):
@@ -6826,8 +6859,8 @@ class T01313Solicitacalculo(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01580Agendaprocesso = relationship('T01580Agendaprocesso', foreign_keys=[T01580_I_CDPROCESSO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01313Solicitacalculo.T01313_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01313Solicitacalculo.T01313_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01313Solicitacalculo.T01313_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01313Solicitacalculo.T01313_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01313_I_ENTOPERADOR, T01313_I_MATOPERADOR])
 
 class T01314Avaliacaoep(Base):
@@ -6844,11 +6877,11 @@ class T01314Avaliacaoep(Base):
     T01314_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01314Avaliacaoep.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01314Avaliacaoep.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01314Avaliacaoep.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01314Avaliacaoep.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01314Avaliacaoep.T01314_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01314Avaliacaoep.T01314_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01314Avaliacaoep.T01314_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01314Avaliacaoep.T01314_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01314_I_ENTOPERADOR, T01314_I_MATOPERADOR])
 
 class T01315Calculoservidor(Base):
@@ -6861,8 +6894,8 @@ class T01315Calculoservidor(Base):
 
     # Relationships
     t01313Solicitacalculo = relationship('T01313Solicitacalculo', foreign_keys=[T01313_I_CDSOLICITACAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01315Calculoservidor.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01315Calculoservidor.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01315Calculoservidor.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01315Calculoservidor.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01316Adiamento(Base):
@@ -6874,8 +6907,8 @@ class T01316Adiamento(Base):
     T01316_I_PRIORIDADE = Column(Integer, primary_key=True)
 
     # Relationships
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01316Adiamento.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01316Adiamento.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01316Adiamento.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01316Adiamento.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01317Eventoincomp(Base):
@@ -6892,11 +6925,11 @@ class T01317Eventoincomp(Base):
     T01317_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01317Eventoincomp.T01317_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01317Eventoincomp.T01317_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01317Eventoincomp.T01317_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01317Eventoincomp.T01317_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01317_I_ENTOPERADOR, T01317_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01317Eventoincomp.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01317Eventoincomp.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01317Eventoincomp.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01317Eventoincomp.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01318Qdrcompativel(Base):
@@ -6913,14 +6946,14 @@ class T01318Qdrcompativel(Base):
     T01318_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01318Qdrcompativel.T01318_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01318Qdrcompativel.T01318_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01318Qdrcompativel.T01318_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01318Qdrcompativel.T01318_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01318_I_ENTOPERADOR, T01318_I_MATOPERADOR])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01318Qdrcompativel.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01318Qdrcompativel.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01318Qdrcompativel.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01318Qdrcompativel.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01318Qdrcompativel.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01318Qdrcompativel.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01318Qdrcompativel.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01318Qdrcompativel.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01319Eventoafastamento(Base):
@@ -6937,11 +6970,11 @@ class T01319Eventoafastamento(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01319_I_TPCOMPATIBILIDADE])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01319Eventoafastamento.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01319Eventoafastamento.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01319Eventoafastamento.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01319Eventoafastamento.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01319Eventoafastamento.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01319Eventoafastamento.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01319Eventoafastamento.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01319Eventoafastamento.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01320Progressao(Base):
@@ -6959,14 +6992,14 @@ class T01320Progressao(Base):
     T01320_D_DTFIM = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01320Progressao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01320Progressao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01320Progressao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01320Progressao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01026PadraorefByICdent = relationship('T01026Padraoref', 
-        primaryjoin='and_(T01320Progressao.T01002_I_CDENT==T01026Padraoref.T01002_I_CDENT, T01320Progressao.T01320_I_CDPADRAO==T01026Padraoref.T01025_I_CDPADRAO, T01320Progressao.T01320_I_CDREF==T01026Padraoref.T01015_I_CDREF)',
+    t01026PadraorefByICdent = relationship('T01026Padraoref',
+        primaryjoin='and_(T01320Progressao.T01002_I_CDENT == T01026Padraoref.T01002_I_CDENT, T01320Progressao.T01320_I_CDPADRAO == T01026Padraoref.T01025_I_CDPADRAO, T01320Progressao.T01320_I_CDREF == T01026Padraoref.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01320_I_CDPADRAO, T01320_I_CDREF])
-    t01026PadraorefByICdent = relationship('T01026Padraoref', 
-        primaryjoin='and_(T01320Progressao.T01002_I_CDENT==T01026Padraoref.T01002_I_CDENT, T01320Progressao.T01320_I_CDPADRAOANT==T01026Padraoref.T01025_I_CDPADRAO, T01320Progressao.T01320_I_CDREFANT==T01026Padraoref.T01015_I_CDREF)',
+    t01026PadraorefByICdent1 = relationship('T01026Padraoref',
+        primaryjoin='and_(T01320Progressao.T01002_I_CDENT == T01026Padraoref.T01002_I_CDENT, T01320Progressao.T01320_I_CDPADRAOANT == T01026Padraoref.T01025_I_CDPADRAO, T01320Progressao.T01320_I_CDREFANT == T01026Padraoref.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01320_I_CDPADRAOANT, T01320_I_CDREFANT])
 
 class T01321Parcela13sal(Base):
@@ -6997,8 +7030,8 @@ class T01322Script(Base):
     T01322_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01322Script.T01322_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01322Script.T01322_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01322Script.T01322_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01322Script.T01322_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01322_I_ENTOPERADOR, T01322_I_MATOPERADOR])
 
 class T01323Funcaocalculo(Base):
@@ -7019,11 +7052,11 @@ class T01323Funcaocalculo(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01322Script = relationship('T01322Script', 
-        primaryjoin='and_(T01323Funcaocalculo.T01322_I_CDSCRIPT==T01322Script.T01322_I_CDSCRIPT, T01323Funcaocalculo.T01322_I_VERSAO==T01322Script.T01322_I_VERSAO)',
+    t01322Script = relationship('T01322Script',
+        primaryjoin='and_(T01323Funcaocalculo.T01322_I_CDSCRIPT == T01322Script.T01322_I_CDSCRIPT, T01323Funcaocalculo.T01322_I_VERSAO == T01322Script.T01322_I_VERSAO)',
         foreign_keys=[T01322_I_CDSCRIPT, T01322_I_VERSAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01323Funcaocalculo.T01323_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01323Funcaocalculo.T01323_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01323Funcaocalculo.T01323_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01323Funcaocalculo.T01323_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01323_I_ENTOPERADOR, T01323_I_MATOPERADOR])
 
 class T01324Interface(Base):
@@ -7054,11 +7087,11 @@ class T01324Interface(Base):
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01324_I_TPINTERFACE])
-    t01322Script = relationship('T01322Script', 
-        primaryjoin='and_(T01324Interface.T01322_I_CDSCRIPT==T01322Script.T01322_I_CDSCRIPT, T01324Interface.T01322_I_VERSAO==T01322Script.T01322_I_VERSAO)',
+    t01322Script = relationship('T01322Script',
+        primaryjoin='and_(T01324Interface.T01322_I_CDSCRIPT == T01322Script.T01322_I_CDSCRIPT, T01324Interface.T01322_I_VERSAO == T01322Script.T01322_I_VERSAO)',
         foreign_keys=[T01322_I_CDSCRIPT, T01322_I_VERSAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01324Interface.T01324_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01324Interface.T01324_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01324Interface.T01324_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01324Interface.T01324_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01324_I_ENTOPERADOR, T01324_I_MATOPERADOR])
 
 class T01325Loginterface(Base):
@@ -7096,8 +7129,8 @@ class T01326Ocorrencialogint(Base):
     T01326_S_TEXTO = Column(String(500), nullable=False)
 
     # Relationships
-    t01325Loginterface = relationship('T01325Loginterface', 
-        primaryjoin='and_(T01326Ocorrencialogint.T01158_I_CDFOLHA==T01325Loginterface.T01158_I_CDFOLHA, T01326Ocorrencialogint.T01324_I_CDINTERFACE==T01325Loginterface.T01324_I_CDINTERFACE, T01326Ocorrencialogint.T01325_D_DTHRINICPROC==T01325Loginterface.T01325_D_DTHRINICPROC)',
+    t01325Loginterface = relationship('T01325Loginterface',
+        primaryjoin='and_(T01326Ocorrencialogint.T01158_I_CDFOLHA == T01325Loginterface.T01158_I_CDFOLHA, T01326Ocorrencialogint.T01324_I_CDINTERFACE == T01325Loginterface.T01324_I_CDINTERFACE, T01326Ocorrencialogint.T01325_D_DTHRINICPROC == T01325Loginterface.T01325_D_DTHRINICPROC)',
         foreign_keys=[T01158_I_CDFOLHA, T01324_I_CDINTERFACE, T01325_D_DTHRINICPROC])
 
 class T01327Arquivorecebido(Base):
@@ -7123,8 +7156,8 @@ class T01327Arquivorecebido(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERFACE])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01327Arquivorecebido.T01327_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01327Arquivorecebido.T01327_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01327Arquivorecebido.T01327_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01327Arquivorecebido.T01327_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01327_I_ENTOPERADOR, T01327_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01327_I_CDTPARQUIVO])
 
@@ -7149,8 +7182,8 @@ class T01329Linhaerro(Base):
     T01329_S_MENSAGEM = Column(String(1000), nullable=False)
 
     # Relationships
-    t01328Linhanaoprocessada = relationship('T01328Linhanaoprocessada', 
-        primaryjoin='and_(T01329Linhaerro.T01327_I_CDARQUIVO==T01328Linhanaoprocessada.T01327_I_CDARQUIVO, T01329Linhaerro.T01328_I_NRLINHA==T01328Linhanaoprocessada.T01328_I_NRLINHA)',
+    t01328Linhanaoprocessada = relationship('T01328Linhanaoprocessada',
+        primaryjoin='and_(T01329Linhaerro.T01327_I_CDARQUIVO == T01328Linhanaoprocessada.T01327_I_CDARQUIVO, T01329Linhaerro.T01328_I_NRLINHA == T01328Linhanaoprocessada.T01328_I_NRLINHA)',
         foreign_keys=[T01327_I_CDARQUIVO, T01328_I_NRLINHA])
 
 class T01330Solcalcquadro(Base):
@@ -7163,8 +7196,8 @@ class T01330Solcalcquadro(Base):
 
     # Relationships
     t01313Solicitacalculo = relationship('T01313Solicitacalculo', foreign_keys=[T01313_I_CDSOLICITACAO])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01330Solcalcquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01330Solcalcquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01330Solcalcquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01330Solcalcquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01331Solcalccarreira(Base):
@@ -7177,8 +7210,8 @@ class T01331Solcalccarreira(Base):
 
     # Relationships
     t01313Solicitacalculo = relationship('T01313Solicitacalculo', foreign_keys=[T01313_I_CDSOLICITACAO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01331Solcalccarreira.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01331Solcalccarreira.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01331Solcalccarreira.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01331Solcalccarreira.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01332Solcalcunidf(Base):
@@ -7192,8 +7225,8 @@ class T01332Solcalcunidf(Base):
 
     # Relationships
     t01313Solicitacalculo = relationship('T01313Solicitacalculo', foreign_keys=[T01313_I_CDSOLICITACAO])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01332Solcalcunidf.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01332Solcalcunidf.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01332Solcalcunidf.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01332Solcalcunidf.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01332Solcalcunidf.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01332Solcalcunidf.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01333Grupoeventos(Base):
@@ -7220,8 +7253,8 @@ class T01334Quadrocodigos(Base):
     T01334_I_TIPO = Column(Numeric(1, 0), primary_key=True)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01334Quadrocodigos.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01334Quadrocodigos.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01334Quadrocodigos.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01334Quadrocodigos.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01335Itemrepfolha(Base):
@@ -7253,14 +7286,14 @@ class T01335Itemrepfolha(Base):
     t01324InterfaceByICdinterfacefechou = relationship('T01324Interface', foreign_keys=[T01335_I_CDINTERFACEFECHOU])
     t01158AbertfolhaByICdfolhafechou = relationship('T01158Abertfolha', foreign_keys=[T01335_I_CDFOLHAFECHOU])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01335_I_SITUACAO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01335Itemrepfolha.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01335Itemrepfolha.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01335Itemrepfolha.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01335Itemrepfolha.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01335Itemrepfolha.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01335Itemrepfolha.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01335Itemrepfolha.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01335Itemrepfolha.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01335Itemrepfolha.T01335_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01335Itemrepfolha.T01335_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01335Itemrepfolha.T01335_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01335Itemrepfolha.T01335_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01335_I_ENTOPERADOR, T01335_I_MATOPERADOR])
 
 class T01337Histeventos(Base):
@@ -7279,8 +7312,8 @@ class T01337Histeventos(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01337Histeventos.T01337_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01337Histeventos.T01337_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01337Histeventos.T01337_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01337Histeventos.T01337_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01337_I_ENTOPERADOR, T01337_I_MATOPERADOR])
 
 class T01338Eventoflgrupos(Base):
@@ -7297,14 +7330,14 @@ class T01338Eventoflgrupos(Base):
     T01338_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01338Eventoflgrupos.T01338_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01338Eventoflgrupos.T01338_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01338Eventoflgrupos.T01338_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01338Eventoflgrupos.T01338_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01338_I_ENTOPERADOR, T01338_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01338Eventoflgrupos.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01338Eventoflgrupos.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01338Eventoflgrupos.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01338Eventoflgrupos.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01333Grupoeventos = relationship('T01333Grupoeventos', 
-        primaryjoin='and_(T01338Eventoflgrupos.T01333_I_CDGREVENTO==T01333Grupoeventos.T01333_I_CDGREVENTO, T01338Eventoflgrupos.T01002_I_CDENT==T01333Grupoeventos.T01002_I_CDENT)',
+    t01333Grupoeventos = relationship('T01333Grupoeventos',
+        primaryjoin='and_(T01338Eventoflgrupos.T01333_I_CDGREVENTO == T01333Grupoeventos.T01333_I_CDGREVENTO, T01338Eventoflgrupos.T01002_I_CDENT == T01333Grupoeventos.T01002_I_CDENT)',
         foreign_keys=[T01333_I_CDGREVENTO, T01002_I_CDENT])
 
 class T01339Afastperaval(Base):
@@ -7320,11 +7353,11 @@ class T01339Afastperaval(Base):
     T01339_I_NUMDIASPRO = Column(Numeric(4, 0), nullable=False)
 
     # Relationships
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01339Afastperaval.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01339Afastperaval.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01339Afastperaval.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01339Afastperaval.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01339Afastperaval.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01339Afastperaval.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01079Periodoestprob = relationship('T01079Periodoestprob', 
-        primaryjoin='and_(T01339Afastperaval.T01002_I_CDENT==T01079Periodoestprob.T01002_I_CDENT, T01339Afastperaval.T01001_I_MATRICULA==T01079Periodoestprob.T01001_I_MATRICULA, T01339Afastperaval.T01314_D_DTADMISSAO==T01079Periodoestprob.T01314_D_DTADMISSAO, T01339Afastperaval.T01079_I_PERIODO==T01079Periodoestprob.T01079_I_PERIODO, T01339Afastperaval.T01079_I_SEQSUBSID==T01079Periodoestprob.T01079_I_SEQSUBSID)',
+    t01079Periodoestprob = relationship('T01079Periodoestprob',
+        primaryjoin='and_(T01339Afastperaval.T01002_I_CDENT == T01079Periodoestprob.T01002_I_CDENT, T01339Afastperaval.T01001_I_MATRICULA == T01079Periodoestprob.T01001_I_MATRICULA, T01339Afastperaval.T01314_D_DTADMISSAO == T01079Periodoestprob.T01314_D_DTADMISSAO, T01339Afastperaval.T01079_I_PERIODO == T01079Periodoestprob.T01079_I_PERIODO, T01339Afastperaval.T01079_I_SEQSUBSID == T01079Periodoestprob.T01079_I_SEQSUBSID)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01314_D_DTADMISSAO, T01079_I_PERIODO, T01079_I_SEQSUBSID])
 
 class T01340Joiaipmc(Base):
@@ -7341,8 +7374,8 @@ class T01340Joiaipmc(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHAVIRADA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01340Joiaipmc.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01340Joiaipmc.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01340Joiaipmc.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01340Joiaipmc.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01342Entidadesefip(Base):
@@ -7403,8 +7436,8 @@ class T01345Entpasep909(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01345Entpasep909.T01345_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01345Entpasep909.T01345_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01345Entpasep909.T01345_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01345Entpasep909.T01345_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01345_I_ENTOPERADOR, T01345_I_MATOPERADOR])
 
 class T01346Totpasep909(Base):
@@ -7418,8 +7451,8 @@ class T01346Totpasep909(Base):
     T01346_I_TOTSERVENV = Column(Numeric(6, 0), nullable=False)
 
     # Relationships
-    t01345Entpasep909 = relationship('T01345Entpasep909', 
-        primaryjoin='and_(T01346Totpasep909.T01002_I_CDENT==T01345Entpasep909.T01002_I_CDENT, T01346Totpasep909.T01345_I_ANO==T01345Entpasep909.T01345_I_ANO)',
+    t01345Entpasep909 = relationship('T01345Entpasep909',
+        primaryjoin='and_(T01346Totpasep909.T01002_I_CDENT == T01345Entpasep909.T01002_I_CDENT, T01346Totpasep909.T01345_I_ANO == T01345Entpasep909.T01345_I_ANO)',
         foreign_keys=[T01002_I_CDENT, T01345_I_ANO])
 
 class T01347Servpasep909(Base):
@@ -7437,11 +7470,11 @@ class T01347Servpasep909(Base):
     T01347_S_VETOROCOR = Column(String(40), nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01347Servpasep909.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01347Servpasep909.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01347Servpasep909.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01347Servpasep909.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01345Entpasep909 = relationship('T01345Entpasep909', 
-        primaryjoin='and_(T01347Servpasep909.T01002_I_CDENT==T01345Entpasep909.T01002_I_CDENT, T01347Servpasep909.T01345_I_ANO==T01345Entpasep909.T01345_I_ANO)',
+    t01345Entpasep909 = relationship('T01345Entpasep909',
+        primaryjoin='and_(T01347Servpasep909.T01002_I_CDENT == T01345Entpasep909.T01002_I_CDENT, T01347Servpasep909.T01345_I_ANO == T01345Entpasep909.T01345_I_ANO)',
         foreign_keys=[T01002_I_CDENT, T01345_I_ANO])
 
 class T01348Ocorrenciapasep(Base):
@@ -7474,8 +7507,8 @@ class T01349Entpasep910(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01349Entpasep910.T01349_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01349Entpasep910.T01349_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01349Entpasep910.T01349_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01349Entpasep910.T01349_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01349_I_ENTOPERADOR, T01349_I_MATOPERADOR])
 
 class T01350Totpasep910(Base):
@@ -7490,8 +7523,8 @@ class T01350Totpasep910(Base):
     T01350_I_VLRTOTAL = Column(Numeric(19, 4), nullable=False)
 
     # Relationships
-    t01349Entpasep910 = relationship('T01349Entpasep910', 
-        primaryjoin='and_(T01350Totpasep910.T01002_I_CDENT==T01349Entpasep910.T01002_I_CDENT, T01350Totpasep910.T01349_I_ANO==T01349Entpasep910.T01349_I_ANO)',
+    t01349Entpasep910 = relationship('T01349Entpasep910',
+        primaryjoin='and_(T01350Totpasep910.T01002_I_CDENT == T01349Entpasep910.T01002_I_CDENT, T01350Totpasep910.T01349_I_ANO == T01349Entpasep910.T01349_I_ANO)',
         foreign_keys=[T01002_I_CDENT, T01349_I_ANO])
 
 class T01351Servpasep910(Base):
@@ -7517,11 +7550,11 @@ class T01351Servpasep910(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01351Servpasep910.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01351Servpasep910.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01351Servpasep910.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01351Servpasep910.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01349Entpasep910 = relationship('T01349Entpasep910', 
-        primaryjoin='and_(T01351Servpasep910.T01002_I_CDENT==T01349Entpasep910.T01002_I_CDENT, T01351Servpasep910.T01349_I_ANO==T01349Entpasep910.T01349_I_ANO)',
+    t01349Entpasep910 = relationship('T01349Entpasep910',
+        primaryjoin='and_(T01351Servpasep910.T01002_I_CDENT == T01349Entpasep910.T01002_I_CDENT, T01351Servpasep910.T01349_I_ANO == T01349Entpasep910.T01349_I_ANO)',
         foreign_keys=[T01002_I_CDENT, T01349_I_ANO])
 
 class T01352Diferencavt(Base):
@@ -7536,8 +7569,8 @@ class T01352Diferencavt(Base):
     T01352_D_MESANOREFDIF = Column(DateTime, primary_key=True)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01352Diferencavt.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01352Diferencavt.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01352Diferencavt.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01352Diferencavt.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01353Tpcamporel(Base):
@@ -7603,21 +7636,23 @@ class T01355Eventoinfserv(Base):
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERFACE])
     t01327Arquivorecebido = relationship('T01327Arquivorecebido', foreign_keys=[T01327_I_CDARQUIVO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01355Eventoinfserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01355Eventoinfserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01355Eventoinfserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01355Eventoinfserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01355Eventoinfserv.T01355_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01355Eventoinfserv.T01355_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01355Eventoinfserv.T01355_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01355Eventoinfserv.T01355_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01355_I_ENTOPERADOR, T01355_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01355Eventoinfserv.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01355Eventoinfserv.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01355Eventoinfserv.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01355Eventoinfserv.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01355_I_CDENTLOCTRABEFET])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01355Eventoinfserv.T01355_I_CDENTLOCTRABEFET==T01004Unidfunc.T01002_I_CDENT, T01355Eventoinfserv.T01355_I_CDLOCTRABEFET==T01004Unidfunc.T01004_I_CDUNIDFUN, T01355Eventoinfserv.T01355_I_VLOCTRABEFET==T01004Unidfunc.T01004_I_VERSAO)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01355Eventoinfserv.T01355_I_CDENTLOCTRABEFET == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01355_I_CDENTLOCTRABEFET])
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01355Eventoinfserv.T01355_I_CDENTLOCTRABEFET == T01004Unidfunc.T01002_I_CDENT, T01355Eventoinfserv.T01355_I_CDLOCTRABEFET == T01004Unidfunc.T01004_I_CDUNIDFUN, T01355Eventoinfserv.T01355_I_VLOCTRABEFET == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01355_I_CDENTLOCTRABEFET, T01355_I_CDLOCTRABEFET, T01355_I_VLOCTRABEFET])
-    t01001ServidorByIEntoperincl = relationship('T01001Servidor', 
-        primaryjoin='and_(T01355Eventoinfserv.T01355_I_ENTOPERINCL==T01001Servidor.T01002_I_CDENT, T01355Eventoinfserv.T01355_I_MATOPERINCL==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperincl = relationship('T01001Servidor',
+        primaryjoin='and_(T01355Eventoinfserv.T01355_I_ENTOPERINCL == T01001Servidor.T01002_I_CDENT, T01355Eventoinfserv.T01355_I_MATOPERINCL == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01355_I_ENTOPERINCL, T01355_I_MATOPERINCL])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01355_I_TPATO])
 
@@ -7662,9 +7697,11 @@ class T01355EventoinfservHist(Base):
     T01355_S_PERIODREF = Column(String(7))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01355_I_CDENTLOCTRABEFET])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01355EventoinfservHist.T01355_I_CDENTLOCTRABEFET==T01004Unidfunc.T01002_I_CDENT, T01355EventoinfservHist.T01355_I_CDLOCTRABEFET==T01004Unidfunc.T01004_I_CDUNIDFUN, T01355EventoinfservHist.T01355_I_VLOCTRABEFET==T01004Unidfunc.T01004_I_VERSAO)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01355EventoinfservHist.T01355_I_CDENTLOCTRABEFET == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01355_I_CDENTLOCTRABEFET])
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01355EventoinfservHist.T01355_I_CDENTLOCTRABEFET == T01004Unidfunc.T01002_I_CDENT, T01355EventoinfservHist.T01355_I_CDLOCTRABEFET == T01004Unidfunc.T01004_I_CDUNIDFUN, T01355EventoinfservHist.T01355_I_VLOCTRABEFET == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01355_I_CDENTLOCTRABEFET, T01355_I_CDLOCTRABEFET, T01355_I_VLOCTRABEFET])
 
 class T01356Parceventoinf(Base):
@@ -7685,8 +7722,8 @@ class T01356Parceventoinf(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01355Eventoinfserv = relationship('T01355Eventoinfserv', foreign_keys=[T01355_I_CDEVENTOSERV])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01356Parceventoinf.T01356_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01356Parceventoinf.T01356_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01356Parceventoinf.T01356_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01356Parceventoinf.T01356_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01356_I_ENTOPERADOR, T01356_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01356_I_TIPOPAGA])
 
@@ -7749,19 +7786,19 @@ class T01358Itemfinanceiro(Base):
     T01466_I_CODRUBRICAMES = Column(Integer, ForeignKey('RH.T01466_RUBRICAMES.T01466_I_CODRUBRICAMES'))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01358Itemfinanceiro.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01358Itemfinanceiro.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01358Itemfinanceiro.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01358Itemfinanceiro.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01358_I_CDENTPAG])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01358Itemfinanceiro.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01358Itemfinanceiro.T01059_I_ANOVBORCA==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01358Itemfinanceiro.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01358Itemfinanceiro.T01059_I_ANOVBORCA == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCA])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHAEMPENHO])
-    t01409Divisaofolha = relationship('T01409Divisaofolha', 
-        primaryjoin='and_(T01358Itemfinanceiro.T01407_I_CDDIVISAO==T01409Divisaofolha.T01407_I_CDDIVISAO, T01358Itemfinanceiro.T01158_I_CDFOLHA==T01409Divisaofolha.T01158_I_CDFOLHA)',
+    t01409Divisaofolha = relationship('T01409Divisaofolha',
+        primaryjoin='and_(T01358Itemfinanceiro.T01407_I_CDDIVISAO == T01409Divisaofolha.T01407_I_CDDIVISAO, T01358Itemfinanceiro.T01158_I_CDFOLHA == T01409Divisaofolha.T01158_I_CDFOLHA)',
         foreign_keys=[T01407_I_CDDIVISAO, T01158_I_CDFOLHA])
-    t01466Rubricames = relationship('T01466Rubricames', 
-        primaryjoin='and_(T01358Itemfinanceiro.T01466_I_CODRUBRICAMES==T01466Rubricames.T01466_I_CODRUBRICAMES, T01358Itemfinanceiro.T01158_I_CDFOLHA==T01466Rubricames.T01158_I_CDFOLHA)',
+    t01466Rubricames = relationship('T01466Rubricames',
+        primaryjoin='and_(T01358Itemfinanceiro.T01466_I_CODRUBRICAMES == T01466Rubricames.T01466_I_CODRUBRICAMES, T01358Itemfinanceiro.T01158_I_CDFOLHA == T01466Rubricames.T01158_I_CDFOLHA)',
         foreign_keys=[T01466_I_CODRUBRICAMES, T01158_I_CDFOLHA])
 
 class T01358Itemfinanceiro511(Base):
@@ -7818,8 +7855,8 @@ class T01359Itemferiaspgto(Base):
     t01158AbertfolhaByICdfolharecolhe = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHARECOLHE])
     t01158AbertfolhaByICdfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01359_I_TIPOCOLETIVA])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01359Itemferiaspgto.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01359Itemferiaspgto.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01359Itemferiaspgto.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01359Itemferiaspgto.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01359Itemferiaspgto.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01359Itemferiaspgto.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
     t01158AbertfolhaByICdfolhasupl = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHASUPL])
 
@@ -7840,8 +7877,8 @@ class T01360Histlancmanual(Base):
     # Relationships
     t01355Eventoinfserv = relationship('T01355Eventoinfserv', foreign_keys=[T01355_I_CDEVENTOSERV])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01360_I_TPDADOLEG])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01360Histlancmanual.T01360_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01360Histlancmanual.T01360_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01360Histlancmanual.T01360_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01360Histlancmanual.T01360_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01360_I_ENTOPERADOR, T01360_I_MATOPERADOR])
 
 class T01360HistlancmanualHist(Base):
@@ -7869,8 +7906,8 @@ class T01361Servpasep909rj(Base):
     T01361_S_MOTREJEICAO = Column(String(1000), nullable=False)
 
     # Relationships
-    t01345Entpasep909 = relationship('T01345Entpasep909', 
-        primaryjoin='and_(T01361Servpasep909rj.T01002_I_CDENT==T01345Entpasep909.T01002_I_CDENT, T01361Servpasep909rj.T01345_I_ANO==T01345Entpasep909.T01345_I_ANO)',
+    t01345Entpasep909 = relationship('T01345Entpasep909',
+        primaryjoin='and_(T01361Servpasep909rj.T01002_I_CDENT == T01345Entpasep909.T01002_I_CDENT, T01361Servpasep909rj.T01345_I_ANO == T01345Entpasep909.T01345_I_ANO)',
         foreign_keys=[T01002_I_CDENT, T01345_I_ANO])
 
 class T01362Servpasep910rj(Base):
@@ -7884,8 +7921,8 @@ class T01362Servpasep910rj(Base):
     T01362_S_MOTREJEICAO = Column(String(1000), nullable=False)
 
     # Relationships
-    t01349Entpasep910 = relationship('T01349Entpasep910', 
-        primaryjoin='and_(T01362Servpasep910rj.T01002_I_CDENT==T01349Entpasep910.T01002_I_CDENT, T01362Servpasep910rj.T01349_I_ANO==T01349Entpasep910.T01349_I_ANO)',
+    t01349Entpasep910 = relationship('T01349Entpasep910',
+        primaryjoin='and_(T01362Servpasep910rj.T01002_I_CDENT == T01349Entpasep910.T01002_I_CDENT, T01362Servpasep910rj.T01349_I_ANO == T01349Entpasep910.T01349_I_ANO)',
         foreign_keys=[T01002_I_CDENT, T01349_I_ANO])
 
 class T01363Cedulac(Base):
@@ -7912,12 +7949,14 @@ class T01364Valorcedulac(Base):
     T01364_S_OUTROS = Column(String)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01364_I_CDENTPAG])
-    t01363Cedulac = relationship('T01363Cedulac', 
-        primaryjoin='and_(T01364Valorcedulac.T01363_I_ANO==T01363Cedulac.T01363_I_ANO, T01364Valorcedulac.T01363_I_ITEM==T01363Cedulac.T01363_I_ITEM, T01364Valorcedulac.T01363_I_LINHA==T01363Cedulac.T01363_I_LINHA, T01364Valorcedulac.T01364_I_CDENTPAG==T01363Cedulac.T01002_I_CDENT)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01364Valorcedulac.T01364_I_CDENTPAG == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01364_I_CDENTPAG])
+    t01363Cedulac = relationship('T01363Cedulac',
+        primaryjoin='and_(T01364Valorcedulac.T01363_I_ANO == T01363Cedulac.T01363_I_ANO, T01364Valorcedulac.T01363_I_ITEM == T01363Cedulac.T01363_I_ITEM, T01364Valorcedulac.T01363_I_LINHA == T01363Cedulac.T01363_I_LINHA, T01364Valorcedulac.T01364_I_CDENTPAG == T01363Cedulac.T01002_I_CDENT)',
         foreign_keys=[T01363_I_ANO, T01363_I_ITEM, T01363_I_LINHA, T01364_I_CDENTPAG])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01364Valorcedulac.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01364Valorcedulac.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01364Valorcedulac.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01364Valorcedulac.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01365Eventoadiado(Base):
@@ -7949,11 +7988,11 @@ class T01365Eventoadiado(Base):
     t01158AbertfolhaByICdfolhavirada = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHAVIRADA])
     t01158AbertfolhaByICdfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERFACE])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01365Eventoadiado.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01365Eventoadiado.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01365Eventoadiado.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01365Eventoadiado.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01365Eventoadiado.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01365Eventoadiado.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01365Eventoadiado.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01365Eventoadiado.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01366Paramevadiado(Base):
@@ -8001,11 +8040,11 @@ class T01368Remessa(Base):
     t01071ItemlistaByIMotcancelamento = relationship('T01071Itemlista', foreign_keys=[T01368_I_MOTCANCELAMENTO])
     t01071ItemlistaByITppagto = relationship('T01071Itemlista', foreign_keys=[T01368_I_TPPAGTO])
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01368Remessa.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01368Remessa.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01368Remessa.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01368Remessa.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01368Remessa.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01368Remessa.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01368Remessa.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01368Remessa.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01369Histremessa(Base):
@@ -8027,8 +8066,8 @@ class T01369Histremessa(Base):
 
     # Relationships
     t01368Remessa = relationship('T01368Remessa', foreign_keys=[T01368_I_CDCONTROLE])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01369Histremessa.T01369_I_CDAGENCIADEB==T01057Agbancaria.T01057_S_CDAGENCIA, T01369Histremessa.T01369_I_CDBANCODEB==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01369Histremessa.T01369_I_CDAGENCIADEB == T01057Agbancaria.T01057_S_CDAGENCIA, T01369Histremessa.T01369_I_CDBANCODEB == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01369_I_CDAGENCIADEB, T01369_I_CDBANCODEB])
 
 class T01370Logarqenviado(Base):
@@ -8044,8 +8083,8 @@ class T01370Logarqenviado(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01370Logarqenviado.T01370_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01370Logarqenviado.T01370_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01370Logarqenviado.T01370_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01370Logarqenviado.T01370_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01370_I_ENTOPERADOR, T01370_I_MATOPERADOR])
 
 class T01372Liqconsignavel(Base):
@@ -8081,8 +8120,8 @@ class T01373Resumopgto(Base):
     T01373_I_VRLDEP = Column(Numeric(19, 4))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01373Resumopgto.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01373Resumopgto.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01373Resumopgto.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01373Resumopgto.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01373_I_CDENTPAG])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
@@ -8123,14 +8162,14 @@ class T01374Aposentadoria(Base):
     t01071ItemlistaByICdcriterio = relationship('T01071Itemlista', foreign_keys=[T01071_I_CDCRITERIO])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHAACERTO])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENGACERTO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01374Aposentadoria.T01374_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01374Aposentadoria.T01374_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01374Aposentadoria.T01374_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01374Aposentadoria.T01374_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01374_I_ENTOPERADOR, T01374_I_MATOPERADOR])
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01374Aposentadoria.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01374Aposentadoria.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01374Aposentadoria.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01374Aposentadoria.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01374Aposentadoria.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01374Aposentadoria.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01374Aposentadoria.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01374Aposentadoria.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01071ItemlistaByIIndtemposerv = relationship('T01071Itemlista', foreign_keys=[T01374_I_INDTEMPOSERV])
 
@@ -8150,8 +8189,8 @@ class T01375Refeicaoserv(Base):
     # Relationships
     t01071ItemlistaByICdturno = relationship('T01071Itemlista', foreign_keys=[T01375_I_CDTURNO])
     t01071ItemlistaByIOrigem = relationship('T01071Itemlista', foreign_keys=[T01375_I_ORIGEM])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01375Refeicaoserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01375Refeicaoserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01375Refeicaoserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01375Refeicaoserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01376Ocorrenciainterface(Base):
@@ -8165,8 +8204,8 @@ class T01376Ocorrenciainterface(Base):
     T01376_S_TEXTO = Column(Text, nullable=False)
 
     # Relationships
-    t01325Loginterface = relationship('T01325Loginterface', 
-        primaryjoin='and_(T01376Ocorrenciainterface.T01158_I_CDFOLHA==T01325Loginterface.T01158_I_CDFOLHA, T01376Ocorrenciainterface.T01324_I_CDINTERFACE==T01325Loginterface.T01324_I_CDINTERFACE, T01376Ocorrenciainterface.T01325_D_DTHRINICPROC==T01325Loginterface.T01325_D_DTHRINICPROC)',
+    t01325Loginterface = relationship('T01325Loginterface',
+        primaryjoin='and_(T01376Ocorrenciainterface.T01158_I_CDFOLHA == T01325Loginterface.T01158_I_CDFOLHA, T01376Ocorrenciainterface.T01324_I_CDINTERFACE == T01325Loginterface.T01324_I_CDINTERFACE, T01376Ocorrenciainterface.T01325_D_DTHRINICPROC == T01325Loginterface.T01325_D_DTHRINICPROC)',
         foreign_keys=[T01158_I_CDFOLHA, T01324_I_CDINTERFACE, T01325_D_DTHRINICPROC])
 
 class T01377Eventosaposentadoria(Base):
@@ -8187,14 +8226,14 @@ class T01377Eventosaposentadoria(Base):
     T01377_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01377Eventosaposentadoria.T01377_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01377Eventosaposentadoria.T01377_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01377Eventosaposentadoria.T01377_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01377Eventosaposentadoria.T01377_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01377_I_ENTOPERADOR, T01377_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01377Eventosaposentadoria.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01377Eventosaposentadoria.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01377Eventosaposentadoria.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01377Eventosaposentadoria.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01374Aposentadoria = relationship('T01374Aposentadoria', 
-        primaryjoin='and_(T01377Eventosaposentadoria.T01002_I_CDENT==T01374Aposentadoria.T01002_I_CDENT, T01377Eventosaposentadoria.T01001_I_MATRICULA==T01374Aposentadoria.T01001_I_MATRICULA, T01377Eventosaposentadoria.T01374_D_DTAPOSENT==T01374Aposentadoria.T01374_D_DTAPOSENT)',
+    t01374Aposentadoria = relationship('T01374Aposentadoria',
+        primaryjoin='and_(T01377Eventosaposentadoria.T01002_I_CDENT == T01374Aposentadoria.T01002_I_CDENT, T01377Eventosaposentadoria.T01001_I_MATRICULA == T01374Aposentadoria.T01001_I_MATRICULA, T01377Eventosaposentadoria.T01374_D_DTAPOSENT == T01374Aposentadoria.T01374_D_DTAPOSENT)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01374_D_DTAPOSENT])
 
 class T01378Loctrabmodulo(Base):
@@ -8207,8 +8246,8 @@ class T01378Loctrabmodulo(Base):
     T01378_S_MODULO = Column(String(70), primary_key=True)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01378Loctrabmodulo.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01378Loctrabmodulo.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01378Loctrabmodulo.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01378Loctrabmodulo.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01378Loctrabmodulo.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01378Loctrabmodulo.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01379Unidfuncapos(Base):
@@ -8223,11 +8262,11 @@ class T01379Unidfuncapos(Base):
     T01379_I_VLOCTRAB = Column(Numeric(2, 0), ForeignKey('RH.T01004_UNIDFUNC.T01004_I_VERSAO'), nullable=False)
 
     # Relationships
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01379Unidfuncapos.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01379Unidfuncapos.T01379_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01379Unidfuncapos.T01379_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01379Unidfuncapos.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01379Unidfuncapos.T01379_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01379Unidfuncapos.T01379_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01379_I_CDLOCTRAB, T01379_I_VLOCTRAB])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01379Unidfuncapos.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01379Unidfuncapos.T01379_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01379Unidfuncapos.T01379_I_VORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01379Unidfuncapos.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01379Unidfuncapos.T01379_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01379Unidfuncapos.T01379_I_VORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01379_I_CDORGLOT, T01379_I_VORGLOT])
 
 class T01380Ccentidade(Base):
@@ -8248,8 +8287,8 @@ class T01380Ccentidade(Base):
 
     # Relationships
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01380Ccentidade.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01380Ccentidade.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01380Ccentidade.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01380Ccentidade.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
 
 class T01381Tpbeneficio(Base):
@@ -8271,8 +8310,8 @@ class T01382Eventotpbeneficio(Base):
 
     # Relationships
     t01381Tpbeneficio = relationship('T01381Tpbeneficio', foreign_keys=[T01381_I_CDBENEFICIO])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01382Eventotpbeneficio.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01382Eventotpbeneficio.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01382Eventotpbeneficio.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01382Eventotpbeneficio.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01383Isencaoexcserv(Base):
@@ -8287,11 +8326,11 @@ class T01383Isencaoexcserv(Base):
     T01383_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01383Isencaoexcserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01383Isencaoexcserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01383Isencaoexcserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01383Isencaoexcserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01383Isencaoexcserv.T01383_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01383Isencaoexcserv.T01383_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01383Isencaoexcserv.T01383_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01383Isencaoexcserv.T01383_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01383_I_ENTOPERADOR, T01383_I_MATOPERADOR])
 
 class T01384Docapre(Base):
@@ -8307,8 +8346,8 @@ class T01384Docapre(Base):
     T01384_S_AVALIACAO = Column(String(255))
 
     # Relationships
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01384Docapre.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01384Docapre.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01384Docapre.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01384Docapre.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01384Docapre.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01384Docapre.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01384Docapre.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01384Docapre.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
 
 class T01385Histfreq(Base):
@@ -8325,8 +8364,8 @@ class T01385Histfreq(Base):
     # Relationships
     t01038Refefreq = relationship('T01038Refefreq', foreign_keys=[T01038_I_CDREFEFRE])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01385_I_TPHIST])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01385Histfreq.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01385Histfreq.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01385Histfreq.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01385Histfreq.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01386Menutpfolha(Base):
@@ -8354,14 +8393,14 @@ class T01387Eventopadrao(Base):
     T01387_I_PERCENTUAL = Column(Numeric(8, 2))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01387Eventopadrao.T01387_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01387Eventopadrao.T01387_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01387Eventopadrao.T01387_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01387Eventopadrao.T01387_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01387_I_ENTOPERADOR, T01387_I_MATOPERADOR])
-    t01025Padrao = relationship('T01025Padrao', 
-        primaryjoin='and_(T01387Eventopadrao.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01387Eventopadrao.T01025_I_CDPADRAO==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025Padrao = relationship('T01025Padrao',
+        primaryjoin='and_(T01387Eventopadrao.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01387Eventopadrao.T01025_I_CDPADRAO == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01387Eventopadrao.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01387Eventopadrao.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01387Eventopadrao.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01387Eventopadrao.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01388Ocorrenciaretorno(Base):
@@ -8402,8 +8441,8 @@ class T01390Processoant(Base):
     T01390_I_TPDEP = Column(Numeric(1, 0))
 
     # Relationships
-    t01389Processo = relationship('T01389Processo', 
-        primaryjoin='and_(T01390Processoant.T01389_I_CDPROCESSO==T01389Processo.T01389_I_CDPROCESSO, T01390Processoant.T01002_I_CDENT==T01389Processo.T01002_I_CDENT)',
+    t01389Processo = relationship('T01389Processo',
+        primaryjoin='and_(T01390Processoant.T01389_I_CDPROCESSO == T01389Processo.T01389_I_CDPROCESSO, T01390Processoant.T01002_I_CDENT == T01389Processo.T01002_I_CDENT)',
         foreign_keys=[T01389_I_CDPROCESSO, T01002_I_CDENT])
 
 class T01391Controleprocesso(Base):
@@ -8416,10 +8455,12 @@ class T01391Controleprocesso(Base):
     T01391_I_STATUS = Column(Numeric(1, 0), nullable=False)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01391Controleprocesso.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01389Processo = relationship('T01389Processo', 
-        primaryjoin='and_(T01391Controleprocesso.T01389_I_CDPROCESSO==T01389Processo.T01389_I_CDPROCESSO, T01391Controleprocesso.T01002_I_CDENT==T01389Processo.T01002_I_CDENT)',
+    t01389Processo = relationship('T01389Processo',
+        primaryjoin='and_(T01391Controleprocesso.T01389_I_CDPROCESSO == T01389Processo.T01389_I_CDPROCESSO, T01391Controleprocesso.T01002_I_CDENT == T01389Processo.T01002_I_CDENT)',
         foreign_keys=[T01389_I_CDPROCESSO, T01002_I_CDENT])
 
 class T01392Custorefeicao(Base):
@@ -8444,8 +8485,8 @@ class T01393Faixasalrefeicao(Base):
     T01393_I_PERCENTUAL = Column(Numeric(5, 2), nullable=False)
 
     # Relationships
-    t01392Custorefeicao = relationship('T01392Custorefeicao', 
-        primaryjoin='and_(T01393Faixasalrefeicao.T01002_I_CDENT==T01392Custorefeicao.T01002_I_CDENT, T01393Faixasalrefeicao.T01392_D_DTINICVIG==T01392Custorefeicao.T01392_D_DTINICVIG)',
+    t01392Custorefeicao = relationship('T01392Custorefeicao',
+        primaryjoin='and_(T01393Faixasalrefeicao.T01002_I_CDENT == T01392Custorefeicao.T01002_I_CDENT, T01393Faixasalrefeicao.T01392_D_DTINICVIG == T01392Custorefeicao.T01392_D_DTINICVIG)',
         foreign_keys=[T01002_I_CDENT, T01392_D_DTINICVIG])
 
 class T01395Moeda(Base):
@@ -8471,8 +8512,8 @@ class T01396Contapadrao(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01396Contapadrao.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01396Contapadrao.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01396Contapadrao.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01396Contapadrao.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
 
 class T01397Projecao13(Base):
@@ -8494,11 +8535,11 @@ class T01397Projecao13(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01397Projecao13.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01397Projecao13.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01397Projecao13.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01397Projecao13.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01397Projecao13.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01397Projecao13.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01397Projecao13.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01397Projecao13.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01398Itemfinancparam(Base):
@@ -8514,8 +8555,8 @@ class T01398Itemfinancparam(Base):
     T01398_I_VALOR = Column(String(20))
 
     # Relationships
-    t01358Itemfinanceiro = relationship('T01358Itemfinanceiro', 
-        primaryjoin='and_(T01398Itemfinancparam.T01158_I_CDFOLHA==T01358Itemfinanceiro.T01158_I_CDFOLHA, T01398Itemfinancparam.T01002_I_CDENT==T01358Itemfinanceiro.T01002_I_CDENT, T01398Itemfinancparam.T01001_I_MATRICULA==T01358Itemfinanceiro.T01001_I_MATRICULA, T01398Itemfinancparam.T01058_I_CDEVENTO==T01358Itemfinanceiro.T01058_I_CDEVENTO, T01398Itemfinancparam.T01358_I_SEQUENCIA==T01358Itemfinanceiro.T01358_I_SEQUENCIA)',
+    t01358Itemfinanceiro = relationship('T01358Itemfinanceiro',
+        primaryjoin='and_(T01398Itemfinancparam.T01158_I_CDFOLHA == T01358Itemfinanceiro.T01158_I_CDFOLHA, T01398Itemfinancparam.T01002_I_CDENT == T01358Itemfinanceiro.T01002_I_CDENT, T01398Itemfinancparam.T01001_I_MATRICULA == T01358Itemfinanceiro.T01001_I_MATRICULA, T01398Itemfinancparam.T01058_I_CDEVENTO == T01358Itemfinanceiro.T01058_I_CDEVENTO, T01398Itemfinancparam.T01358_I_SEQUENCIA == T01358Itemfinanceiro.T01358_I_SEQUENCIA)',
         foreign_keys=[T01158_I_CDFOLHA, T01002_I_CDENT, T01001_I_MATRICULA, T01058_I_CDEVENTO, T01358_I_SEQUENCIA])
 
 class T01399Paramprojecao(Base):
@@ -8531,8 +8572,8 @@ class T01399Paramprojecao(Base):
     T01399_I_VALOR = Column(Numeric(19, 4))
 
     # Relationships
-    t01397Projecao13 = relationship('T01397Projecao13', 
-        primaryjoin='and_(T01399Paramprojecao.T01158_I_CDFOLHA==T01397Projecao13.T01158_I_CDFOLHA, T01399Paramprojecao.T01002_I_CDENT==T01397Projecao13.T01002_I_CDENT, T01399Paramprojecao.T01001_I_MATRICULA==T01397Projecao13.T01001_I_MATRICULA, T01399Paramprojecao.T01058_I_CDEVENTO==T01397Projecao13.T01058_I_CDEVENTO, T01399Paramprojecao.T01397_I_SEQUENCIA==T01397Projecao13.T01397_I_SEQUENCIA)',
+    t01397Projecao13 = relationship('T01397Projecao13',
+        primaryjoin='and_(T01399Paramprojecao.T01158_I_CDFOLHA == T01397Projecao13.T01158_I_CDFOLHA, T01399Paramprojecao.T01002_I_CDENT == T01397Projecao13.T01002_I_CDENT, T01399Paramprojecao.T01001_I_MATRICULA == T01397Projecao13.T01001_I_MATRICULA, T01399Paramprojecao.T01058_I_CDEVENTO == T01397Projecao13.T01058_I_CDEVENTO, T01399Paramprojecao.T01397_I_SEQUENCIA == T01397Projecao13.T01397_I_SEQUENCIA)',
         foreign_keys=[T01158_I_CDFOLHA, T01002_I_CDENT, T01001_I_MATRICULA, T01058_I_CDEVENTO, T01397_I_SEQUENCIA])
 
 class T01400Telagbancaria(Base):
@@ -8549,8 +8590,8 @@ class T01400Telagbancaria(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01400_I_TPTEL])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01400Telagbancaria.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01400Telagbancaria.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01400Telagbancaria.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01400Telagbancaria.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
 
 class T01401Pagindenizado(Base):
@@ -8577,11 +8618,11 @@ class T01401Pagindenizado(Base):
     T01401_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01026Padraoref = relationship('T01026Padraoref', 
-        primaryjoin='and_(T01401Pagindenizado.T01002_I_CDENT==T01026Padraoref.T01002_I_CDENT, T01401Pagindenizado.T01025_I_CDPADRAO==T01026Padraoref.T01025_I_CDPADRAO, T01401Pagindenizado.T01015_I_CDREF==T01026Padraoref.T01015_I_CDREF)',
+    t01026Padraoref = relationship('T01026Padraoref',
+        primaryjoin='and_(T01401Pagindenizado.T01002_I_CDENT == T01026Padraoref.T01002_I_CDENT, T01401Pagindenizado.T01025_I_CDPADRAO == T01026Padraoref.T01025_I_CDPADRAO, T01401Pagindenizado.T01015_I_CDREF == T01026Padraoref.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO, T01015_I_CDREF])
-    t01183Matrdiversa = relationship('T01183Matrdiversa', 
-        primaryjoin='and_(T01401Pagindenizado.T01002_I_CDENT==T01183Matrdiversa.T01002_I_CDENT, T01401Pagindenizado.T01183_I_MATRICULA==T01183Matrdiversa.T01183_I_MATRICULA)',
+    t01183Matrdiversa = relationship('T01183Matrdiversa',
+        primaryjoin='and_(T01401Pagindenizado.T01002_I_CDENT == T01183Matrdiversa.T01002_I_CDENT, T01401Pagindenizado.T01183_I_MATRICULA == T01183Matrdiversa.T01183_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01183_I_MATRICULA])
 
 class T01402Itemfinanmatdiv(Base):
@@ -8605,12 +8646,12 @@ class T01402Itemfinanmatdiv(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01402_I_CDENTPAG])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01402Itemfinanmatdiv.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01402Itemfinanmatdiv.T01059_I_ANOVBORCA==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01402Itemfinanmatdiv.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01402Itemfinanmatdiv.T01059_I_ANOVBORCA == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCA])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01183Matrdiversa = relationship('T01183Matrdiversa', 
-        primaryjoin='and_(T01402Itemfinanmatdiv.T01002_I_CDENT==T01183Matrdiversa.T01002_I_CDENT, T01402Itemfinanmatdiv.T01183_I_MATRICULA==T01183Matrdiversa.T01183_I_MATRICULA)',
+    t01183Matrdiversa = relationship('T01183Matrdiversa',
+        primaryjoin='and_(T01402Itemfinanmatdiv.T01002_I_CDENT == T01183Matrdiversa.T01002_I_CDENT, T01402Itemfinanmatdiv.T01183_I_MATRICULA == T01183Matrdiversa.T01183_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01183_I_MATRICULA])
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
 
@@ -8629,8 +8670,8 @@ class T01403Resumopgtomatdiv(Base):
     T01403_I_VALORIR = Column(Numeric(19, 4))
 
     # Relationships
-    t01183Matrdiversa = relationship('T01183Matrdiversa', 
-        primaryjoin='and_(T01403Resumopgtomatdiv.T01002_I_CDENT==T01183Matrdiversa.T01002_I_CDENT, T01403Resumopgtomatdiv.T01183_I_MATRICULA==T01183Matrdiversa.T01183_I_MATRICULA)',
+    t01183Matrdiversa = relationship('T01183Matrdiversa',
+        primaryjoin='and_(T01403Resumopgtomatdiv.T01002_I_CDENT == T01183Matrdiversa.T01002_I_CDENT, T01403Resumopgtomatdiv.T01183_I_MATRICULA == T01183Matrdiversa.T01183_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01183_I_MATRICULA])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
 
@@ -8657,19 +8698,21 @@ class T01404Itemfinanpens(Base):
     T01404_I_CDENTPAG = Column(Numeric(4, 0), ForeignKey('RH.T01002_ENTIDADE.T01002_I_CDENT'))
 
     # Relationships
-    t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
+    t01158Abertfolha = relationship('T01158Abertfolha',
+        primaryjoin='and_(T01404Itemfinanpens.T01158_I_CDFOLHA == T01158Abertfolha.T01158_I_CDFOLHA)',
+        foreign_keys=[T01158_I_CDFOLHA])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01404_I_CDENTPAG])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01404Itemfinanpens.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01404Itemfinanpens.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01404Itemfinanpens.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01404Itemfinanpens.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01404Itemfinanpens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01404Itemfinanpens.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01404Itemfinanpens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01404Itemfinanpens.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01404Itemfinanpens.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01404Itemfinanpens.T01059_I_ANOVBORCA==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01404Itemfinanpens.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01404Itemfinanpens.T01059_I_ANOVBORCA == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCA])
-    t01409Divisaofolha = relationship('T01409Divisaofolha', 
-        primaryjoin='and_(T01404Itemfinanpens.T01407_I_CDDIVISAO==T01409Divisaofolha.T01407_I_CDDIVISAO, T01404Itemfinanpens.T01158_I_CDFOLHA==T01409Divisaofolha.T01158_I_CDFOLHA)',
+    t01409Divisaofolha = relationship('T01409Divisaofolha',
+        primaryjoin='and_(T01404Itemfinanpens.T01407_I_CDDIVISAO == T01409Divisaofolha.T01407_I_CDDIVISAO, T01404Itemfinanpens.T01158_I_CDFOLHA == T01409Divisaofolha.T01158_I_CDFOLHA)',
         foreign_keys=[T01407_I_CDDIVISAO, T01158_I_CDFOLHA])
 
 class T01405Resumopgtopens(Base):
@@ -8691,8 +8734,8 @@ class T01405Resumopgtopens(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01405_I_CDENTPAG])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01405Resumopgtopens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01405Resumopgtopens.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01405Resumopgtopens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01405Resumopgtopens.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
 
 class T01406Contaorcsub(Base):
@@ -8708,8 +8751,8 @@ class T01406Contaorcsub(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01406Contaorcsub.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01406Contaorcsub.T01059_I_ANOVBORCA==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01406Contaorcsub.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01406Contaorcsub.T01059_I_ANOVBORCA == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCA])
 
 class T01407Divisaofolhamodelo(Base):
@@ -8738,16 +8781,18 @@ class T01407Divisaofolhamodelo(Base):
     T01407_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01407Divisaofolhamodelo.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01474Fonterec = relationship('T01474Fonterec', foreign_keys=[T01474_I_FONTEREC])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01407Divisaofolhamodelo.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01407Divisaofolhamodelo.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01407Divisaofolhamodelo.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01407Divisaofolhamodelo.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01407Divisaofolhamodelo.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01407Divisaofolhamodelo.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01407Divisaofolhamodelo.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01407Divisaofolhamodelo.T01059_I_ANOVBORCAM==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01407Divisaofolhamodelo.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01407Divisaofolhamodelo.T01059_I_ANOVBORCAM == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCAM])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01407Divisaofolhamodelo.T01407_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01407Divisaofolhamodelo.T01407_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01407Divisaofolhamodelo.T01407_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01407Divisaofolhamodelo.T01407_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01407_I_ENTOPERADOR, T01407_I_MATOPERADOR])
 
 class T01409Divisaofolha(Base):
@@ -8773,15 +8818,17 @@ class T01409Divisaofolha(Base):
     T01409_I_INDLICMATERNIDADE = Column(Boolean)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01409Divisaofolha.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
     t01474Fonterec = relationship('T01474Fonterec', foreign_keys=[T01474_I_FONTEREC])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01409Divisaofolha.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01409Divisaofolha.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01409Divisaofolha.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01409Divisaofolha.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01409Divisaofolha.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01409Divisaofolha.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01409Divisaofolha.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01409Divisaofolha.T01059_I_ANOVBORCAM==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01409Divisaofolha.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01409Divisaofolha.T01059_I_ANOVBORCAM == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCAM])
 
 class T01410Empenhofolha(Base):
@@ -8806,20 +8853,24 @@ class T01410Empenhofolha(Base):
     T01058_I_CDEVENTO = Column(Integer)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01410Empenhofolha.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01021Banco = relationship('T01021Banco', foreign_keys=[T01021_I_CDBANCO])
-    t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01410Empenhofolha.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01410Empenhofolha.T01059_I_ANOVBORCA==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01158Abertfolha = relationship('T01158Abertfolha',
+        primaryjoin='and_(T01410Empenhofolha.T01158_I_CDFOLHA == T01158Abertfolha.T01158_I_CDFOLHA)',
+        foreign_keys=[T01158_I_CDFOLHA])
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01410Empenhofolha.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01410Empenhofolha.T01059_I_ANOVBORCA == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCA])
-    t01409Divisaofolha = relationship('T01409Divisaofolha', 
-        primaryjoin='and_(T01410Empenhofolha.T01407_I_CDDIVISAO==T01409Divisaofolha.T01407_I_CDDIVISAO, T01410Empenhofolha.T01158_I_CDFOLHA==T01409Divisaofolha.T01158_I_CDFOLHA)',
+    t01409Divisaofolha = relationship('T01409Divisaofolha',
+        primaryjoin='and_(T01410Empenhofolha.T01407_I_CDDIVISAO == T01409Divisaofolha.T01407_I_CDDIVISAO, T01410Empenhofolha.T01158_I_CDFOLHA == T01409Divisaofolha.T01158_I_CDFOLHA)',
         foreign_keys=[T01407_I_CDDIVISAO, T01158_I_CDFOLHA])
-    t01333Grupoeventos = relationship('T01333Grupoeventos', 
-        primaryjoin='and_(T01410Empenhofolha.T01333_I_CDGREVENTO==T01333Grupoeventos.T01333_I_CDGREVENTO, T01410Empenhofolha.T01002_I_CDENT==T01333Grupoeventos.T01002_I_CDENT)',
+    t01333Grupoeventos = relationship('T01333Grupoeventos',
+        primaryjoin='and_(T01410Empenhofolha.T01333_I_CDGREVENTO == T01333Grupoeventos.T01333_I_CDGREVENTO, T01410Empenhofolha.T01002_I_CDENT == T01333Grupoeventos.T01002_I_CDENT)',
         foreign_keys=[T01333_I_CDGREVENTO, T01002_I_CDENT])
-    t01466Rubricames = relationship('T01466Rubricames', 
-        primaryjoin='and_(T01410Empenhofolha.T01466_I_CODRUBRICAMES==T01466Rubricames.T01466_I_CODRUBRICAMES, T01410Empenhofolha.T01158_I_CDFOLHA==T01466Rubricames.T01158_I_CDFOLHA)',
+    t01466Rubricames = relationship('T01466Rubricames',
+        primaryjoin='and_(T01410Empenhofolha.T01466_I_CODRUBRICAMES == T01466Rubricames.T01466_I_CODRUBRICAMES, T01410Empenhofolha.T01158_I_CDFOLHA == T01466Rubricames.T01158_I_CDFOLHA)',
         foreign_keys=[T01466_I_CODRUBRICAMES, T01158_I_CDFOLHA])
 
 class T01411Transfempenho(Base):
@@ -8837,16 +8888,18 @@ class T01411Transfempenho(Base):
     T01411_I_MATOPERADOR = Column(Numeric(7, 0), ForeignKey('RH.T01001_SERVIDOR.T01001_I_MATRICULA'))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01411Transfempenho.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01411Transfempenho.T01411_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01411Transfempenho.T01411_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01411Transfempenho.T01411_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01411Transfempenho.T01411_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01411_I_ENTOPERADOR, T01411_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01411Transfempenho.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01411Transfempenho.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01411Transfempenho.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01411Transfempenho.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01411Transfempenho.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01411Transfempenho.T01059_I_ANOVBORCA==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01411Transfempenho.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01411Transfempenho.T01059_I_ANOVBORCA == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCA])
 
 class T01412Vigenciascat(Base):
@@ -8865,11 +8918,11 @@ class T01412Vigenciascat(Base):
     T01412_I_VALIDINDET = Column(Numeric(1, 0), nullable=False)
 
     # Relationships
-    t01135Lts = relationship('T01135Lts', 
-        primaryjoin='and_(T01412Vigenciascat.T01135_I_CDLTS==T01135Lts.T01135_I_CDLTS, T01412Vigenciascat.T01135_I_ANO==T01135Lts.T01135_I_ANO, T01412Vigenciascat.T01135_I_SEQUENCIA==T01135Lts.T01135_I_SEQUENCIA, T01412Vigenciascat.T01135_I_TPDOC==T01135Lts.T01135_I_TPDOC)',
+    t01135Lts = relationship('T01135Lts',
+        primaryjoin='and_(T01412Vigenciascat.T01135_I_CDLTS == T01135Lts.T01135_I_CDLTS, T01412Vigenciascat.T01135_I_ANO == T01135Lts.T01135_I_ANO, T01412Vigenciascat.T01135_I_SEQUENCIA == T01135Lts.T01135_I_SEQUENCIA, T01412Vigenciascat.T01135_I_TPDOC == T01135Lts.T01135_I_TPDOC)',
         foreign_keys=[T01135_I_CDLTS, T01135_I_ANO, T01135_I_SEQUENCIA, T01135_I_TPDOC])
-    t01110Acidente = relationship('T01110Acidente', 
-        primaryjoin='and_(T01412Vigenciascat.T01110_I_CDCAT==T01110Acidente.T01110_I_CDCAT, T01412Vigenciascat.T01110_I_ANOCAT==T01110Acidente.T01110_I_ANOCAT)',
+    t01110Acidente = relationship('T01110Acidente',
+        primaryjoin='and_(T01412Vigenciascat.T01110_I_CDCAT == T01110Acidente.T01110_I_CDCAT, T01412Vigenciascat.T01110_I_ANOCAT == T01110Acidente.T01110_I_ANOCAT)',
         foreign_keys=[T01110_I_CDCAT, T01110_I_ANOCAT])
 
 class T01414Histgratificproventos(Base):
@@ -8889,11 +8942,11 @@ class T01414Histgratificproventos(Base):
     T01414_I_INDCONGELADO = Column(SmallInteger, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01414Histgratificproventos.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01414Histgratificproventos.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01414Histgratificproventos.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01414Histgratificproventos.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01333Grupoeventos = relationship('T01333Grupoeventos', 
-        primaryjoin='and_(T01414Histgratificproventos.T01333_I_CDGREVENTO==T01333Grupoeventos.T01333_I_CDGREVENTO, T01414Histgratificproventos.T01002_I_CDENT==T01333Grupoeventos.T01002_I_CDENT)',
+    t01333Grupoeventos = relationship('T01333Grupoeventos',
+        primaryjoin='and_(T01414Histgratificproventos.T01333_I_CDGREVENTO == T01333Grupoeventos.T01333_I_CDGREVENTO, T01414Histgratificproventos.T01002_I_CDENT == T01333Grupoeventos.T01002_I_CDENT)',
         foreign_keys=[T01333_I_CDGREVENTO, T01002_I_CDENT])
 
 class T01415Adichist(Base):
@@ -8908,8 +8961,8 @@ class T01415Adichist(Base):
     T01415_I_PERCENTUAL = Column(Numeric(2, 0), nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01415Adichist.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01415Adichist.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01415Adichist.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01415Adichist.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01416Lphist(Base):
@@ -8933,8 +8986,8 @@ class T01416Lphist(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01416_I_TPATO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01416Lphist.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01416Lphist.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01416Lphist.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01416Lphist.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01417Feriashist(Base):
@@ -8957,8 +9010,8 @@ class T01417Feriashist(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01417_I_TPATO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01417Feriashist.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01417Feriashist.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01417Feriashist.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01417Feriashist.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01418Histproventos(Base):
@@ -8972,8 +9025,8 @@ class T01418Histproventos(Base):
     T01418_S_OBSERVACAO = Column(String(500))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01418Histproventos.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01418Histproventos.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01418Histproventos.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01418Histproventos.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01419Docdevolucao(Base):
@@ -8996,8 +9049,8 @@ class T01419Docdevolucao(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01419Docdevolucao.T01419_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01419Docdevolucao.T01419_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01419Docdevolucao.T01419_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01419Docdevolucao.T01419_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01419_I_ENTOPERADOR, T01419_I_MATOPERADOR])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
 
@@ -9027,8 +9080,8 @@ class T01421Docdeveventinf(Base):
     # Relationships
     t01355Eventoinfserv = relationship('T01355Eventoinfserv', foreign_keys=[T01355_I_CDEVENTOSERV])
     t01419Docdevolucao = relationship('T01419Docdevolucao', foreign_keys=[T01419_I_CDDOCDEVOLUCAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01421Docdeveventinf.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01421Docdeveventinf.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01421Docdeveventinf.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01421Docdeveventinf.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01422Doccasseventinf(Base):
@@ -9045,11 +9098,11 @@ class T01422Doccasseventinf(Base):
 
     # Relationships
     t01355Eventoinfserv = relationship('T01355Eventoinfserv', foreign_keys=[T01355_I_CDEVENTOSERV])
-    t01420Doccassacao = relationship('T01420Doccassacao', 
-        primaryjoin='and_(T01422Doccasseventinf.T01419_I_CDDOCDEVOLUCAO==T01420Doccassacao.T01419_I_CDDOCDEVOLUCAO, T01422Doccasseventinf.T01420_I_NUMDOCCASSACAO==T01420Doccassacao.T01420_I_NUMDOCCASSACAO, T01422Doccasseventinf.T01420_I_ANODOCCASSACAO==T01420Doccassacao.T01420_I_ANODOCCASSACAO)',
+    t01420Doccassacao = relationship('T01420Doccassacao',
+        primaryjoin='and_(T01422Doccasseventinf.T01419_I_CDDOCDEVOLUCAO == T01420Doccassacao.T01419_I_CDDOCDEVOLUCAO, T01422Doccasseventinf.T01420_I_NUMDOCCASSACAO == T01420Doccassacao.T01420_I_NUMDOCCASSACAO, T01422Doccasseventinf.T01420_I_ANODOCCASSACAO == T01420Doccassacao.T01420_I_ANODOCCASSACAO)',
         foreign_keys=[T01419_I_CDDOCDEVOLUCAO, T01420_I_NUMDOCCASSACAO, T01420_I_ANODOCCASSACAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01422Doccasseventinf.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01422Doccasseventinf.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01422Doccasseventinf.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01422Doccasseventinf.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01423Docdeveventexcecao(Base):
@@ -9064,8 +9117,8 @@ class T01423Docdeveventexcecao(Base):
 
     # Relationships
     t01419Docdevolucao = relationship('T01419Docdevolucao', foreign_keys=[T01419_I_CDDOCDEVOLUCAO])
-    t01306Eventoexcecao = relationship('T01306Eventoexcecao', 
-        primaryjoin='and_(T01423Docdeveventexcecao.T01002_I_CDENT==T01306Eventoexcecao.T01002_I_CDENT, T01423Docdeveventexcecao.T01001_I_MATRICULA==T01306Eventoexcecao.T01001_I_MATRICULA, T01423Docdeveventexcecao.T01058_I_CDEVENTO==T01306Eventoexcecao.T01058_I_CDEVENTO, T01423Docdeveventexcecao.T01306_D_DTINICVIG==T01306Eventoexcecao.T01306_D_DTINICVIG)',
+    t01306Eventoexcecao = relationship('T01306Eventoexcecao',
+        primaryjoin='and_(T01423Docdeveventexcecao.T01002_I_CDENT == T01306Eventoexcecao.T01002_I_CDENT, T01423Docdeveventexcecao.T01001_I_MATRICULA == T01306Eventoexcecao.T01001_I_MATRICULA, T01423Docdeveventexcecao.T01058_I_CDEVENTO == T01306Eventoexcecao.T01058_I_CDEVENTO, T01423Docdeveventexcecao.T01306_D_DTINICVIG == T01306Eventoexcecao.T01306_D_DTINICVIG)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01058_I_CDEVENTO, T01306_D_DTINICVIG])
 
 class T01424Doccasseventexcecao(Base):
@@ -9081,11 +9134,11 @@ class T01424Doccasseventexcecao(Base):
     T01419_I_CDDOCDEVOLUCAO = Column(Integer, ForeignKey('RH.T01420_DOCCASSACAO.T01419_I_CDDOCDEVOLUCAO'), primary_key=True)
 
     # Relationships
-    t01306Eventoexcecao = relationship('T01306Eventoexcecao', 
-        primaryjoin='and_(T01424Doccasseventexcecao.T01002_I_CDENT==T01306Eventoexcecao.T01002_I_CDENT, T01424Doccasseventexcecao.T01001_I_MATRICULA==T01306Eventoexcecao.T01001_I_MATRICULA, T01424Doccasseventexcecao.T01058_I_CDEVENTO==T01306Eventoexcecao.T01058_I_CDEVENTO, T01424Doccasseventexcecao.T01306_D_DTINICVIG==T01306Eventoexcecao.T01306_D_DTINICVIG)',
+    t01306Eventoexcecao = relationship('T01306Eventoexcecao',
+        primaryjoin='and_(T01424Doccasseventexcecao.T01002_I_CDENT == T01306Eventoexcecao.T01002_I_CDENT, T01424Doccasseventexcecao.T01001_I_MATRICULA == T01306Eventoexcecao.T01001_I_MATRICULA, T01424Doccasseventexcecao.T01058_I_CDEVENTO == T01306Eventoexcecao.T01058_I_CDEVENTO, T01424Doccasseventexcecao.T01306_D_DTINICVIG == T01306Eventoexcecao.T01306_D_DTINICVIG)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01058_I_CDEVENTO, T01306_D_DTINICVIG])
-    t01420Doccassacao = relationship('T01420Doccassacao', 
-        primaryjoin='and_(T01424Doccasseventexcecao.T01419_I_CDDOCDEVOLUCAO==T01420Doccassacao.T01419_I_CDDOCDEVOLUCAO, T01424Doccasseventexcecao.T01420_I_NUMDOCCASSACAO==T01420Doccassacao.T01420_I_NUMDOCCASSACAO, T01424Doccasseventexcecao.T01420_I_ANODOCCASSACAO==T01420Doccassacao.T01420_I_ANODOCCASSACAO)',
+    t01420Doccassacao = relationship('T01420Doccassacao',
+        primaryjoin='and_(T01424Doccasseventexcecao.T01419_I_CDDOCDEVOLUCAO == T01420Doccassacao.T01419_I_CDDOCDEVOLUCAO, T01424Doccasseventexcecao.T01420_I_NUMDOCCASSACAO == T01420Doccassacao.T01420_I_NUMDOCCASSACAO, T01424Doccasseventexcecao.T01420_I_ANODOCCASSACAO == T01420Doccassacao.T01420_I_ANODOCCASSACAO)',
         foreign_keys=[T01419_I_CDDOCDEVOLUCAO, T01420_I_NUMDOCCASSACAO, T01420_I_ANODOCCASSACAO])
 
 class T01425Grupodocdevolucao(Base):
@@ -9098,8 +9151,8 @@ class T01425Grupodocdevolucao(Base):
 
     # Relationships
     t01419Docdevolucao = relationship('T01419Docdevolucao', foreign_keys=[T01419_I_CDDOCDEVOLUCAO])
-    t01333Grupoeventos = relationship('T01333Grupoeventos', 
-        primaryjoin='and_(T01425Grupodocdevolucao.T01333_I_CDGREVENTO==T01333Grupoeventos.T01333_I_CDGREVENTO, T01425Grupodocdevolucao.T01002_I_CDENT==T01333Grupoeventos.T01002_I_CDENT)',
+    t01333Grupoeventos = relationship('T01333Grupoeventos',
+        primaryjoin='and_(T01425Grupodocdevolucao.T01333_I_CDGREVENTO == T01333Grupoeventos.T01333_I_CDGREVENTO, T01425Grupodocdevolucao.T01002_I_CDENT == T01333Grupoeventos.T01002_I_CDENT)',
         foreign_keys=[T01333_I_CDGREVENTO, T01002_I_CDENT])
 
 class T01426Grupodoccassacao(Base):
@@ -9113,11 +9166,11 @@ class T01426Grupodoccassacao(Base):
     T01420_I_ANODOCCASSACAO = Column(Numeric(4, 0), ForeignKey('RH.T01420_DOCCASSACAO.T01420_I_ANODOCCASSACAO'), primary_key=True)
 
     # Relationships
-    t01420Doccassacao = relationship('T01420Doccassacao', 
-        primaryjoin='and_(T01426Grupodoccassacao.T01419_I_CDDOCDEVOLUCAO==T01420Doccassacao.T01419_I_CDDOCDEVOLUCAO, T01426Grupodoccassacao.T01420_I_NUMDOCCASSACAO==T01420Doccassacao.T01420_I_NUMDOCCASSACAO, T01426Grupodoccassacao.T01420_I_ANODOCCASSACAO==T01420Doccassacao.T01420_I_ANODOCCASSACAO)',
+    t01420Doccassacao = relationship('T01420Doccassacao',
+        primaryjoin='and_(T01426Grupodoccassacao.T01419_I_CDDOCDEVOLUCAO == T01420Doccassacao.T01419_I_CDDOCDEVOLUCAO, T01426Grupodoccassacao.T01420_I_NUMDOCCASSACAO == T01420Doccassacao.T01420_I_NUMDOCCASSACAO, T01426Grupodoccassacao.T01420_I_ANODOCCASSACAO == T01420Doccassacao.T01420_I_ANODOCCASSACAO)',
         foreign_keys=[T01419_I_CDDOCDEVOLUCAO, T01420_I_NUMDOCCASSACAO, T01420_I_ANODOCCASSACAO])
-    t01333Grupoeventos = relationship('T01333Grupoeventos', 
-        primaryjoin='and_(T01426Grupodoccassacao.T01333_I_CDGREVENTO==T01333Grupoeventos.T01333_I_CDGREVENTO, T01426Grupodoccassacao.T01002_I_CDENT==T01333Grupoeventos.T01002_I_CDENT)',
+    t01333Grupoeventos = relationship('T01333Grupoeventos',
+        primaryjoin='and_(T01426Grupodoccassacao.T01333_I_CDGREVENTO == T01333Grupoeventos.T01333_I_CDGREVENTO, T01426Grupodoccassacao.T01002_I_CDENT == T01333Grupoeventos.T01002_I_CDENT)',
         foreign_keys=[T01333_I_CDGREVENTO, T01002_I_CDENT])
 
 class T01427Histeventonaorec(Base):
@@ -9137,11 +9190,11 @@ class T01427Histeventonaorec(Base):
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERFACE])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01427_I_MOTIVO])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01427Histeventonaorec.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01427Histeventonaorec.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01427Histeventonaorec.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01427Histeventonaorec.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01427Histeventonaorec.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01427Histeventonaorec.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01427Histeventonaorec.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01427Histeventonaorec.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01428Localserv(Base):
@@ -9165,11 +9218,11 @@ class T01428Localserv(Base):
     t01071ItemlistaByITpprov = relationship('T01071Itemlista', foreign_keys=[T01428_I_TPPROV])
     t01071ItemlistaByITplocal = relationship('T01071Itemlista', foreign_keys=[T01428_I_TPLOCAL])
     t01071ItemlistaByICdtpdoc = relationship('T01071Itemlista', foreign_keys=[T01428_I_CDTPDOC])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01428Localserv.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01428Localserv.T01428_I_CDUFDEFIN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01428Localserv.T01428_I_VRUFDEFIN==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01428Localserv.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01428Localserv.T01428_I_CDUFDEFIN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01428Localserv.T01428_I_VRUFDEFIN == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01428_I_CDUFDEFIN, T01428_I_VRUFDEFIN])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01428Localserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01428Localserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01428Localserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01428Localserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01429Gratificacao(Base):
@@ -9192,11 +9245,11 @@ class T01429Gratificacao(Base):
     T01429_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01429Gratificacao.T01429_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01429Gratificacao.T01429_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01429Gratificacao.T01429_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01429Gratificacao.T01429_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01429_I_ENTOPERADOR, T01429_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01429Gratificacao.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01429Gratificacao.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01429Gratificacao.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01429Gratificacao.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01430Gratunidfunc(Base):
@@ -9219,14 +9272,14 @@ class T01430Gratunidfunc(Base):
     T01430_I_VALORGRATIFICFGS = Column(Numeric(9, 2))
 
     # Relationships
-    t01429Gratificacao = relationship('T01429Gratificacao', 
-        primaryjoin='and_(T01430Gratunidfunc.T01002_I_CDENT==T01429Gratificacao.T01002_I_CDENT, T01430Gratunidfunc.T01058_I_CDEVENTO==T01429Gratificacao.T01058_I_CDEVENTO)',
+    t01429Gratificacao = relationship('T01429Gratificacao',
+        primaryjoin='and_(T01430Gratunidfunc.T01002_I_CDENT == T01429Gratificacao.T01002_I_CDENT, T01430Gratunidfunc.T01058_I_CDEVENTO == T01429Gratificacao.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01430Gratunidfunc.T01430_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01430Gratunidfunc.T01430_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01430Gratunidfunc.T01430_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01430Gratunidfunc.T01430_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01430_I_ENTOPERADOR, T01430_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01430Gratunidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01430Gratunidfunc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01430Gratunidfunc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01430Gratunidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01430Gratunidfunc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01430Gratunidfunc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01431Gratperiodicidadepgto(Base):
@@ -9247,11 +9300,11 @@ class T01431Gratperiodicidadepgto(Base):
     T01431_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01429Gratificacao = relationship('T01429Gratificacao', 
-        primaryjoin='and_(T01431Gratperiodicidadepgto.T01002_I_CDENT==T01429Gratificacao.T01002_I_CDENT, T01431Gratperiodicidadepgto.T01058_I_CDEVENTO==T01429Gratificacao.T01058_I_CDEVENTO)',
+    t01429Gratificacao = relationship('T01429Gratificacao',
+        primaryjoin='and_(T01431Gratperiodicidadepgto.T01002_I_CDENT == T01429Gratificacao.T01002_I_CDENT, T01431Gratperiodicidadepgto.T01058_I_CDEVENTO == T01429Gratificacao.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01431Gratperiodicidadepgto.T01431_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01431Gratperiodicidadepgto.T01431_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01431Gratperiodicidadepgto.T01431_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01431Gratperiodicidadepgto.T01431_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01431_I_ENTOPERADOR, T01431_I_MATOPERADOR])
 
 class T01432Gratcontroleaval(Base):
@@ -9265,8 +9318,8 @@ class T01432Gratcontroleaval(Base):
     T01432_I_PERCPGTORECEBER = Column(Numeric(5, 2), nullable=False)
 
     # Relationships
-    t01429Gratificacao = relationship('T01429Gratificacao', 
-        primaryjoin='and_(T01432Gratcontroleaval.T01002_I_CDENT==T01429Gratificacao.T01002_I_CDENT, T01432Gratcontroleaval.T01058_I_CDEVENTO==T01429Gratificacao.T01058_I_CDEVENTO)',
+    t01429Gratificacao = relationship('T01429Gratificacao',
+        primaryjoin='and_(T01432Gratcontroleaval.T01002_I_CDENT == T01429Gratificacao.T01002_I_CDENT, T01432Gratcontroleaval.T01058_I_CDEVENTO == T01429Gratificacao.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01433Gratafastperm(Base):
@@ -9283,14 +9336,14 @@ class T01433Gratafastperm(Base):
     T01433_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01429Gratificacao = relationship('T01429Gratificacao', 
-        primaryjoin='and_(T01433Gratafastperm.T01002_I_CDENT==T01429Gratificacao.T01002_I_CDENT, T01433Gratafastperm.T01058_I_CDEVENTO==T01429Gratificacao.T01058_I_CDEVENTO)',
+    t01429Gratificacao = relationship('T01429Gratificacao',
+        primaryjoin='and_(T01433Gratafastperm.T01002_I_CDENT == T01429Gratificacao.T01002_I_CDENT, T01433Gratafastperm.T01058_I_CDEVENTO == T01429Gratificacao.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01433Gratafastperm.T01433_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01433Gratafastperm.T01433_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01433Gratafastperm.T01433_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01433Gratafastperm.T01433_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01433_I_ENTOPERADOR, T01433_I_MATOPERADOR])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01433Gratafastperm.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01433Gratafastperm.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01433Gratafastperm.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01433Gratafastperm.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
 
 class T01434Fichasriscosocup(Base):
@@ -9328,17 +9381,17 @@ class T01435Reativdesativserv(Base):
     # Relationships
     t01071ItemlistaByIIndreatdesat = relationship('T01071Itemlista', foreign_keys=[T01435_I_INDREATDESAT])
     t01071ItemlistaByICdmotivo = relationship('T01071Itemlista', foreign_keys=[T01435_I_CDMOTIVO])
-    t01001ServidorByIEntoperadorexcl = relationship('T01001Servidor', 
-        primaryjoin='and_(T01435Reativdesativserv.T01435_I_ENTOPERADOREXCL==T01001Servidor.T01002_I_CDENT, T01435Reativdesativserv.T01435_I_MATOPERADOREXCL==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperadorexcl = relationship('T01001Servidor',
+        primaryjoin='and_(T01435Reativdesativserv.T01435_I_ENTOPERADOREXCL == T01001Servidor.T01002_I_CDENT, T01435Reativdesativserv.T01435_I_MATOPERADOREXCL == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01435_I_ENTOPERADOREXCL, T01435_I_MATOPERADOREXCL])
-    t01001ServidorByIEntoperadorincl = relationship('T01001Servidor', 
-        primaryjoin='and_(T01435Reativdesativserv.T01435_I_ENTOPERADORINCL==T01001Servidor.T01002_I_CDENT, T01435Reativdesativserv.T01435_I_MATOPERADORINCL==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperadorincl = relationship('T01001Servidor',
+        primaryjoin='and_(T01435Reativdesativserv.T01435_I_ENTOPERADORINCL == T01001Servidor.T01002_I_CDENT, T01435Reativdesativserv.T01435_I_MATOPERADORINCL == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01435_I_ENTOPERADORINCL, T01435_I_MATOPERADORINCL])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01435Reativdesativserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01435Reativdesativserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01435Reativdesativserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01435Reativdesativserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01435Reativdesativserv.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01435Reativdesativserv.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01435Reativdesativserv.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01435Reativdesativserv.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01435Reativdesativserv.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01435Reativdesativserv.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01436Fechamentoserv(Base):
@@ -9368,14 +9421,14 @@ class T01436Fechamentoserv(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHAEMPENHO])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01358_I_CDENTPAG])
-    t01409Divisaofolha = relationship('T01409Divisaofolha', 
-        primaryjoin='and_(T01436Fechamentoserv.T01407_I_CDDIVISAO==T01409Divisaofolha.T01407_I_CDDIVISAO, T01436Fechamentoserv.T01158_I_CDFOLHA==T01409Divisaofolha.T01158_I_CDFOLHA)',
+    t01409Divisaofolha = relationship('T01409Divisaofolha',
+        primaryjoin='and_(T01436Fechamentoserv.T01407_I_CDDIVISAO == T01409Divisaofolha.T01407_I_CDDIVISAO, T01436Fechamentoserv.T01158_I_CDFOLHA == T01409Divisaofolha.T01158_I_CDFOLHA)',
         foreign_keys=[T01407_I_CDDIVISAO, T01158_I_CDFOLHA])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01436Fechamentoserv.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01436Fechamentoserv.T01059_I_ANOVBORCA==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01436Fechamentoserv.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01436Fechamentoserv.T01059_I_ANOVBORCA == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCA])
-    t01466Rubricames = relationship('T01466Rubricames', 
-        primaryjoin='and_(T01436Fechamentoserv.T01466_I_CODRUBRICAMES==T01466Rubricames.T01466_I_CODRUBRICAMES, T01436Fechamentoserv.T01158_I_CDFOLHA==T01466Rubricames.T01158_I_CDFOLHA)',
+    t01466Rubricames = relationship('T01466Rubricames',
+        primaryjoin='and_(T01436Fechamentoserv.T01466_I_CODRUBRICAMES == T01466Rubricames.T01466_I_CODRUBRICAMES, T01436Fechamentoserv.T01158_I_CDFOLHA == T01466Rubricames.T01158_I_CDFOLHA)',
         foreign_keys=[T01466_I_CODRUBRICAMES, T01158_I_CDFOLHA])
 
 class T01437Fechamentoservparam(Base):
@@ -9391,8 +9444,8 @@ class T01437Fechamentoservparam(Base):
     T01398_I_VALOR = Column(String(20))
 
     # Relationships
-    t01436Fechamentoserv = relationship('T01436Fechamentoserv', 
-        primaryjoin='and_(T01437Fechamentoservparam.T01158_I_CDFOLHA==T01436Fechamentoserv.T01158_I_CDFOLHA, T01437Fechamentoservparam.T01002_I_CDENT==T01436Fechamentoserv.T01002_I_CDENT, T01437Fechamentoservparam.T01001_I_MATRICULA==T01436Fechamentoserv.T01001_I_MATRICULA, T01437Fechamentoservparam.T01058_I_CDEVENTO==T01436Fechamentoserv.T01058_I_CDEVENTO, T01437Fechamentoservparam.T01358_I_SEQUENCIA==T01436Fechamentoserv.T01358_I_SEQUENCIA)',
+    t01436Fechamentoserv = relationship('T01436Fechamentoserv',
+        primaryjoin='and_(T01437Fechamentoservparam.T01158_I_CDFOLHA == T01436Fechamentoserv.T01158_I_CDFOLHA, T01437Fechamentoservparam.T01002_I_CDENT == T01436Fechamentoserv.T01002_I_CDENT, T01437Fechamentoservparam.T01001_I_MATRICULA == T01436Fechamentoserv.T01001_I_MATRICULA, T01437Fechamentoservparam.T01058_I_CDEVENTO == T01436Fechamentoserv.T01058_I_CDEVENTO, T01437Fechamentoservparam.T01358_I_SEQUENCIA == T01436Fechamentoserv.T01358_I_SEQUENCIA)',
         foreign_keys=[T01158_I_CDFOLHA, T01002_I_CDENT, T01001_I_MATRICULA, T01058_I_CDEVENTO, T01358_I_SEQUENCIA])
 
 class T01439Cargabancaria(Base):
@@ -9409,8 +9462,8 @@ class T01439Cargabancaria(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01439Cargabancaria.T01439_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01439Cargabancaria.T01439_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01439Cargabancaria.T01439_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01439Cargabancaria.T01439_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01439_I_ENTOPERADOR, T01439_I_MATOPERADOR])
 
 class T01440Histccservidor(Base):
@@ -9431,14 +9484,14 @@ class T01440Histccservidor(Base):
     T01440_I_TPPAGTO = Column(Numeric(4, 0), ForeignKey('RH.T01071_ITEMLISTA.T01071_I_CDITEM'), nullable=False)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01440Histccservidor.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01440Histccservidor.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01440Histccservidor.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01440Histccservidor.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01440Histccservidor.T01440_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01440Histccservidor.T01440_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01440Histccservidor.T01440_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01440Histccservidor.T01440_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01440_I_ENTOPERADOR, T01440_I_MATOPERADOR])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01440Histccservidor.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01440Histccservidor.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01440Histccservidor.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01440Histccservidor.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01440_I_TPPAGTO])
 
@@ -9455,14 +9508,14 @@ class T01441Gratsimbolos(Base):
     T01441_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01441Gratsimbolos.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01441Gratsimbolos.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01441Gratsimbolos.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01441Gratsimbolos.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
-    t01429Gratificacao = relationship('T01429Gratificacao', 
-        primaryjoin='and_(T01441Gratsimbolos.T01002_I_CDENT==T01429Gratificacao.T01002_I_CDENT, T01441Gratsimbolos.T01058_I_CDEVENTO==T01429Gratificacao.T01058_I_CDEVENTO)',
+    t01429Gratificacao = relationship('T01429Gratificacao',
+        primaryjoin='and_(T01441Gratsimbolos.T01002_I_CDENT == T01429Gratificacao.T01002_I_CDENT, T01441Gratsimbolos.T01058_I_CDEVENTO == T01429Gratificacao.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01441Gratsimbolos.T01441_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01441Gratsimbolos.T01441_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01441Gratsimbolos.T01441_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01441Gratsimbolos.T01441_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01441_I_ENTOPERADOR, T01441_I_MATOPERADOR])
 
 class T01442Resumopgtohistserv(Base):
@@ -9493,38 +9546,40 @@ class T01442Resumopgtohistserv(Base):
     T01075_I_CDCGCONF = Column(Numeric(4, 0), ForeignKey('RH.T01075_CARGOCONFIA.T01075_I_CDCGCONF'))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01442_I_TPPAGTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01442Resumopgtohistserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01442Resumopgtohistserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01442Resumopgtohistserv.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01442Resumopgtohistserv.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01442Resumopgtohistserv.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01442Resumopgtohistserv.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01442Resumopgtohistserv.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01442Resumopgtohistserv.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01025Padrao = relationship('T01025Padrao', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01442Resumopgtohistserv.T01025_I_CDPADRAO==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025Padrao = relationship('T01025Padrao',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01442Resumopgtohistserv.T01025_I_CDPADRAO == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO])
-    t01015Referencia = relationship('T01015Referencia', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01442Resumopgtohistserv.T01015_I_CDREF==T01015Referencia.T01015_I_CDREF)',
+    t01015Referencia = relationship('T01015Referencia',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01442Resumopgtohistserv.T01015_I_CDREF == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01015_I_CDREF])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01442Resumopgtohistserv.T01442_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01442Resumopgtohistserv.T01442_I_VORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01442Resumopgtohistserv.T01442_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01442Resumopgtohistserv.T01442_I_VORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01442_I_CDORGLOT, T01442_I_VORGLOT])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01442Resumopgtohistserv.T01442_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01442Resumopgtohistserv.T01442_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01442Resumopgtohistserv.T01442_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01442Resumopgtohistserv.T01442_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01442_I_CDLOCTRAB, T01442_I_VLOCTRAB])
-    t01075Cargoconfia = relationship('T01075Cargoconfia', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01075Cargoconfia.T01002_I_CDENT, T01442Resumopgtohistserv.T01075_I_CDCGCONF==T01075Cargoconfia.T01075_I_CDCGCONF)',
+    t01075Cargoconfia = relationship('T01075Cargoconfia',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01075Cargoconfia.T01002_I_CDENT, T01442Resumopgtohistserv.T01075_I_CDCGCONF == T01075Cargoconfia.T01075_I_CDCGCONF)',
         foreign_keys=[T01002_I_CDENT, T01075_I_CDCGCONF])
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01442Resumopgtohistserv.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01442Resumopgtohistserv.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01442Resumopgtohistserv.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
 
 class T01443Histquadro(Base):
@@ -9566,9 +9621,11 @@ class T01443Histquadro(Base):
     T01443_I_INDATIVO = Column(Integer)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01443Histquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01443Histquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01443Histquadro.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01443Histquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01443Histquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01444Notaavalgrat(Base):
@@ -9582,11 +9639,11 @@ class T01444Notaavalgrat(Base):
     T01444_I_NOTA = Column(Numeric(5, 2), nullable=False)
 
     # Relationships
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01444Notaavalgrat.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01444Notaavalgrat.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01444Notaavalgrat.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01444Notaavalgrat.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01444Notaavalgrat.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01444Notaavalgrat.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01444Notaavalgrat.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01444Notaavalgrat.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01449Filtroarquivo(Base):
@@ -9606,17 +9663,19 @@ class T01449Filtroarquivo(Base):
     T01449_I_MATOPERADOR = Column(Numeric(7, 0), ForeignKey('RH.T01001_SERVIDOR.T01001_I_MATRICULA'), nullable=False)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01449Filtroarquivo.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01071ItemlistaByIFiltro = relationship('T01071Itemlista', foreign_keys=[T01449_I_FILTRO])
     t01071ItemlistaByIArquivo = relationship('T01071Itemlista', foreign_keys=[T01449_I_ARQUIVO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01449Filtroarquivo.T01449_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01449Filtroarquivo.T01449_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01449Filtroarquivo.T01449_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01449Filtroarquivo.T01449_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01449_I_ENTOPERADOR, T01449_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01449Filtroarquivo.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01449Filtroarquivo.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01449Filtroarquivo.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01449Filtroarquivo.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01449Filtroarquivo.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01449Filtroarquivo.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01449Filtroarquivo.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01449Filtroarquivo.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01449Filtroarquivo.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01449Filtroarquivo.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01450Histdefifisica(Base):
@@ -9629,8 +9688,8 @@ class T01450Histdefifisica(Base):
     T01041_I_CONCURSO = Column(Integer, ForeignKey('RH.T01042_CANDIDATO.T01041_I_CONCURSO'), primary_key=True)
 
     # Relationships
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01450Histdefifisica.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01450Histdefifisica.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01450Histdefifisica.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01450Histdefifisica.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
 
 class T01451Arquivo(Base):
@@ -9655,8 +9714,8 @@ class T01451Arquivo(Base):
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01451_I_CDMODULO])
     t01070Lista = relationship('T01070Lista', foreign_keys=[T01451_I_CDLISTA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01451Arquivo.T01451_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01451Arquivo.T01451_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01451Arquivo.T01451_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01451Arquivo.T01451_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01451_I_ENTOPERADOR, T01451_I_MATOPERADOR])
 
 class T01452Itemarquivo(Base):
@@ -9704,8 +9763,8 @@ class T01456Quadrosimam(Base):
     T01456_I_SITUACAO = Column(SmallInteger, nullable=False)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01456Quadrosimam.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01456Quadrosimam.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01456Quadrosimam.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01456Quadrosimam.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01457Parceventoinfex(Base):
@@ -9722,8 +9781,8 @@ class T01457Parceventoinfex(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01458Eventoinfservex = relationship('T01458Eventoinfservex', 
-        primaryjoin='and_(T01457Parceventoinfex.T01458_I_CDEVENTOSERV==T01458Eventoinfservex.T01458_I_CDEVENTOSERV, T01457Parceventoinfex.T01327_I_CDARQUIVOEX==T01458Eventoinfservex.T01327_I_CDARQUIVOEX)',
+    t01458Eventoinfservex = relationship('T01458Eventoinfservex',
+        primaryjoin='and_(T01457Parceventoinfex.T01458_I_CDEVENTOSERV == T01458Eventoinfservex.T01458_I_CDEVENTOSERV, T01457Parceventoinfex.T01327_I_CDARQUIVOEX == T01458Eventoinfservex.T01327_I_CDARQUIVOEX)',
         foreign_keys=[T01458_I_CDEVENTOSERV, T01327_I_CDARQUIVOEX])
 
 class T01458Eventoinfservex(Base):
@@ -9761,14 +9820,14 @@ class T01458Eventoinfservex(Base):
     t01324InterfaceByICdinterface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERFACE])
     t01158AbertfolhaByICdfolhaex = relationship('T01158Abertfolha', foreign_keys=[T01458_I_CDFOLHAEX])
     t01324InterfaceByICdinterfaceex = relationship('T01324Interface', foreign_keys=[T01458_I_CDINTERFACEEX])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01458Eventoinfservex.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01458Eventoinfservex.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01458Eventoinfservex.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01458Eventoinfservex.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01458Eventoinfservex.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01458Eventoinfservex.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01458Eventoinfservex.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01458Eventoinfservex.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01458Eventoinfservex.T01458_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01458Eventoinfservex.T01458_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01458Eventoinfservex.T01458_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01458Eventoinfservex.T01458_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01458_I_ENTOPERADOR, T01458_I_MATOPERADOR])
 
 class T01459Identtceesp(Base):
@@ -9795,8 +9854,8 @@ class T01460Sepfundef(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01460Sepfundef.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01460Sepfundef.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01460Sepfundef.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01460Sepfundef.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01461Identtceufunc(Base):
@@ -9823,15 +9882,17 @@ class T01462Histccpens(Base):
     T01462_I_TPPAGTO = Column(Numeric(4, 0), ForeignKey('RH.T01071_ITEMLISTA.T01071_I_CDITEM'), nullable=False)
 
     # Relationships
-    t01021Banco = relationship('T01021Banco', foreign_keys=[T01021_I_CDBANCO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01462Histccpens.T01462_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01462Histccpens.T01462_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01021Banco = relationship('T01021Banco',
+        primaryjoin='and_(T01462Histccpens.T01021_I_CDBANCO == T01021Banco.T01021_I_CDBANCO)',
+        foreign_keys=[T01021_I_CDBANCO])
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01462Histccpens.T01462_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01462Histccpens.T01462_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01462_I_ENTOPERADOR, T01462_I_MATOPERADOR])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01462Histccpens.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01462Histccpens.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01462Histccpens.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01462Histccpens.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01462Histccpens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01462Histccpens.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01462Histccpens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01462Histccpens.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01462_I_TPPAGTO])
 
@@ -9852,12 +9913,12 @@ class T01463Histccmatdiv(Base):
     T01463_I_TPPAGTO = Column(Numeric(4, 0), ForeignKey('RH.T01071_ITEMLISTA.T01071_I_CDITEM'), nullable=False)
 
     # Relationships
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01463Histccmatdiv.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01463Histccmatdiv.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01463Histccmatdiv.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01463Histccmatdiv.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01463_I_TPPAGTO])
-    t01183Matrdiversa = relationship('T01183Matrdiversa', 
-        primaryjoin='and_(T01463Histccmatdiv.T01002_I_CDENT==T01183Matrdiversa.T01002_I_CDENT, T01463Histccmatdiv.T01183_I_MATRICULA==T01183Matrdiversa.T01183_I_MATRICULA)',
+    t01183Matrdiversa = relationship('T01183Matrdiversa',
+        primaryjoin='and_(T01463Histccmatdiv.T01002_I_CDENT == T01183Matrdiversa.T01002_I_CDENT, T01463Histccmatdiv.T01183_I_MATRICULA == T01183Matrdiversa.T01183_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01183_I_MATRICULA])
 
 class T01464Resumopgtohistmatdiv(Base):
@@ -9876,8 +9937,8 @@ class T01464Resumopgtohistmatdiv(Base):
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01464_I_TPPAGTO])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01183Matrdiversa = relationship('T01183Matrdiversa', 
-        primaryjoin='and_(T01464Resumopgtohistmatdiv.T01002_I_CDENT==T01183Matrdiversa.T01002_I_CDENT, T01464Resumopgtohistmatdiv.T01183_I_MATRICULA==T01183Matrdiversa.T01183_I_MATRICULA)',
+    t01183Matrdiversa = relationship('T01183Matrdiversa',
+        primaryjoin='and_(T01464Resumopgtohistmatdiv.T01002_I_CDENT == T01183Matrdiversa.T01002_I_CDENT, T01464Resumopgtohistmatdiv.T01183_I_MATRICULA == T01183Matrdiversa.T01183_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01183_I_MATRICULA])
 
 class T01465Rubrica(Base):
@@ -9976,10 +10037,12 @@ class T01469Regraquadro(Base):
     T01469_I_DESCONS = Column(Boolean, nullable=False)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01469Regraquadro.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01465Rubrica = relationship('T01465Rubrica', foreign_keys=[T01465_I_CDRUBRICA])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01469Regraquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01469Regraquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01469Regraquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01469Regraquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01470Regraunidfunc(Base):
@@ -9994,10 +10057,12 @@ class T01470Regraunidfunc(Base):
     T01470_I_DESCONS = Column(Boolean, nullable=False)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01470Regraunidfunc.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01465Rubrica = relationship('T01465Rubrica', foreign_keys=[T01465_I_CDRUBRICA])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01470Regraunidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01470Regraunidfunc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01470Regraunidfunc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01470Regraunidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01470Regraunidfunc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01470Regraunidfunc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01471Regraevento(Base):
@@ -10011,10 +10076,12 @@ class T01471Regraevento(Base):
     T01471_I_DESCONS = Column(Boolean, nullable=False)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01471Regraevento.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01465Rubrica = relationship('T01465Rubrica', foreign_keys=[T01465_I_CDRUBRICA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01471Regraevento.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01471Regraevento.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01471Regraevento.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01471Regraevento.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01472Regratpafast(Base):
@@ -10028,10 +10095,12 @@ class T01472Regratpafast(Base):
     T01472_I_DESCONS = Column(Boolean, nullable=False)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01472Regratpafast.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01465Rubrica = relationship('T01465Rubrica', foreign_keys=[T01465_I_CDRUBRICA])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01472Regratpafast.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01472Regratpafast.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01472Regratpafast.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01472Regratpafast.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
 
 class T01473Regraitemhierarq(Base):
@@ -10045,10 +10114,12 @@ class T01473Regraitemhierarq(Base):
     T01473_I_DESCONS = Column(Boolean, nullable=False)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01473Regraitemhierarq.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01465Rubrica = relationship('T01465Rubrica', foreign_keys=[T01465_I_CDRUBRICA])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01473Regraitemhierarq.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01473Regraitemhierarq.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01473Regraitemhierarq.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01473Regraitemhierarq.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01474Fonterec(Base):
@@ -10081,8 +10152,8 @@ class T01475Verbarubfonte(Base):
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01465Rubrica = relationship('T01465Rubrica', foreign_keys=[T01465_I_CDRUBRICA])
     t01474Fonterec = relationship('T01474Fonterec', foreign_keys=[T01474_I_FONTEREC])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01475Verbarubfonte.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01475Verbarubfonte.T01059_I_ANOVBORCAM==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01475Verbarubfonte.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01475Verbarubfonte.T01059_I_ANOVBORCAM == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCAM])
     t01966Centrocustofin = relationship('T01966Centrocustofin', foreign_keys=[T01966_I_CDCENTROCUSTO])
 
@@ -10106,17 +10177,17 @@ class T01476Itemconcurso(Base):
 
     # Relationships
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01476Itemconcurso.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01476Itemconcurso.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01476Itemconcurso.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01476Itemconcurso.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01476Itemconcurso.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01476Itemconcurso.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01476Itemconcurso.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01476Itemconcurso.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01476Itemconcurso.T01476_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01476Itemconcurso.T01476_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01476Itemconcurso.T01476_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01476Itemconcurso.T01476_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01476_I_ENTOPERADOR, T01476_I_MATOPERADOR])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01476Itemconcurso.T01476_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01476Itemconcurso.T01476_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador1 = relationship('T01001Servidor',
+        primaryjoin='and_(T01476Itemconcurso.T01476_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01476Itemconcurso.T01476_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01476_I_ENTOPERADOR, T01476_I_MATOPERADOR])
     t01688Grupoconc = relationship('T01688Grupoconc', foreign_keys=[T01688_I_CDGRUPOCONC])
 
@@ -10131,11 +10202,11 @@ class T01477Eventodependencia(Base):
     T01477_D_DATAFIM = Column(DateTime)
 
     # Relationships
-    t01058EventosfolhaByICdent = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01477Eventodependencia.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01477Eventodependencia.T01477_I_CDEVENTODEPENDENCIA==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058EventosfolhaByICdent = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01477Eventodependencia.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01477Eventodependencia.T01477_I_CDEVENTODEPENDENCIA == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01477_I_CDEVENTODEPENDENCIA])
-    t01058EventosfolhaByICdent = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01477Eventodependencia.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01477Eventodependencia.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058EventosfolhaByICdent1 = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01477Eventodependencia.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01477Eventodependencia.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01478Assunto(Base):
@@ -10177,17 +10248,17 @@ class T01479Histedital(Base):
     # Relationships
     t01071ItemlistaByIRespedital2 = relationship('T01071Itemlista', foreign_keys=[T01479_I_RESPEDITAL2])
     t01071ItemlistaByIRespedital1 = relationship('T01071Itemlista', foreign_keys=[T01479_I_RESPEDITAL1])
-    t01044Edital = relationship('T01044Edital', 
-        primaryjoin='and_(T01479Histedital.T01002_I_CDENT==T01044Edital.T01002_I_CDENT, T01479Histedital.T01044_I_CDEDITAL==T01044Edital.T01044_I_CDEDITAL, T01479Histedital.T01044_I_ANOEDITAL==T01044Edital.T01044_I_ANOEDITAL)',
+    t01044Edital = relationship('T01044Edital',
+        primaryjoin='and_(T01479Histedital.T01002_I_CDENT == T01044Edital.T01002_I_CDENT, T01479Histedital.T01044_I_CDEDITAL == T01044Edital.T01044_I_CDEDITAL, T01479Histedital.T01044_I_ANOEDITAL == T01044Edital.T01044_I_ANOEDITAL)',
         foreign_keys=[T01002_I_CDENT, T01044_I_CDEDITAL, T01044_I_ANOEDITAL])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01479Histedital.T01479_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01479Histedital.T01479_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01479Histedital.T01479_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01479Histedital.T01479_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01479_I_ENTOPERADOR, T01479_I_MATOPERADOR])
-    t01001ServidorByIEntresp1 = relationship('T01001Servidor', 
-        primaryjoin='and_(T01479Histedital.T01002_I_ENTRESP1==T01001Servidor.T01002_I_CDENT, T01479Histedital.T01001_I_MATRESP1==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntresp1 = relationship('T01001Servidor',
+        primaryjoin='and_(T01479Histedital.T01002_I_ENTRESP1 == T01001Servidor.T01002_I_CDENT, T01479Histedital.T01001_I_MATRESP1 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTRESP1, T01001_I_MATRESP1])
-    t01001ServidorByIEntresp2 = relationship('T01001Servidor', 
-        primaryjoin='and_(T01479Histedital.T01002_I_ENTRESP2==T01001Servidor.T01002_I_CDENT, T01479Histedital.T01001_I_MATRESP2==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntresp2 = relationship('T01001Servidor',
+        primaryjoin='and_(T01479Histedital.T01002_I_ENTRESP2 == T01001Servidor.T01002_I_CDENT, T01479Histedital.T01001_I_MATRESP2 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTRESP2, T01001_I_MATRESP2])
 
 class T01480Histitemedital(Base):
@@ -10217,11 +10288,11 @@ class T01480Histitemedital(Base):
     # Relationships
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
     t01479Histedital = relationship('T01479Histedital', foreign_keys=[T01479_I_CDHISTEDITAL])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01480Histitemedital.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01480Histitemedital.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01480Histitemedital.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01480Histitemedital.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01480Histitemedital.T01480_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01480Histitemedital.T01480_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01480Histitemedital.T01480_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01480Histitemedital.T01480_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01480_I_ENTOPERADOR, T01480_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTCONCURSO])
 
@@ -10253,14 +10324,14 @@ class T01481Prova(Base):
     T01481_S_MSGLOCALPROVA = Column(String(100))
 
     # Relationships
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01481Prova.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01481Prova.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01481Prova.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01481Prova.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01476Itemconcurso = relationship('T01476Itemconcurso', 
-        primaryjoin='and_(T01481Prova.T01002_I_CDENT==T01476Itemconcurso.T01002_I_CDENT, T01481Prova.T01036_I_CDHIERARQ==T01476Itemconcurso.T01036_I_CDHIERARQ, T01481Prova.T01041_I_CONCURSO==T01476Itemconcurso.T01041_I_CONCURSO)',
+    t01476Itemconcurso = relationship('T01476Itemconcurso',
+        primaryjoin='and_(T01481Prova.T01002_I_CDENT == T01476Itemconcurso.T01002_I_CDENT, T01481Prova.T01036_I_CDHIERARQ == T01476Itemconcurso.T01036_I_CDHIERARQ, T01481Prova.T01041_I_CONCURSO == T01476Itemconcurso.T01041_I_CONCURSO)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ, T01041_I_CONCURSO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01481Prova.T01481_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01481Prova.T01481_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01481Prova.T01481_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01481Prova.T01481_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01481_I_ENTOPERADOR, T01481_I_MATOPERADOR])
 
 class T01482Assuntoprova(Base):
@@ -10282,8 +10353,8 @@ class T01482Assuntoprova(Base):
     # Relationships
     t01478Assunto = relationship('T01478Assunto', foreign_keys=[T01478_I_CDASSUNTO])
     t01481Prova = relationship('T01481Prova', foreign_keys=[T01481_I_CDPROVA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01482Assuntoprova.T01482_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01482Assuntoprova.T01482_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01482Assuntoprova.T01482_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01482Assuntoprova.T01482_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01482_I_ENTOPERADOR, T01482_I_MATOPERADOR])
 
 class T01483Questaoassunto(Base):
@@ -10302,8 +10373,8 @@ class T01483Questaoassunto(Base):
     # Relationships
     t01478Assunto = relationship('T01478Assunto', foreign_keys=[T01478_I_CDASSUNTO])
     t01481Prova = relationship('T01481Prova', foreign_keys=[T01481_I_CDPROVA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01483Questaoassunto.T01483_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01483Questaoassunto.T01483_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01483Questaoassunto.T01483_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01483Questaoassunto.T01483_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01483_I_ENTOPERADOR, T01483_I_MATOPERADOR])
 
 class T01484Localprova(Base):
@@ -10319,8 +10390,8 @@ class T01484Localprova(Base):
 
     # Relationships
     t01118Endereco = relationship('T01118Endereco', foreign_keys=[T01118_I_CDEND])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01484Localprova.T01484_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01484Localprova.T01484_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01484Localprova.T01484_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01484Localprova.T01484_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01484_I_ENTOPERADOR, T01484_I_MATOPERADOR])
 
 class T01485Salalocal(Base):
@@ -10338,8 +10409,8 @@ class T01485Salalocal(Base):
 
     # Relationships
     t01484Localprova = relationship('T01484Localprova', foreign_keys=[T01484_I_CDLOCAL])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01485Salalocal.T01485_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01485Salalocal.T01485_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01485Salalocal.T01485_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01485Salalocal.T01485_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01485_I_ENTOPERADOR, T01485_I_MATOPERADOR])
 
 class T01486Provalocalsala(Base):
@@ -10352,8 +10423,8 @@ class T01486Provalocalsala(Base):
 
     # Relationships
     t01481Prova = relationship('T01481Prova', foreign_keys=[T01481_I_CDPROVA])
-    t01485Salalocal = relationship('T01485Salalocal', 
-        primaryjoin='and_(T01486Provalocalsala.T01484_I_CDLOCAL==T01485Salalocal.T01484_I_CDLOCAL, T01486Provalocalsala.T01485_S_SALA==T01485Salalocal.T01485_S_SALA)',
+    t01485Salalocal = relationship('T01485Salalocal',
+        primaryjoin='and_(T01486Provalocalsala.T01484_I_CDLOCAL == T01485Salalocal.T01484_I_CDLOCAL, T01486Provalocalsala.T01485_S_SALA == T01485Salalocal.T01485_S_SALA)',
         foreign_keys=[T01484_I_CDLOCAL, T01485_S_SALA])
 
 class T01487Histsituacao(Base):
@@ -10366,8 +10437,8 @@ class T01487Histsituacao(Base):
     T01041_I_CONCURSO = Column(Integer, ForeignKey('RH.T01042_CANDIDATO.T01041_I_CONCURSO'), primary_key=True)
 
     # Relationships
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01487Histsituacao.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01487Histsituacao.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01487Histsituacao.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01487Histsituacao.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
 
 class T01488Memorandocanc(Base):
@@ -10390,15 +10461,17 @@ class T01488Memorandocanc(Base):
     T01488_S_NRATONOME = Column(String(20))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01488Memorandocanc.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01131Nomeacao = relationship('T01131Nomeacao', foreign_keys=[T01131_I_CDNOMEACAO])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01488_I_TPATO])
     t01071ItemlistaByICdmotieli = relationship('T01071Itemlista', foreign_keys=[T01488_I_CDMOTIELI])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01488Memorandocanc.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01488Memorandocanc.T01488_I_MATRICDES==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01488Memorandocanc.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01488Memorandocanc.T01488_I_MATRICDES == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01488_I_MATRICDES])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01488Memorandocanc.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01488Memorandocanc.T01488_I_MATRICREM==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent1 = relationship('T01001Servidor',
+        primaryjoin='and_(T01488Memorandocanc.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01488Memorandocanc.T01488_I_MATRICREM == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01488_I_MATRICREM])
 
 class T01489Histreqoficio(Base):
@@ -10416,14 +10489,14 @@ class T01489Histreqoficio(Base):
     T01489_S_DESCRICAO = Column(String(500), nullable=False)
 
     # Relationships
-    t01054Reqoficio = relationship('T01054Reqoficio', 
-        primaryjoin='and_(T01489Histreqoficio.T01002_I_CDENT==T01054Reqoficio.T01002_I_CDENT, T01489Histreqoficio.T01004_I_CDUNIDFUN==T01054Reqoficio.T01004_I_CDUNIDFUN, T01489Histreqoficio.T01004_I_VERSAO==T01054Reqoficio.T01004_I_VERSAO, T01489Histreqoficio.T01054_I_NRREQOF==T01054Reqoficio.T01054_I_NRREQOF, T01489Histreqoficio.T01054_I_ANOREQOF==T01054Reqoficio.T01054_I_ANOREQOF)',
+    t01054Reqoficio = relationship('T01054Reqoficio',
+        primaryjoin='and_(T01489Histreqoficio.T01002_I_CDENT == T01054Reqoficio.T01002_I_CDENT, T01489Histreqoficio.T01004_I_CDUNIDFUN == T01054Reqoficio.T01004_I_CDUNIDFUN, T01489Histreqoficio.T01004_I_VERSAO == T01054Reqoficio.T01004_I_VERSAO, T01489Histreqoficio.T01054_I_NRREQOF == T01054Reqoficio.T01054_I_NRREQOF, T01489Histreqoficio.T01054_I_ANOREQOF == T01054Reqoficio.T01054_I_ANOREQOF)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO, T01054_I_NRREQOF, T01054_I_ANOREQOF])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01489Histreqoficio.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01489Histreqoficio.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01489Histreqoficio.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01489Histreqoficio.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01489Histreqoficio.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01489Histreqoficio.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01489Histreqoficio.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01489Histreqoficio.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01489Histreqoficio.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01489Histreqoficio.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01490Ensalamento(Base):
@@ -10440,14 +10513,14 @@ class T01490Ensalamento(Base):
     T01490_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01486Provalocalsala = relationship('T01486Provalocalsala', 
-        primaryjoin='and_(T01490Ensalamento.T01481_I_CDPROVA==T01486Provalocalsala.T01481_I_CDPROVA, T01490Ensalamento.T01484_I_CDLOCAL==T01486Provalocalsala.T01484_I_CDLOCAL, T01490Ensalamento.T01485_S_SALA==T01486Provalocalsala.T01485_S_SALA)',
+    t01486Provalocalsala = relationship('T01486Provalocalsala',
+        primaryjoin='and_(T01490Ensalamento.T01481_I_CDPROVA == T01486Provalocalsala.T01481_I_CDPROVA, T01490Ensalamento.T01484_I_CDLOCAL == T01486Provalocalsala.T01484_I_CDLOCAL, T01490Ensalamento.T01485_S_SALA == T01486Provalocalsala.T01485_S_SALA)',
         foreign_keys=[T01481_I_CDPROVA, T01484_I_CDLOCAL, T01485_S_SALA])
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01490Ensalamento.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01490Ensalamento.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01490Ensalamento.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01490Ensalamento.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01490Ensalamento.T01490_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01490Ensalamento.T01490_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01490Ensalamento.T01490_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01490Ensalamento.T01490_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01490_I_ENTOPERADOR, T01490_I_MATOPERADOR])
 
 class T01491Complementodoc(Base):
@@ -10462,8 +10535,8 @@ class T01491Complementodoc(Base):
     T01491_D_DTFIM = Column(DateTime)
 
     # Relationships
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01491Complementodoc.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01491Complementodoc.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01491Complementodoc.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01491Complementodoc.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01492Eventoconveniocq(Base):
@@ -10475,8 +10548,8 @@ class T01492Eventoconveniocq(Base):
     T01492_I_CDCONVENIOCQ = Column(Integer, primary_key=True)
 
     # Relationships
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01492Eventoconveniocq.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01492Eventoconveniocq.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01492Eventoconveniocq.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01492Eventoconveniocq.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01493Pagtogratificacao(Base):
@@ -10497,14 +10570,14 @@ class T01493Pagtogratificacao(Base):
     T01076_I_CDSIMBOLO = Column(Numeric(4, 0), ForeignKey('RH.T01076_SIMBCGCONF.T01076_I_CDSIMBOLO'))
 
     # Relationships
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01493Pagtogratificacao.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01493Pagtogratificacao.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01493Pagtogratificacao.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01493Pagtogratificacao.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01493Pagtogratificacao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01493Pagtogratificacao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01493Pagtogratificacao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01493Pagtogratificacao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01493Pagtogratificacao.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01493Pagtogratificacao.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01493Pagtogratificacao.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01493Pagtogratificacao.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
 
 class T01494Reajusteindenizpen(Base):
@@ -10532,8 +10605,8 @@ class T01494Reajusteindenizpen(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01494Reajusteindenizpen.T01002_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01494Reajusteindenizpen.T01001_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01494Reajusteindenizpen.T01002_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01494Reajusteindenizpen.T01001_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTOPERADOR, T01001_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01494_I_STATUS])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
@@ -10584,10 +10657,12 @@ class T01499Ofdeclaracaovagas(Base):
     T01499_I_DECLARDF = Column(Boolean)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01499Ofdeclaracaovagas.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01499Ofdeclaracaovagas.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01499Ofdeclaracaovagas.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01499Ofdeclaracaovagas.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01499Ofdeclaracaovagas.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01500Tclstnomeados(Base):
@@ -10615,13 +10690,15 @@ class T01500Tclstnomeados(Base):
     T01500_I_DEFFISICA = Column(Boolean)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01500Tclstnomeados.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01500Tclstnomeados.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01500Tclstnomeados.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01500Tclstnomeados.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01500Tclstnomeados.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01500Tclstnomeados.T01500_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01500Tclstnomeados.T01500_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01500Tclstnomeados.T01500_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01500Tclstnomeados.T01500_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01500_I_ENTOPERADOR, T01500_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01500_I_TPRESADMISSAOTC])
 
@@ -10643,8 +10720,8 @@ class T01501Tcofnomeacaoconc(Base):
     T01501_D_DATANOMEFIM = Column(DateTime)
 
     # Relationships
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01501Tcofnomeacaoconc.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01501Tcofnomeacaoconc.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01501Tcofnomeacaoconc.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01501Tcofnomeacaoconc.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
     t01500Tclstnomeados = relationship('T01500Tclstnomeados', foreign_keys=[T01500_I_CDTCLSTNOMEADOS])
@@ -10668,12 +10745,14 @@ class T01502Mandadoseg(Base):
     T01502_I_NEGADO = Column(Boolean)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01054Reqoficio = relationship('T01054Reqoficio', 
-        primaryjoin='and_(T01502Mandadoseg.T01002_I_CDENT==T01054Reqoficio.T01002_I_CDENT, T01502Mandadoseg.T01004_I_CDUNIDFUN==T01054Reqoficio.T01004_I_CDUNIDFUN, T01502Mandadoseg.T01004_I_VERSAO==T01054Reqoficio.T01004_I_VERSAO, T01502Mandadoseg.T01054_I_NRREQOF==T01054Reqoficio.T01054_I_NRREQOF, T01502Mandadoseg.T01054_I_ANOREQOF==T01054Reqoficio.T01054_I_ANOREQOF)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01502Mandadoseg.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01054Reqoficio = relationship('T01054Reqoficio',
+        primaryjoin='and_(T01502Mandadoseg.T01002_I_CDENT == T01054Reqoficio.T01002_I_CDENT, T01502Mandadoseg.T01004_I_CDUNIDFUN == T01054Reqoficio.T01004_I_CDUNIDFUN, T01502Mandadoseg.T01004_I_VERSAO == T01054Reqoficio.T01004_I_VERSAO, T01502Mandadoseg.T01054_I_NRREQOF == T01054Reqoficio.T01054_I_NRREQOF, T01502Mandadoseg.T01054_I_ANOREQOF == T01054Reqoficio.T01054_I_ANOREQOF)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO, T01054_I_NRREQOF, T01054_I_ANOREQOF])
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01502Mandadoseg.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01502Mandadoseg.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01502Mandadoseg.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01502Mandadoseg.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
 
 class T01503Hierarqcargahora(Base):
@@ -10687,11 +10766,11 @@ class T01503Hierarqcargahora(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01503_I_CDTIPO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01503Hierarqcargahora.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01503Hierarqcargahora.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01503Hierarqcargahora.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01503Hierarqcargahora.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01503Hierarqcargahora.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01503Hierarqcargahora.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01503Hierarqcargahora.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01503Hierarqcargahora.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
 
 class T01504Gratperiodveriffaltas(Base):
@@ -10706,8 +10785,8 @@ class T01504Gratperiodveriffaltas(Base):
     T01504_D_DATAFIM = Column(DateTime, nullable=False)
 
     # Relationships
-    t01431Gratperiodicidadepgto = relationship('T01431Gratperiodicidadepgto', 
-        primaryjoin='and_(T01504Gratperiodveriffaltas.T01002_I_CDENT==T01431Gratperiodicidadepgto.T01002_I_CDENT, T01504Gratperiodveriffaltas.T01058_I_CDEVENTO==T01431Gratperiodicidadepgto.T01058_I_CDEVENTO, T01504Gratperiodveriffaltas.T01431_D_DTINIAVALIACAO==T01431Gratperiodicidadepgto.T01431_D_DTINIAVALIACAO)',
+    t01431Gratperiodicidadepgto = relationship('T01431Gratperiodicidadepgto',
+        primaryjoin='and_(T01504Gratperiodveriffaltas.T01002_I_CDENT == T01431Gratperiodicidadepgto.T01002_I_CDENT, T01504Gratperiodveriffaltas.T01058_I_CDEVENTO == T01431Gratperiodicidadepgto.T01058_I_CDEVENTO, T01504Gratperiodveriffaltas.T01431_D_DTINIAVALIACAO == T01431Gratperiodicidadepgto.T01431_D_DTINIAVALIACAO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01431_D_DTINIAVALIACAO])
 
 class T01505Eventospensao(Base):
@@ -10730,14 +10809,14 @@ class T01505Eventospensao(Base):
 
     # Relationships
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01505Eventospensao.T01505_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01505Eventospensao.T01505_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01505Eventospensao.T01505_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01505Eventospensao.T01505_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01505_I_ENTOPERADOR, T01505_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01505Eventospensao.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01505Eventospensao.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01505Eventospensao.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01505Eventospensao.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01505Eventospensao.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01505Eventospensao.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01505Eventospensao.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01505Eventospensao.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
 
 class T01506Eventoinfpens(Base):
@@ -10769,14 +10848,14 @@ class T01506Eventoinfpens(Base):
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01327Arquivorecebido = relationship('T01327Arquivorecebido', foreign_keys=[T01327_I_CDARQUIVO])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERFACE])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01506Eventoinfpens.T01506_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01506Eventoinfpens.T01506_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01506Eventoinfpens.T01506_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01506Eventoinfpens.T01506_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01506_I_ENTOPERADOR, T01506_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01506Eventoinfpens.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01506Eventoinfpens.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01506Eventoinfpens.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01506Eventoinfpens.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01506Eventoinfpens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01506Eventoinfpens.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01506Eventoinfpens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01506Eventoinfpens.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
 
 class T01507Eventoinfpensparc(Base):
@@ -10796,8 +10875,8 @@ class T01507Eventoinfpensparc(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01506Eventoinfpens = relationship('T01506Eventoinfpens', foreign_keys=[T01506_I_CDEVENTOINFPOPENS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01507Eventoinfpensparc.T01507_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01507Eventoinfpensparc.T01507_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01507Eventoinfpensparc.T01507_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01507Eventoinfpensparc.T01507_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01507_I_ENTOPERADOR, T01507_I_MATOPERADOR])
 
 class T01508Histlancmanualpens(Base):
@@ -10817,8 +10896,8 @@ class T01508Histlancmanualpens(Base):
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01508_I_TPDADOLEG])
     t01506Eventoinfpens = relationship('T01506Eventoinfpens', foreign_keys=[T01506_I_CDEVENTOINFPOPENS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01508Histlancmanualpens.T01508_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01508Histlancmanualpens.T01508_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01508Histlancmanualpens.T01508_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01508Histlancmanualpens.T01508_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01508_I_ENTOPERADOR, T01508_I_MATOPERADOR])
 
 class T01509Exoneracaoestprob(Base):
@@ -10844,14 +10923,14 @@ class T01509Exoneracaoestprob(Base):
     T01509_D_DTAUTUACAO = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01509Exoneracaoestprob.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01509Exoneracaoestprob.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01509Exoneracaoestprob.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01509Exoneracaoestprob.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01509Exoneracaoestprob.T01509_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01509Exoneracaoestprob.T01509_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01509Exoneracaoestprob.T01509_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01509Exoneracaoestprob.T01509_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01509_I_ENTOPERADOR, T01509_I_MATOPERADOR])
-    t01314Avaliacaoep = relationship('T01314Avaliacaoep', 
-        primaryjoin='and_(T01509Exoneracaoestprob.T01002_I_CDENT==T01314Avaliacaoep.T01002_I_CDENT, T01509Exoneracaoestprob.T01001_I_MATRICULA==T01314Avaliacaoep.T01001_I_MATRICULA, T01509Exoneracaoestprob.T01314_D_DTADMISSAO==T01314Avaliacaoep.T01314_D_DTADMISSAO)',
+    t01314Avaliacaoep = relationship('T01314Avaliacaoep',
+        primaryjoin='and_(T01509Exoneracaoestprob.T01002_I_CDENT == T01314Avaliacaoep.T01002_I_CDENT, T01509Exoneracaoestprob.T01001_I_MATRICULA == T01314Avaliacaoep.T01001_I_MATRICULA, T01509Exoneracaoestprob.T01314_D_DTADMISSAO == T01314Avaliacaoep.T01314_D_DTADMISSAO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01314_D_DTADMISSAO])
 
 class T01510Compproventos(Base):
@@ -10871,11 +10950,11 @@ class T01510Compproventos(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01510Compproventos.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01510Compproventos.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01510Compproventos.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01510Compproventos.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01510Compproventos.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01510Compproventos.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01510Compproventos.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01510Compproventos.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01511Histmutacaoconc(Base):
@@ -10897,26 +10976,26 @@ class T01511Histmutacaoconc(Base):
     T01511_I_INDPROC = Column(SmallInteger)
 
     # Relationships
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01511Histmutacaoconc.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01511Histmutacaoconc.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01511Histmutacaoconc.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01511Histmutacaoconc.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01511Histmutacaoconc.T01511_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01511Histmutacaoconc.T01511_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01511Histmutacaoconc.T01511_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01511Histmutacaoconc.T01511_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01511_I_ENTOPERADOR, T01511_I_MATOPERADOR])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01511Histmutacaoconc.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01511Histmutacaoconc.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01025Padrao = relationship('T01025Padrao', 
-        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01511Histmutacaoconc.T01025_I_CDPADRAO==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025Padrao = relationship('T01025Padrao',
+        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01511Histmutacaoconc.T01025_I_CDPADRAO == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO])
-    t01015Referencia = relationship('T01015Referencia', 
-        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01511Histmutacaoconc.T01015_I_CDREF==T01015Referencia.T01015_I_CDREF)',
+    t01015Referencia = relationship('T01015Referencia',
+        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01511Histmutacaoconc.T01015_I_CDREF == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01015_I_CDREF])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01511Histmutacaoconc.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01511Histmutacaoconc.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01639Hierarquadro = relationship('T01639Hierarquadro', 
-        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT==T01639Hierarquadro.T01002_I_CDENT, T01511Histmutacaoconc.T01036_I_CDHIERARQ==T01639Hierarquadro.T01036_I_CDHIERARQ, T01511Histmutacaoconc.T01027_I_CDQUADRO==T01639Hierarquadro.T01027_I_CDQUADRO)',
+    t01639Hierarquadro = relationship('T01639Hierarquadro',
+        primaryjoin='and_(T01511Histmutacaoconc.T01002_I_CDENT == T01639Hierarquadro.T01002_I_CDENT, T01511Histmutacaoconc.T01036_I_CDHIERARQ == T01639Hierarquadro.T01036_I_CDHIERARQ, T01511Histmutacaoconc.T01027_I_CDQUADRO == T01639Hierarquadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ, T01027_I_CDQUADRO])
 
 class T01512Nivelclasse(Base):
@@ -10944,11 +11023,11 @@ class T01513Nivelclassepadrao(Base):
     T01513_D_DTFIMVALID = Column(DateTime)
 
     # Relationships
-    t01512Nivelclasse = relationship('T01512Nivelclasse', 
-        primaryjoin='and_(T01513Nivelclassepadrao.T01002_I_CDENT==T01512Nivelclasse.T01002_I_CDENT, T01513Nivelclassepadrao.T01512_I_CDNIVELCLASSE==T01512Nivelclasse.T01512_I_CDNIVELCLASSE)',
+    t01512Nivelclasse = relationship('T01512Nivelclasse',
+        primaryjoin='and_(T01513Nivelclassepadrao.T01002_I_CDENT == T01512Nivelclasse.T01002_I_CDENT, T01513Nivelclassepadrao.T01512_I_CDNIVELCLASSE == T01512Nivelclasse.T01512_I_CDNIVELCLASSE)',
         foreign_keys=[T01002_I_CDENT, T01512_I_CDNIVELCLASSE])
-    t01025Padrao = relationship('T01025Padrao', 
-        primaryjoin='and_(T01513Nivelclassepadrao.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01513Nivelclassepadrao.T01025_I_CDPADRAO==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025Padrao = relationship('T01025Padrao',
+        primaryjoin='and_(T01513Nivelclassepadrao.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01513Nivelclassepadrao.T01025_I_CDPADRAO == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO])
 
 class T01514Itemformquadroconc(Base):
@@ -10988,8 +11067,8 @@ class T01515Canditemformquadroconc(Base):
 
     # Relationships
     t01514Itemformquadroconc = relationship('T01514Itemformquadroconc', foreign_keys=[T01514_I_CDITEMFORMQUADROCONC])
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01515Canditemformquadroconc.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01515Canditemformquadroconc.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01515Canditemformquadroconc.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01515Canditemformquadroconc.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
 
 class T01516Quadroformconc(Base):
@@ -11027,8 +11106,8 @@ class T01518Respostaconc(Base):
 
     # Relationships
     t01481Prova = relationship('T01481Prova', foreign_keys=[T01481_I_CDPROVA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01518Respostaconc.T01518_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01518Respostaconc.T01518_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01518Respostaconc.T01518_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01518Respostaconc.T01518_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01518_I_ENTOPERADOR, T01518_I_MATOPERADOR])
 
 class T01519Prorrogestprob(Base):
@@ -11061,17 +11140,17 @@ class T01519Prorrogestprob(Base):
 
     # Relationships
     t01073Desigcgconf = relationship('T01073Desigcgconf', foreign_keys=[T01073_I_CDDESIG])
-    t01314Avaliacaoep = relationship('T01314Avaliacaoep', 
-        primaryjoin='and_(T01519Prorrogestprob.T01002_I_CDENT==T01314Avaliacaoep.T01002_I_CDENT, T01519Prorrogestprob.T01001_I_MATRICULA==T01314Avaliacaoep.T01001_I_MATRICULA, T01519Prorrogestprob.T01314_D_DTADMISSAO==T01314Avaliacaoep.T01314_D_DTADMISSAO)',
+    t01314Avaliacaoep = relationship('T01314Avaliacaoep',
+        primaryjoin='and_(T01519Prorrogestprob.T01002_I_CDENT == T01314Avaliacaoep.T01002_I_CDENT, T01519Prorrogestprob.T01001_I_MATRICULA == T01314Avaliacaoep.T01001_I_MATRICULA, T01519Prorrogestprob.T01314_D_DTADMISSAO == T01314Avaliacaoep.T01314_D_DTADMISSAO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01314_D_DTADMISSAO])
-    t01001ServidorByIEntavaliador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01519Prorrogestprob.T01519_I_ENTAVALIADOR==T01001Servidor.T01002_I_CDENT, T01519Prorrogestprob.T01519_I_MATAVALIADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntavaliador = relationship('T01001Servidor',
+        primaryjoin='and_(T01519Prorrogestprob.T01519_I_ENTAVALIADOR == T01001Servidor.T01002_I_CDENT, T01519Prorrogestprob.T01519_I_MATAVALIADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01519_I_ENTAVALIADOR, T01519_I_MATAVALIADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01519Prorrogestprob.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01519Prorrogestprob.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01519Prorrogestprob.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01519Prorrogestprob.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01519Prorrogestprob.T01519_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01519Prorrogestprob.T01519_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01519Prorrogestprob.T01519_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01519Prorrogestprob.T01519_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01519_I_ENTOPERADOR, T01519_I_MATOPERADOR])
 
 class T01520Premiacao(Base):
@@ -11104,8 +11183,8 @@ class T01521Premiacaocarreira(Base):
 
     # Relationships
     t01520Premiacao = relationship('T01520Premiacao', foreign_keys=[T01520_I_CDPREMIACAO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01521Premiacaocarreira.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01521Premiacaocarreira.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01521Premiacaocarreira.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01521Premiacaocarreira.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01522Histpremiacao(Base):
@@ -11126,23 +11205,23 @@ class T01522Histpremiacao(Base):
 
     # Relationships
     t01520Premiacao = relationship('T01520Premiacao', foreign_keys=[T01520_I_CDPREMIACAO])
-    t01025PadraoByICdent = relationship('T01025Padrao', 
-        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01522Histpremiacao.T01025_I_CDPADRAOORIG==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025PadraoByICdent = relationship('T01025Padrao',
+        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01522Histpremiacao.T01025_I_CDPADRAOORIG == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAOORIG])
-    t01015ReferenciaByICdent = relationship('T01015Referencia', 
-        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01522Histpremiacao.T01015_I_CDREFDEST==T01015Referencia.T01015_I_CDREF)',
+    t01015ReferenciaByICdent = relationship('T01015Referencia',
+        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01522Histpremiacao.T01015_I_CDREFDEST == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01015_I_CDREFDEST])
-    t01015ReferenciaByICdent = relationship('T01015Referencia', 
-        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01522Histpremiacao.T01015_I_CDREFORIG==T01015Referencia.T01015_I_CDREF)',
+    t01015ReferenciaByICdent1 = relationship('T01015Referencia',
+        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01522Histpremiacao.T01015_I_CDREFORIG == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01015_I_CDREFORIG])
-    t01025PadraoByICdent = relationship('T01025Padrao', 
-        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01522Histpremiacao.T01025_I_CDPADRAODEST==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025PadraoByICdent1 = relationship('T01025Padrao',
+        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01522Histpremiacao.T01025_I_CDPADRAODEST == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAODEST])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01522Histpremiacao.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01522Histpremiacao.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01522Histpremiacao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01522Histpremiacao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01522Histpremiacao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01523Lancmanual(Base):
@@ -11162,11 +11241,11 @@ class T01523Lancmanual(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01523Lancmanual.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01523Lancmanual.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01523Lancmanual.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01523Lancmanual.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01523Lancmanual.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01523Lancmanual.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01523Lancmanual.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01523Lancmanual.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01524Lancmanualpens(Base):
@@ -11186,11 +11265,11 @@ class T01524Lancmanualpens(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01524Lancmanualpens.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01524Lancmanualpens.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01524Lancmanualpens.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01524Lancmanualpens.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01524Lancmanualpens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01524Lancmanualpens.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01524Lancmanualpens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01524Lancmanualpens.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
 
 class T01525Histproventosdif(Base):
@@ -11208,11 +11287,11 @@ class T01525Histproventosdif(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01525Histproventosdif.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01525Histproventosdif.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01525Histproventosdif.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01525Histproventosdif.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01525Histproventosdif.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01525Histproventosdif.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01525Histproventosdif.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01525Histproventosdif.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01527Itemufcargo(Base):
@@ -11227,11 +11306,11 @@ class T01527Itemufcargo(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01071_I_CDITEM])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01527Itemufcargo.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01527Itemufcargo.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01527Itemufcargo.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01527Itemufcargo.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01527Itemufcargo.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01527Itemufcargo.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01527Itemufcargo.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01527Itemufcargo.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01527Itemufcargo.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01527Itemufcargo.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01528Complreadap(Base):
@@ -11248,8 +11327,8 @@ class T01528Complreadap(Base):
     T01528_I_VALOR = Column(Numeric(9, 2), nullable=False)
 
     # Relationships
-    t01049Mutacaoserv = relationship('T01049Mutacaoserv', 
-        primaryjoin='and_(T01528Complreadap.T01002_I_CDENT==T01049Mutacaoserv.T01002_I_CDENT, T01528Complreadap.T01001_I_MATRICULA==T01049Mutacaoserv.T01001_I_MATRICULA, T01528Complreadap.T01047_I_CDTPMUT==T01049Mutacaoserv.T01047_I_CDTPMUT, T01528Complreadap.T01049_D_DTMUTACAO==T01049Mutacaoserv.T01049_D_DTMUTACAO)',
+    t01049Mutacaoserv = relationship('T01049Mutacaoserv',
+        primaryjoin='and_(T01528Complreadap.T01002_I_CDENT == T01049Mutacaoserv.T01002_I_CDENT, T01528Complreadap.T01001_I_MATRICULA == T01049Mutacaoserv.T01001_I_MATRICULA, T01528Complreadap.T01047_I_CDTPMUT == T01049Mutacaoserv.T01047_I_CDTPMUT, T01528Complreadap.T01049_D_DTMUTACAO == T01049Mutacaoserv.T01049_D_DTMUTACAO)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01047_I_CDTPMUT, T01049_D_DTMUTACAO])
 
 class T01529Transfremcoletivos(Base):
@@ -11277,22 +11356,24 @@ class T01529Transfremcoletivos(Base):
     T01529_S_NUMATO = Column(String(20))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01529Transfremcoletivos.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01529_I_TPLOCAL])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01529Transfremcoletivos.T01529_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01529Transfremcoletivos.T01529_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01529Transfremcoletivos.T01529_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01529Transfremcoletivos.T01529_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01529_I_ENTOPERADOR, T01529_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01529Transfremcoletivos.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01529Transfremcoletivos.T01004_I_CDLOCTRABDESTINO==T01004Unidfunc.T01004_I_CDUNIDFUN, T01529Transfremcoletivos.T01004_I_VRLOCTRABDESTINO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01529Transfremcoletivos.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01529Transfremcoletivos.T01004_I_CDLOCTRABDESTINO == T01004Unidfunc.T01004_I_CDUNIDFUN, T01529Transfremcoletivos.T01004_I_VRLOCTRABDESTINO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDLOCTRABDESTINO, T01004_I_VRLOCTRABDESTINO])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01529Transfremcoletivos.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01529Transfremcoletivos.T01004_I_CDLOCTRABORIGEM==T01004Unidfunc.T01004_I_CDUNIDFUN, T01529Transfremcoletivos.T01004_I_VRLOCTRABORIGEM==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01529Transfremcoletivos.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01529Transfremcoletivos.T01004_I_CDLOCTRABORIGEM == T01004Unidfunc.T01004_I_CDUNIDFUN, T01529Transfremcoletivos.T01004_I_VRLOCTRABORIGEM == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDLOCTRABORIGEM, T01004_I_VRLOCTRABORIGEM])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01529Transfremcoletivos.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01529Transfremcoletivos.T01004_I_CDORGLOTDESTINO==T01004Unidfunc.T01004_I_CDUNIDFUN, T01529Transfremcoletivos.T01004_I_VRORGLOTDESTINO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent2 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01529Transfremcoletivos.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01529Transfremcoletivos.T01004_I_CDORGLOTDESTINO == T01004Unidfunc.T01004_I_CDUNIDFUN, T01529Transfremcoletivos.T01004_I_VRORGLOTDESTINO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDORGLOTDESTINO, T01004_I_VRORGLOTDESTINO])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01529Transfremcoletivos.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01529Transfremcoletivos.T01004_I_CDORGLOTORIGEM==T01004Unidfunc.T01004_I_CDUNIDFUN, T01529Transfremcoletivos.T01004_I_VRORGLOTORIGEM==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent3 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01529Transfremcoletivos.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01529Transfremcoletivos.T01004_I_CDORGLOTORIGEM == T01004Unidfunc.T01004_I_CDUNIDFUN, T01529Transfremcoletivos.T01004_I_VRORGLOTORIGEM == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDORGLOTORIGEM, T01004_I_VRORGLOTORIGEM])
 
 class T01530Histcessao(Base):
@@ -11310,11 +11391,11 @@ class T01530Histcessao(Base):
     # Relationships
     t01236Entformarem = relationship('T01236Entformarem', foreign_keys=[T01236_I_CDENTFORMAREM])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01530_I_TPCESSAO])
-    t01233Cessao = relationship('T01233Cessao', 
-        primaryjoin='and_(T01530Histcessao.T01002_I_CDENT==T01233Cessao.T01002_I_CDENT, T01530Histcessao.T01001_I_MATRICULA==T01233Cessao.T01001_I_MATRICULA, T01530Histcessao.T01102_I_CDAFASTAM==T01233Cessao.T01102_I_CDAFASTAM)',
+    t01233Cessao = relationship('T01233Cessao',
+        primaryjoin='and_(T01530Histcessao.T01002_I_CDENT == T01233Cessao.T01002_I_CDENT, T01530Histcessao.T01001_I_MATRICULA == T01233Cessao.T01001_I_MATRICULA, T01530Histcessao.T01102_I_CDAFASTAM == T01233Cessao.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01530Histcessao.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01530Histcessao.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01530Histcessao.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01530Histcessao.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01530Histcessao.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01530Histcessao.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01531Fgvencpreapos(Base):
@@ -11331,11 +11412,11 @@ class T01531Fgvencpreapos(Base):
     T01531_I_SUBTRAIRVENC = Column(SmallInteger)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01531Fgvencpreapos.T01531_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01531Fgvencpreapos.T01531_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01531Fgvencpreapos.T01531_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01531Fgvencpreapos.T01531_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01531_I_ENTOPERADOR, T01531_I_MATOPERADOR])
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01531Fgvencpreapos.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01531Fgvencpreapos.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01531Fgvencpreapos.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01531Fgvencpreapos.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
 
 class T01532Vencpreapos(Base):
@@ -11361,11 +11442,11 @@ class T01532Vencpreapos(Base):
     t01158AbertfolhaByICdfolharecolhida = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHARECOLHIDA])
     t01324InterfaceByICdintereng = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
     t01324InterfaceByICdinterengrecolhida = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENGRECOLHIDA])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01532Vencpreapos.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01532Vencpreapos.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01532Vencpreapos.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01532Vencpreapos.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01532Vencpreapos.T01532_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01532Vencpreapos.T01532_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01532Vencpreapos.T01532_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01532Vencpreapos.T01532_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01532_I_ENTOPERADOR, T01532_I_MATOPERADOR])
 
 class T01533Vencpreapositem(Base):
@@ -11410,14 +11491,14 @@ class T01534Itemferindenizusuf(Base):
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01534_I_TPATO])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01534_I_CDENT])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01534Itemferindenizusuf.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01534Itemferindenizusuf.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01534Itemferindenizusuf.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01534Itemferindenizusuf.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01534Itemferindenizusuf.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01534Itemferindenizusuf.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
-    t01141Itemferias = relationship('T01141Itemferias', 
-        primaryjoin='and_(T01534Itemferindenizusuf.T01002_I_CDENT==T01141Itemferias.T01002_I_CDENT, T01534Itemferindenizusuf.T01001_I_MATRICULA==T01141Itemferias.T01001_I_MATRICULA, T01534Itemferindenizusuf.T01141_I_CDFERIAS==T01141Itemferias.T01141_I_CDFERIAS)',
+    t01141Itemferias = relationship('T01141Itemferias',
+        primaryjoin='and_(T01534Itemferindenizusuf.T01002_I_CDENT == T01141Itemferias.T01002_I_CDENT, T01534Itemferindenizusuf.T01001_I_MATRICULA == T01141Itemferias.T01001_I_MATRICULA, T01534Itemferindenizusuf.T01141_I_CDFERIAS == T01141Itemferias.T01141_I_CDFERIAS)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01141_I_CDFERIAS])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01534Itemferindenizusuf.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01534Itemferindenizusuf.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01534Itemferindenizusuf.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01534Itemferindenizusuf.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01534Itemferindenizusuf.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01534Itemferindenizusuf.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01535Afastrecessoind(Base):
@@ -11431,8 +11512,8 @@ class T01535Afastrecessoind(Base):
 
     # Relationships
     t01305Matrecesso = relationship('T01305Matrecesso', foreign_keys=[T01305_I_CDRECESSO])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01535Afastrecessoind.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01535Afastrecessoind.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01535Afastrecessoind.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01535Afastrecessoind.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01535Afastrecessoind.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01535Afastrecessoind.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01536Licgalaafast(Base):
@@ -11446,8 +11527,8 @@ class T01536Licgalaafast(Base):
 
     # Relationships
     t01087Licgala = relationship('T01087Licgala', foreign_keys=[T01087_I_CDLICGALA])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01536Licgalaafast.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01536Licgalaafast.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01536Licgalaafast.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01536Licgalaafast.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01536Licgalaafast.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01536Licgalaafast.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01537Faixaetariaseg(Base):
@@ -11489,11 +11570,11 @@ class T01539Compdecterceiro(Base):
 
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01539Compdecterceiro.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01539Compdecterceiro.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01539Compdecterceiro.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01539Compdecterceiro.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01539Compdecterceiro.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01539Compdecterceiro.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01539Compdecterceiro.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01539Compdecterceiro.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01540Licnojoafast(Base):
@@ -11507,8 +11588,8 @@ class T01540Licnojoafast(Base):
 
     # Relationships
     t01088Licnojo = relationship('T01088Licnojo', foreign_keys=[T01088_I_CDLICNOJO])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01540Licnojoafast.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01540Licnojoafast.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01540Licnojoafast.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01540Licnojoafast.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01540Licnojoafast.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01540Licnojoafast.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01541Licpaternafast(Base):
@@ -11522,8 +11603,8 @@ class T01541Licpaternafast(Base):
 
     # Relationships
     t01206Licpatern = relationship('T01206Licpatern', foreign_keys=[T01206_I_CDLICPATERN])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01541Licpaternafast.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01541Licpaternafast.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01541Licpaternafast.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01541Licpaternafast.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01541Licpaternafast.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01541Licpaternafast.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01542Concursorem(Base):
@@ -11566,8 +11647,8 @@ class T01542Concursorem(Base):
     # Relationships
     t01071ItemlistaByITipoato = relationship('T01071Itemlista', foreign_keys=[T01542_I_TIPOATO])
     t01071ItemlistaByICdtpatomut = relationship('T01071Itemlista', foreign_keys=[T01542_I_CDTPATOMUT])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01542Concursorem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01542Concursorem.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01542Concursorem.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01542Concursorem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01542Concursorem.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01542Concursorem.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01543Impedimento(Base):
@@ -11581,8 +11662,8 @@ class T01543Impedimento(Base):
 
     # Relationships
     t01542Concursorem = relationship('T01542Concursorem', foreign_keys=[T01542_I_CODCONCURSOREM])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01543Impedimento.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01543Impedimento.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01543Impedimento.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01543Impedimento.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01544Impedxloctrab(Base):
@@ -11596,8 +11677,8 @@ class T01544Impedxloctrab(Base):
 
     # Relationships
     t01543Impedimento = relationship('T01543Impedimento', foreign_keys=[T01543_I_CODIMPED])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01544Impedxloctrab.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01544Impedxloctrab.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01544Impedxloctrab.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01544Impedxloctrab.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01544Impedxloctrab.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01544Impedxloctrab.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01545Eventoisencaopens(Base):
@@ -11613,14 +11694,14 @@ class T01545Eventoisencaopens(Base):
     T01545_I_MATOPERADOR = Column(Numeric(7, 0), ForeignKey('RH.T01001_SERVIDOR.T01001_I_MATRICULA'), nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01545Eventoisencaopens.T01545_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01545Eventoisencaopens.T01545_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01545Eventoisencaopens.T01545_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01545Eventoisencaopens.T01545_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01545_I_ENTOPERADOR, T01545_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01545Eventoisencaopens.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01545Eventoisencaopens.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01545Eventoisencaopens.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01545Eventoisencaopens.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01545Eventoisencaopens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01545Eventoisencaopens.T01001_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01545Eventoisencaopens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01545Eventoisencaopens.T01001_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01546Inscricaorem(Base):
@@ -11641,8 +11722,8 @@ class T01546Inscricaorem(Base):
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01546_I_TPINSCRICAO])
     t01542Concursorem = relationship('T01542Concursorem', foreign_keys=[T01542_I_CODCONCURSOREM])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01546Inscricaorem.T01546_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01546Inscricaorem.T01546_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01546Inscricaorem.T01546_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01546Inscricaorem.T01546_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01546_I_ENTOPERADOR, T01546_I_MATOPERADOR])
 
 class T01547Candidatoremopcao(Base):
@@ -11665,11 +11746,11 @@ class T01547Candidatoremopcao(Base):
     t01071ItemlistaByITpturno3 = relationship('T01071Itemlista', foreign_keys=[T01547_I_TPTURNO3])
     t01071ItemlistaByITpturno2 = relationship('T01071Itemlista', foreign_keys=[T01547_I_TPTURNO2])
     t01071ItemlistaByITpturno1 = relationship('T01071Itemlista', foreign_keys=[T01547_I_TPTURNO1])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01547Candidatoremopcao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01547Candidatoremopcao.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01547Candidatoremopcao.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01547Candidatoremopcao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01547Candidatoremopcao.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01547Candidatoremopcao.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01553Candidatorem = relationship('T01553Candidatorem', 
-        primaryjoin='and_(T01547Candidatoremopcao.T01542_I_CODCONCURSOREM==T01553Candidatorem.T01542_I_CODCONCURSOREM, T01547Candidatoremopcao.T01546_I_CODINSCRICAOREM==T01553Candidatorem.T01546_I_CODINSCRICAOREM, T01547Candidatoremopcao.T01553_I_PADRAO==T01553Candidatorem.T01553_I_PADRAO)',
+    t01553Candidatorem = relationship('T01553Candidatorem',
+        primaryjoin='and_(T01547Candidatoremopcao.T01542_I_CODCONCURSOREM == T01553Candidatorem.T01542_I_CODCONCURSOREM, T01547Candidatoremopcao.T01546_I_CODINSCRICAOREM == T01553Candidatorem.T01546_I_CODINSCRICAOREM, T01547Candidatoremopcao.T01553_I_PADRAO == T01553Candidatorem.T01553_I_PADRAO)',
         foreign_keys=[T01542_I_CODCONCURSOREM, T01546_I_CODINSCRICAOREM, T01553_I_PADRAO])
 
 class T01548Empresquitado(Base):
@@ -11707,8 +11788,8 @@ class T01549Conctpatua(Base):
 
     # Relationships
     t01542Concursorem = relationship('T01542Concursorem', foreign_keys=[T01542_I_CODCONCURSOREM])
-    t01187Tpatuacao = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01549Conctpatua.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01549Conctpatua.T01187_I_CDTPATUA==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187Tpatuacao = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01549Conctpatua.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01549Conctpatua.T01187_I_CDTPATUA == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA])
 
 class T01550Tpatuarem(Base):
@@ -11722,11 +11803,11 @@ class T01550Tpatuarem(Base):
 
     # Relationships
     t01549Conctpatua = relationship('T01549Conctpatua', foreign_keys=[T01549_I_CODCONCTPATUA])
-    t01187Tpatuacao = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01550Tpatuarem.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01550Tpatuarem.T01187_I_CDTPATUA==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187Tpatuacao = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01550Tpatuarem.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01550Tpatuarem.T01187_I_CDTPATUA == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA])
-    t01188Tpatividade = relationship('T01188Tpatividade', 
-        primaryjoin='and_(T01550Tpatuarem.T01002_I_CDENT==T01188Tpatividade.T01002_I_CDENT, T01550Tpatuarem.T01188_I_CDTPATIVI==T01188Tpatividade.T01188_I_CDTPATIVI)',
+    t01188Tpatividade = relationship('T01188Tpatividade',
+        primaryjoin='and_(T01550Tpatuarem.T01002_I_CDENT == T01188Tpatividade.T01002_I_CDENT, T01550Tpatuarem.T01188_I_CDTPATIVI == T01188Tpatividade.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01188_I_CDTPATIVI])
 
 class T01551Prenomeliminados(Base):
@@ -11742,14 +11823,14 @@ class T01551Prenomeliminados(Base):
     T01551_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01551Prenomeliminados.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01551Prenomeliminados.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01551Prenomeliminados.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01551Prenomeliminados.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
-    t01132Itemnomeacao = relationship('T01132Itemnomeacao', 
-        primaryjoin='and_(T01551Prenomeliminados.T01131_I_CDNOMEACAO==T01132Itemnomeacao.T01131_I_CDNOMEACAO, T01551Prenomeliminados.T01132_I_CDITEMNOME==T01132Itemnomeacao.T01132_I_CDITEMNOME)',
+    t01132Itemnomeacao = relationship('T01132Itemnomeacao',
+        primaryjoin='and_(T01551Prenomeliminados.T01131_I_CDNOMEACAO == T01132Itemnomeacao.T01131_I_CDNOMEACAO, T01551Prenomeliminados.T01132_I_CDITEMNOME == T01132Itemnomeacao.T01132_I_CDITEMNOME)',
         foreign_keys=[T01131_I_CDNOMEACAO, T01132_I_CDITEMNOME])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01551Prenomeliminados.T01551_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01551Prenomeliminados.T01551_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01551Prenomeliminados.T01551_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01551Prenomeliminados.T01551_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01551_I_ENTOPERADOR, T01551_I_MATOPERADOR])
 
 class T01552Origdesthierarq(Base):
@@ -11765,14 +11846,14 @@ class T01552Origdesthierarq(Base):
     T01552_I_INDATIVO = Column(SmallInteger, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01552Origdesthierarq.T01552_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01552Origdesthierarq.T01552_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01552Origdesthierarq.T01552_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01552Origdesthierarq.T01552_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01552_I_ENTOPERADOR, T01552_I_MATOPERADOR])
-    t01036ItemhierarqByICdent = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01552Origdesthierarq.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01552Origdesthierarq.T01036_I_CDHIERARQDEST==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036ItemhierarqByICdent = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01552Origdesthierarq.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01552Origdesthierarq.T01036_I_CDHIERARQDEST == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQDEST])
-    t01036ItemhierarqByICdent = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01552Origdesthierarq.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01552Origdesthierarq.T01036_I_CDHIERARQORIG==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036ItemhierarqByICdent1 = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01552Origdesthierarq.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01552Origdesthierarq.T01036_I_CDHIERARQORIG == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQORIG])
 
 class T01553Candidatorem(Base):
@@ -11831,35 +11912,35 @@ class T01553Candidatorem(Base):
     t01071ItemlistaByICritdesemp = relationship('T01071Itemlista', foreign_keys=[T01553_I_CRITDESEMP])
     t01071ItemlistaByITpvaga = relationship('T01071Itemlista', foreign_keys=[T01553_I_TPVAGA])
     t01071ItemlistaByITpturno = relationship('T01071Itemlista', foreign_keys=[T01553_I_TPTURNO])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01553Candidatorem.T01004_I_CDUNIDFUNPONT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01553Candidatorem.T01004_I_VERSAOPONT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01553Candidatorem.T01004_I_CDUNIDFUNPONT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01553Candidatorem.T01004_I_VERSAOPONT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUNPONT, T01004_I_VERSAOPONT])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01553Candidatorem.T01004_I_CDUNIDFUNNOVA==T01004Unidfunc.T01004_I_CDUNIDFUN, T01553Candidatorem.T01004_I_VERSAONOVA==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01553Candidatorem.T01004_I_CDUNIDFUNNOVA == T01004Unidfunc.T01004_I_CDUNIDFUN, T01553Candidatorem.T01004_I_VERSAONOVA == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUNNOVA, T01004_I_VERSAONOVA])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01553Candidatorem.T01004_I_CDUNIDFUNATUAL==T01004Unidfunc.T01004_I_CDUNIDFUN, T01553Candidatorem.T01004_I_VERSAOATUAL==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent2 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01553Candidatorem.T01004_I_CDUNIDFUNATUAL == T01004Unidfunc.T01004_I_CDUNIDFUN, T01553Candidatorem.T01004_I_VERSAOATUAL == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUNATUAL, T01004_I_VERSAOATUAL])
-    t01188Tpatividade = relationship('T01188Tpatividade', 
-        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT==T01188Tpatividade.T01002_I_CDENT, T01553Candidatorem.T01188_I_CDTPATIVNOVO==T01188Tpatividade.T01188_I_CDTPATIVI)',
+    t01188Tpatividade = relationship('T01188Tpatividade',
+        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT == T01188Tpatividade.T01002_I_CDENT, T01553Candidatorem.T01188_I_CDTPATIVNOVO == T01188Tpatividade.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01188_I_CDTPATIVNOVO])
-    t01187TpatuacaoByICdent = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01553Candidatorem.T01187_I_CDTPATUAOPCAO==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187TpatuacaoByICdent = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01553Candidatorem.T01187_I_CDTPATUAOPCAO == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUAOPCAO])
-    t01187TpatuacaoByICdent = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01553Candidatorem.T01187_I_CDTPATUANOVO==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187TpatuacaoByICdent1 = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01553Candidatorem.T01187_I_CDTPATUANOVO == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUANOVO])
-    t01187TpatuacaoByICdent = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01553Candidatorem.T01187_I_CDTPATUA==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187TpatuacaoByICdent2 = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01553Candidatorem.T01187_I_CDTPATUA == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01553Candidatorem.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01553Candidatorem.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01553Candidatorem.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01546Inscricaorem = relationship('T01546Inscricaorem', 
-        primaryjoin='and_(T01553Candidatorem.T01542_I_CODCONCURSOREM==T01546Inscricaorem.T01542_I_CODCONCURSOREM, T01553Candidatorem.T01546_I_CODINSCRICAOREM==T01546Inscricaorem.T01546_I_CODINSCRICAOREM)',
+    t01546Inscricaorem = relationship('T01546Inscricaorem',
+        primaryjoin='and_(T01553Candidatorem.T01542_I_CODCONCURSOREM == T01546Inscricaorem.T01542_I_CODCONCURSOREM, T01553Candidatorem.T01546_I_CODINSCRICAOREM == T01546Inscricaorem.T01546_I_CODINSCRICAOREM)',
         foreign_keys=[T01542_I_CODCONCURSOREM, T01546_I_CODINSCRICAOREM])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01553Candidatorem.T01553_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01553Candidatorem.T01553_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01553Candidatorem.T01553_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01553Candidatorem.T01553_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01553_I_ENTOPERADOR, T01553_I_MATOPERADOR])
 
 class T01554Valcarregcq(Base):
@@ -11875,8 +11956,8 @@ class T01554Valcarregcq(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01327Arquivorecebido = relationship('T01327Arquivorecebido', foreign_keys=[T01327_I_CDARQUIVO])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01554Valcarregcq.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01554Valcarregcq.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01554Valcarregcq.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01554Valcarregcq.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01555Remessamatrdiv(Base):
@@ -11897,12 +11978,12 @@ class T01555Remessamatrdiv(Base):
     T01021_I_CDBANCO = Column(Integer, ForeignKey('RH.T01057_AGBANCARIA.T01021_I_CDBANCO'), nullable=False)
 
     # Relationships
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01555Remessamatrdiv.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01555Remessamatrdiv.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01555Remessamatrdiv.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01555Remessamatrdiv.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01183Matrdiversa = relationship('T01183Matrdiversa', 
-        primaryjoin='and_(T01555Remessamatrdiv.T01002_I_CDENT==T01183Matrdiversa.T01002_I_CDENT, T01555Remessamatrdiv.T01183_I_MATRICULA==T01183Matrdiversa.T01183_I_MATRICULA)',
+    t01183Matrdiversa = relationship('T01183Matrdiversa',
+        primaryjoin='and_(T01555Remessamatrdiv.T01002_I_CDENT == T01183Matrdiversa.T01002_I_CDENT, T01555Remessamatrdiv.T01183_I_MATRICULA == T01183Matrdiversa.T01183_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01183_I_MATRICULA])
     t01300Pensiopensao = relationship('T01300Pensiopensao', foreign_keys=[T01300_I_CDPENSIONISTA])
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
@@ -11925,8 +12006,8 @@ class T01556Histremessamatrdiv(Base):
     T01021_I_CDBANCO = Column(Integer, ForeignKey('RH.T01057_AGBANCARIA.T01021_I_CDBANCO'), nullable=False)
 
     # Relationships
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01556Histremessamatrdiv.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01556Histremessamatrdiv.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01556Histremessamatrdiv.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01556Histremessamatrdiv.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
     t01555Remessamatrdiv = relationship('T01555Remessamatrdiv', foreign_keys=[T01555_I_CDCONTROLE])
 
@@ -11964,11 +12045,11 @@ class T01558Remessapens(Base):
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
     t01071ItemlistaByIMotcancelamento = relationship('T01071Itemlista', foreign_keys=[T01558_I_MOTCANCELAMENTO])
     t01071ItemlistaByITppagto = relationship('T01071Itemlista', foreign_keys=[T01558_I_TPPAGTO])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01558Remessapens.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01558Remessapens.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01558Remessapens.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01558Remessapens.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01558Remessapens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01558Remessapens.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01558Remessapens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01558Remessapens.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
 
 class T01559Histremessapens(Base):
@@ -11990,8 +12071,8 @@ class T01559Histremessapens(Base):
 
     # Relationships
     t01558Remessapens = relationship('T01558Remessapens', foreign_keys=[T01558_I_CDCONTROLE])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01559Histremessapens.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01559Histremessapens.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01559Histremessapens.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01559Histremessapens.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
 
 class T01560Ocorrenciaretornopens(Base):
@@ -12017,8 +12098,8 @@ class T01561Remhistarquivos(Base):
 
     # Relationships
     t01451Arquivo = relationship('T01451Arquivo', foreign_keys=[T01451_I_CODARQUIVO])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01561Remhistarquivos.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01561Remhistarquivos.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01561Remhistarquivos.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01561Remhistarquivos.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
 
 class T01562Listaesperarem(Base):
@@ -12041,14 +12122,14 @@ class T01562Listaesperarem(Base):
     # Relationships
     t01542Concursorem = relationship('T01542Concursorem', foreign_keys=[T01542_I_CODCONCURSOREM])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01562_I_TPTURNO])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01562Listaesperarem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01562Listaesperarem.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01562Listaesperarem.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01562Listaesperarem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01562Listaesperarem.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01562Listaesperarem.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01562Listaesperarem.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01562Listaesperarem.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01562Listaesperarem.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01562Listaesperarem.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01187Tpatuacao = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01562Listaesperarem.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01562Listaesperarem.T01187_I_CDTPATUA==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187Tpatuacao = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01562Listaesperarem.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01562Listaesperarem.T01187_I_CDTPATUA == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA])
 
 class T01563Excepcional(Base):
@@ -12072,11 +12153,11 @@ class T01563Excepcional(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01563_I_TIPOATO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01563Excepcional.T01563_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01563Excepcional.T01563_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01563Excepcional.T01563_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01563Excepcional.T01563_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01563_I_ENTOPERADOR, T01563_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01563Excepcional.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01563Excepcional.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01563Excepcional.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01563Excepcional.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01564Operentidade(Base):
@@ -12090,8 +12171,8 @@ class T01564Operentidade(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01564_I_CODEXEC])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01564Operentidade.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01564Operentidade.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01564Operentidade.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01564Operentidade.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01565Candidatogeraimp(Base):
@@ -12102,8 +12183,8 @@ class T01565Candidatogeraimp(Base):
     T01042_I_NRCONCURS = Column(Numeric(7, 0), ForeignKey('RH.T01042_CANDIDATO.T01042_I_NRCONCURS'), primary_key=True)
 
     # Relationships
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01565Candidatogeraimp.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01565Candidatogeraimp.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01565Candidatogeraimp.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01565Candidatogeraimp.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
 
 class T01566Dimloctrabrem(Base):
@@ -12127,14 +12208,14 @@ class T01566Dimloctrabrem(Base):
     # Relationships
     t01542Concursorem = relationship('T01542Concursorem', foreign_keys=[T01542_I_CODCONCURSOREM])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01566_I_TURNO])
-    t01187Tpatuacao = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01566Dimloctrabrem.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01566Dimloctrabrem.T01187_I_CDTPATUA==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187Tpatuacao = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01566Dimloctrabrem.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01566Dimloctrabrem.T01187_I_CDTPATUA == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01566Dimloctrabrem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01566Dimloctrabrem.T01004_I_UNIDLOCAL==T01004Unidfunc.T01004_I_CDUNIDFUN, T01566Dimloctrabrem.T01004_I_VERLOCAL==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01566Dimloctrabrem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01566Dimloctrabrem.T01004_I_UNIDLOCAL == T01004Unidfunc.T01004_I_CDUNIDFUN, T01566Dimloctrabrem.T01004_I_VERLOCAL == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_UNIDLOCAL, T01004_I_VERLOCAL])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01566Dimloctrabrem.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01566Dimloctrabrem.T01004_I_UNIDLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01566Dimloctrabrem.T01004_I_VERSAOLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01566Dimloctrabrem.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01566Dimloctrabrem.T01004_I_UNIDLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01566Dimloctrabrem.T01004_I_VERSAOLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_UNIDLOT, T01004_I_VERSAOLOT])
 
 class T01567Logradouropro(Base):
@@ -12151,7 +12232,7 @@ class T01567Logradouropro(Base):
 
     # Relationships
     t01125LocalextByICdlocal = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
-    t01125LocalextByICdlocal = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
+    t01125LocalextByICdlocal1 = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
     t01127Tipoext = relationship('T01127Tipoext', foreign_keys=[T01127_I_CDTIPO])
 
 class T01568Reajuspenjud(Base):
@@ -12174,8 +12255,8 @@ class T01568Reajuspenjud(Base):
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071ItemlistaByITrdecimal = relationship('T01071Itemlista', foreign_keys=[T01568_I_TRDECIMAL])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01568Reajuspenjud.T01568_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01568Reajuspenjud.T01568_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01568Reajuspenjud.T01568_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01568Reajuspenjud.T01568_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01568_I_ENTOPERADOR, T01568_I_MATOPERADOR])
     t01071ItemlistaByIStatus = relationship('T01071Itemlista', foreign_keys=[T01568_I_STATUS])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01568_I_CDFOLHA])
@@ -12194,13 +12275,15 @@ class T01569Itemreajuspenjud(Base):
     T01569_I_VLRREAJUSTADO = Column(Numeric(19, 4), nullable=False)
 
     # Relationships
-    t01300Pensiopensao = relationship('T01300Pensiopensao', foreign_keys=[T01300_I_CDPENSIONISTA])
+    t01300Pensiopensao = relationship('T01300Pensiopensao',
+        primaryjoin='and_(T01569Itemreajuspenjud.T01300_I_CDPENSIONISTA == T01300Pensiopensao.T01300_I_CDPENSIONISTA)',
+        foreign_keys=[T01300_I_CDPENSIONISTA])
     t01568Reajuspenjud = relationship('T01568Reajuspenjud', foreign_keys=[T01568_I_CDREAJUSTE])
-    t01301Sentenca = relationship('T01301Sentenca', 
-        primaryjoin='and_(T01569Itemreajuspenjud.T01300_I_CDPENSIONISTA==T01301Sentenca.T01300_I_CDPENSIONISTA, T01569Itemreajuspenjud.T01301_I_CDSENTENCA==T01301Sentenca.T01301_I_CDSENTENCA, T01569Itemreajuspenjud.T01301_D_DTINICVIG==T01301Sentenca.T01301_D_DTINICVIG)',
+    t01301Sentenca = relationship('T01301Sentenca',
+        primaryjoin='and_(T01569Itemreajuspenjud.T01300_I_CDPENSIONISTA == T01301Sentenca.T01300_I_CDPENSIONISTA, T01569Itemreajuspenjud.T01301_I_CDSENTENCA == T01301Sentenca.T01301_I_CDSENTENCA, T01569Itemreajuspenjud.T01301_D_DTINICVIG == T01301Sentenca.T01301_D_DTINICVIG)',
         foreign_keys=[T01300_I_CDPENSIONISTA, T01301_I_CDSENTENCA, T01301_D_DTINICVIG])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01569Itemreajuspenjud.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01569Itemreajuspenjud.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01569Itemreajuspenjud.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01569Itemreajuspenjud.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01570Avaldesemp(Base):
@@ -12227,14 +12310,14 @@ class T01570Avaldesemp(Base):
     T01570_I_MATANTERIOR = Column(Integer)
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01570Avaldesemp.T01570_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01570Avaldesemp.T01570_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01570Avaldesemp.T01570_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01570Avaldesemp.T01570_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01570_I_ENTOPERADOR, T01570_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01570Avaldesemp.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01570Avaldesemp.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01570Avaldesemp.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01570Avaldesemp.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01570Avaldesemp.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01570Avaldesemp.T01004_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01570Avaldesemp.T01004_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01570Avaldesemp.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01570Avaldesemp.T01004_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01570Avaldesemp.T01004_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDLOCTRAB, T01004_I_VLOCTRAB])
 
 class T01571Treinamav(Base):
@@ -12250,11 +12333,11 @@ class T01571Treinamav(Base):
     T01571_D_DTTREINAM = Column(DateTime)
 
     # Relationships
-    t01572Treinam = relationship('T01572Treinam', 
-        primaryjoin='and_(T01571Treinamav.T01572_I_CDTREINAM==T01572Treinam.T01572_I_CDTREINAM, T01571Treinamav.T01572_S_TPFATOR==T01572Treinam.T01572_S_TPFATOR)',
+    t01572Treinam = relationship('T01572Treinam',
+        primaryjoin='and_(T01571Treinamav.T01572_I_CDTREINAM == T01572Treinam.T01572_I_CDTREINAM, T01571Treinamav.T01572_S_TPFATOR == T01572Treinam.T01572_S_TPFATOR)',
         foreign_keys=[T01572_I_CDTREINAM, T01572_S_TPFATOR])
-    t01570Avaldesemp = relationship('T01570Avaldesemp', 
-        primaryjoin='and_(T01571Treinamav.T01002_I_CDENT==T01570Avaldesemp.T01002_I_CDENT, T01571Treinamav.T01001_I_MATRICULA==T01570Avaldesemp.T01001_I_MATRICULA, T01571Treinamav.T01570_D_DTLIMAVAL==T01570Avaldesemp.T01570_D_DTLIMAVAL)',
+    t01570Avaldesemp = relationship('T01570Avaldesemp',
+        primaryjoin='and_(T01571Treinamav.T01002_I_CDENT == T01570Avaldesemp.T01002_I_CDENT, T01571Treinamav.T01001_I_MATRICULA == T01570Avaldesemp.T01001_I_MATRICULA, T01571Treinamav.T01570_D_DTLIMAVAL == T01570Avaldesemp.T01570_D_DTLIMAVAL)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01570_D_DTLIMAVAL])
 
 class T01572Treinam(Base):
@@ -12285,14 +12368,14 @@ class T01573Histarqcartasconv(Base):
 
     # Relationships
     t01451Arquivo = relationship('T01451Arquivo', foreign_keys=[T01451_I_CODARQUIVO])
-    t01004UnidfuncByICdentger = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01573Histarqcartasconv.T01002_I_CDENTGER==T01004Unidfunc.T01002_I_CDENT, T01573Histarqcartasconv.T01004_I_CDUNIDGER==T01004Unidfunc.T01004_I_CDUNIDFUN, T01573Histarqcartasconv.T01004_I_VERGER==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdentger = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01573Histarqcartasconv.T01002_I_CDENTGER == T01004Unidfunc.T01002_I_CDENT, T01573Histarqcartasconv.T01004_I_CDUNIDGER == T01004Unidfunc.T01004_I_CDUNIDFUN, T01573Histarqcartasconv.T01004_I_VERGER == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENTGER, T01004_I_CDUNIDGER, T01004_I_VERGER])
-    t01004UnidfuncByICdentpag = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01573Histarqcartasconv.T01002_I_CDENTPAG==T01004Unidfunc.T01002_I_CDENT, T01573Histarqcartasconv.T01004_I_CDUNIDPAG==T01004Unidfunc.T01004_I_CDUNIDFUN, T01573Histarqcartasconv.T01004_I_VERPAG==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdentpag = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01573Histarqcartasconv.T01002_I_CDENTPAG == T01004Unidfunc.T01002_I_CDENT, T01573Histarqcartasconv.T01004_I_CDUNIDPAG == T01004Unidfunc.T01004_I_CDUNIDFUN, T01573Histarqcartasconv.T01004_I_VERPAG == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENTPAG, T01004_I_CDUNIDPAG, T01004_I_VERPAG])
-    t01045Itemedital = relationship('T01045Itemedital', 
-        primaryjoin='and_(T01573Histarqcartasconv.T01002_I_CDENT==T01045Itemedital.T01002_I_CDENT, T01573Histarqcartasconv.T01044_I_CDEDITAL==T01045Itemedital.T01044_I_CDEDITAL, T01573Histarqcartasconv.T01044_I_ANOEDITAL==T01045Itemedital.T01044_I_ANOEDITAL, T01573Histarqcartasconv.T01045_I_CDITEM==T01045Itemedital.T01045_I_CDITEM)',
+    t01045Itemedital = relationship('T01045Itemedital',
+        primaryjoin='and_(T01573Histarqcartasconv.T01002_I_CDENT == T01045Itemedital.T01002_I_CDENT, T01573Histarqcartasconv.T01044_I_CDEDITAL == T01045Itemedital.T01044_I_CDEDITAL, T01573Histarqcartasconv.T01044_I_ANOEDITAL == T01045Itemedital.T01044_I_ANOEDITAL, T01573Histarqcartasconv.T01045_I_CDITEM == T01045Itemedital.T01045_I_CDITEM)',
         foreign_keys=[T01002_I_CDENT, T01044_I_CDEDITAL, T01044_I_ANOEDITAL, T01045_I_CDITEM])
 
 class T01574Histccpensjudicial(Base):
@@ -12311,11 +12394,11 @@ class T01574Histccpensjudicial(Base):
 
     # Relationships
     t01300Pensiopensao = relationship('T01300Pensiopensao', foreign_keys=[T01300_I_CDPENSIONISTA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01574Histccpensjudicial.T01574_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01574Histccpensjudicial.T01574_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01574Histccpensjudicial.T01574_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01574Histccpensjudicial.T01574_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01574_I_ENTOPERADOR, T01574_I_MATOPERADOR])
-    t01057Agbancaria = relationship('T01057Agbancaria', 
-        primaryjoin='and_(T01574Histccpensjudicial.T01057_S_CDAGENCIA==T01057Agbancaria.T01057_S_CDAGENCIA, T01574Histccpensjudicial.T01021_I_CDBANCO==T01057Agbancaria.T01021_I_CDBANCO)',
+    t01057Agbancaria = relationship('T01057Agbancaria',
+        primaryjoin='and_(T01574Histccpensjudicial.T01057_S_CDAGENCIA == T01057Agbancaria.T01057_S_CDAGENCIA, T01574Histccpensjudicial.T01021_I_CDBANCO == T01057Agbancaria.T01021_I_CDBANCO)',
         foreign_keys=[T01057_S_CDAGENCIA, T01021_I_CDBANCO])
 
 class T01575Logliqconsig(Base):
@@ -12333,8 +12416,8 @@ class T01575Logliqconsig(Base):
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01575Logliqconsig.T01575_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01575Logliqconsig.T01575_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01575Logliqconsig.T01575_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01575Logliqconsig.T01575_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01575_I_ENTOPERADOR, T01575_I_MATOPERADOR])
 
 class T01576Relemitidos(Base):
@@ -12349,8 +12432,8 @@ class T01576Relemitidos(Base):
     T01576_D_DTREF = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01576Relemitidos.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01576Relemitidos.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01576Relemitidos.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01576Relemitidos.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01577Arcorreiosconv(Base):
@@ -12368,8 +12451,8 @@ class T01577Arcorreiosconv(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01577Arcorreiosconv.T01577_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01577Arcorreiosconv.T01577_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01577Arcorreiosconv.T01577_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01577Arcorreiosconv.T01577_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01577_I_ENTOPERADOR, T01577_I_MATOPERADOR])
 
 class T01578Histocorserv(Base):
@@ -12387,11 +12470,11 @@ class T01578Histocorserv(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01578_I_CDASSUNTO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01578Histocorserv.T01578_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01578Histocorserv.T01578_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01578Histocorserv.T01578_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01578Histocorserv.T01578_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01578_I_ENTOPERADOR, T01578_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01578Histocorserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01578Histocorserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01578Histocorserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01578Histocorserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01579Valorcedulacpens(Base):
@@ -12407,11 +12490,11 @@ class T01579Valorcedulacpens(Base):
     T01579_S_OUTROS = Column(String(500))
 
     # Relationships
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01579Valorcedulacpens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01579Valorcedulacpens.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01579Valorcedulacpens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01579Valorcedulacpens.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
-    t01363Cedulac = relationship('T01363Cedulac', 
-        primaryjoin='and_(T01579Valorcedulacpens.T01363_I_ANO==T01363Cedulac.T01363_I_ANO, T01579Valorcedulacpens.T01363_I_ITEM==T01363Cedulac.T01363_I_ITEM, T01579Valorcedulacpens.T01363_I_LINHA==T01363Cedulac.T01363_I_LINHA, T01579Valorcedulacpens.T01002_I_CDENT==T01363Cedulac.T01002_I_CDENT)',
+    t01363Cedulac = relationship('T01363Cedulac',
+        primaryjoin='and_(T01579Valorcedulacpens.T01363_I_ANO == T01363Cedulac.T01363_I_ANO, T01579Valorcedulacpens.T01363_I_ITEM == T01363Cedulac.T01363_I_ITEM, T01579Valorcedulacpens.T01363_I_LINHA == T01363Cedulac.T01363_I_LINHA, T01579Valorcedulacpens.T01002_I_CDENT == T01363Cedulac.T01002_I_CDENT)',
         foreign_keys=[T01363_I_ANO, T01363_I_ITEM, T01363_I_LINHA, T01002_I_CDENT])
 
 class T01580Agendaprocesso(Base):
@@ -12440,8 +12523,8 @@ class T01580Agendaprocesso(Base):
     t01071ItemlistaByICdemailini = relationship('T01071Itemlista', foreign_keys=[T01580_I_CDEMAILINI])
     t01071ItemlistaByICdstatus = relationship('T01071Itemlista', foreign_keys=[T01580_I_CDSTATUS])
     t01071ItemlistaByICdperiodic = relationship('T01071Itemlista', foreign_keys=[T01580_I_CDPERIODIC])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01580Agendaprocesso.T01580_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01580Agendaprocesso.T01580_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01580Agendaprocesso.T01580_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01580Agendaprocesso.T01580_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01580_I_ENTOPERADOR, T01580_I_MATOPERADOR])
 
 class T01581Agendaprocessoparam(Base):
@@ -12468,11 +12551,11 @@ class T01582Valorcedulacmatdiv(Base):
     T01582_S_OUTROS = Column(String(500))
 
     # Relationships
-    t01183Matrdiversa = relationship('T01183Matrdiversa', 
-        primaryjoin='and_(T01582Valorcedulacmatdiv.T01002_I_CDENT==T01183Matrdiversa.T01002_I_CDENT, T01582Valorcedulacmatdiv.T01183_I_MATRICULA==T01183Matrdiversa.T01183_I_MATRICULA)',
+    t01183Matrdiversa = relationship('T01183Matrdiversa',
+        primaryjoin='and_(T01582Valorcedulacmatdiv.T01002_I_CDENT == T01183Matrdiversa.T01002_I_CDENT, T01582Valorcedulacmatdiv.T01183_I_MATRICULA == T01183Matrdiversa.T01183_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01183_I_MATRICULA])
-    t01363Cedulac = relationship('T01363Cedulac', 
-        primaryjoin='and_(T01582Valorcedulacmatdiv.T01363_I_ANO==T01363Cedulac.T01363_I_ANO, T01582Valorcedulacmatdiv.T01363_I_ITEM==T01363Cedulac.T01363_I_ITEM, T01582Valorcedulacmatdiv.T01363_I_LINHA==T01363Cedulac.T01363_I_LINHA, T01582Valorcedulacmatdiv.T01002_I_CDENT==T01363Cedulac.T01002_I_CDENT)',
+    t01363Cedulac = relationship('T01363Cedulac',
+        primaryjoin='and_(T01582Valorcedulacmatdiv.T01363_I_ANO == T01363Cedulac.T01363_I_ANO, T01582Valorcedulacmatdiv.T01363_I_ITEM == T01363Cedulac.T01363_I_ITEM, T01582Valorcedulacmatdiv.T01363_I_LINHA == T01363Cedulac.T01363_I_LINHA, T01582Valorcedulacmatdiv.T01002_I_CDENT == T01363Cedulac.T01002_I_CDENT)',
         foreign_keys=[T01363_I_ANO, T01363_I_ITEM, T01363_I_LINHA, T01002_I_CDENT])
 
 class T01583Cursopfext(Base):
@@ -12514,18 +12597,20 @@ class T01583Cursopfext(Base):
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
     t01125Localext = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
     t01071ItemlistaByINacionalidade = relationship('T01071Itemlista', foreign_keys=[T01583_I_NACIONALIDADE])
-    t01584Area = relationship('T01584Area', foreign_keys=[T01584_I_CDAREA])
+    t01584Area = relationship('T01584Area',
+        primaryjoin='and_(T01583Cursopfext.T01584_I_CDAREA == T01584Area.T01584_I_CDAREA)',
+        foreign_keys=[T01584_I_CDAREA])
     t01071ItemlistaByICdatividade = relationship('T01071Itemlista', foreign_keys=[T01583_I_CDATIVIDADE])
     t01071ItemlistaByICdnivel = relationship('T01071Itemlista', foreign_keys=[T01583_I_CDNIVEL])
     t01071ItemlistaByICdclasse = relationship('T01071Itemlista', foreign_keys=[T01583_I_CDCLASSE])
-    t01585Especarea = relationship('T01585Especarea', 
-        primaryjoin='and_(T01583Cursopfext.T01584_I_CDAREA==T01585Especarea.T01584_I_CDAREA, T01583Cursopfext.T01585_I_CDESPECAREA==T01585Especarea.T01585_I_CDESPECAREA)',
+    t01585Especarea = relationship('T01585Especarea',
+        primaryjoin='and_(T01583Cursopfext.T01584_I_CDAREA == T01585Especarea.T01584_I_CDAREA, T01583Cursopfext.T01585_I_CDESPECAREA == T01585Especarea.T01585_I_CDESPECAREA)',
         foreign_keys=[T01584_I_CDAREA, T01585_I_CDESPECAREA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01583Cursopfext.T01583_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01583Cursopfext.T01583_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01583Cursopfext.T01583_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01583Cursopfext.T01583_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01583_I_ENTOPERADOR, T01583_I_MATOPERADOR])
-    t01001ServidorByIEntavaliador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01583Cursopfext.T01583_I_ENTAVALIADOR==T01001Servidor.T01002_I_CDENT, T01583Cursopfext.T01583_I_MATAVALIADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntavaliador = relationship('T01001Servidor',
+        primaryjoin='and_(T01583Cursopfext.T01583_I_ENTAVALIADOR == T01001Servidor.T01002_I_CDENT, T01583Cursopfext.T01583_I_MATAVALIADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01583_I_ENTAVALIADOR, T01583_I_MATAVALIADOR])
     t01071ItemlistaByICdturno = relationship('T01071Itemlista', foreign_keys=[T01583_I_CDTURNO])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTCURINT])
@@ -12573,17 +12658,17 @@ class T01586Utilizcursointext(Base):
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
     t01583Cursopfext = relationship('T01583Cursopfext', foreign_keys=[T01583_I_CDCURSOPFEXT])
     t01587Cursopfint = relationship('T01587Cursopfint', foreign_keys=[T01587_I_CDCURSOPFINT])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01586Utilizcursointext.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01586Utilizcursointext.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01586Utilizcursointext.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01586Utilizcursointext.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01586Utilizcursointext.T01586_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01586Utilizcursointext.T01586_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01586Utilizcursointext.T01586_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01586Utilizcursointext.T01586_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01586_I_ENTOPERADOR, T01586_I_MATOPERADOR])
-    t01001ServidorByIEntopcao = relationship('T01001Servidor', 
-        primaryjoin='and_(T01586Utilizcursointext.T01586_I_ENTOPCAO==T01001Servidor.T01002_I_CDENT, T01586Utilizcursointext.T01586_I_MATOPCAO==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntopcao = relationship('T01001Servidor',
+        primaryjoin='and_(T01586Utilizcursointext.T01586_I_ENTOPCAO == T01001Servidor.T01002_I_CDENT, T01586Utilizcursointext.T01586_I_MATOPCAO == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01586_I_ENTOPCAO, T01586_I_MATOPCAO])
-    t01139Desigesp = relationship('T01139Desigesp', 
-        primaryjoin='and_(T01586Utilizcursointext.T01002_I_CDENT==T01139Desigesp.T01002_I_CDENT, T01586Utilizcursointext.T01001_I_MATRICULA==T01139Desigesp.T01001_I_MATRICULA, T01586Utilizcursointext.T01139_I_CDDESIG==T01139Desigesp.T01139_I_CDDESIG)',
+    t01139Desigesp = relationship('T01139Desigesp',
+        primaryjoin='and_(T01586Utilizcursointext.T01002_I_CDENT == T01139Desigesp.T01002_I_CDENT, T01586Utilizcursointext.T01001_I_MATRICULA == T01139Desigesp.T01001_I_MATRICULA, T01586Utilizcursointext.T01139_I_CDDESIG == T01139Desigesp.T01139_I_CDDESIG)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01139_I_CDDESIG])
 
 class T01587Cursopfint(Base):
@@ -12608,8 +12693,8 @@ class T01587Cursopfint(Base):
     # Relationships
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
     t01588Cursoint = relationship('T01588Cursoint', foreign_keys=[T01588_I_CDCURSOINT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01587Cursopfint.T01587_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01587Cursopfint.T01587_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01587Cursopfint.T01587_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01587Cursopfint.T01587_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01587_I_ENTOPERADOR, T01587_I_MATOPERADOR])
 
 class T01588Cursoint(Base):
@@ -12639,8 +12724,8 @@ class T01590Gratproc(Base):
     T01590_D_DTPROC = Column(DateTime, nullable=False)
 
     # Relationships
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01590Gratproc.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01590Gratproc.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01590Gratproc.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01590Gratproc.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01591Gratperfaltasproc(Base):
@@ -12655,8 +12740,8 @@ class T01591Gratperfaltasproc(Base):
     T01591_D_DTFIM = Column(DateTime, nullable=False)
 
     # Relationships
-    t01590Gratproc = relationship('T01590Gratproc', 
-        primaryjoin='and_(T01591Gratperfaltasproc.T01002_I_CDENT==T01590Gratproc.T01002_I_CDENT, T01591Gratperfaltasproc.T01058_I_CDEVENTO==T01590Gratproc.T01058_I_CDEVENTO, T01591Gratperfaltasproc.T01590_D_DTINIAVALIACAO==T01590Gratproc.T01590_D_DTINIAVALIACAO)',
+    t01590Gratproc = relationship('T01590Gratproc',
+        primaryjoin='and_(T01591Gratperfaltasproc.T01002_I_CDENT == T01590Gratproc.T01002_I_CDENT, T01591Gratperfaltasproc.T01058_I_CDEVENTO == T01590Gratproc.T01058_I_CDEVENTO, T01591Gratperfaltasproc.T01590_D_DTINIAVALIACAO == T01590Gratproc.T01590_D_DTINIAVALIACAO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01590_D_DTINIAVALIACAO])
 
 class T01592Gratafastservproc(Base):
@@ -12675,14 +12760,14 @@ class T01592Gratafastservproc(Base):
     T01592_I_INDTPOCORAFAST = Column(SmallInteger, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01592Gratafastservproc.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01592Gratafastservproc.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01592Gratafastservproc.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01592Gratafastservproc.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01590Gratproc = relationship('T01590Gratproc', 
-        primaryjoin='and_(T01592Gratafastservproc.T01002_I_CDENT==T01590Gratproc.T01002_I_CDENT, T01592Gratafastservproc.T01058_I_CDEVENTO==T01590Gratproc.T01058_I_CDEVENTO, T01592Gratafastservproc.T01590_D_DTINIAVALIACAO==T01590Gratproc.T01590_D_DTINIAVALIACAO)',
+    t01590Gratproc = relationship('T01590Gratproc',
+        primaryjoin='and_(T01592Gratafastservproc.T01002_I_CDENT == T01590Gratproc.T01002_I_CDENT, T01592Gratafastservproc.T01058_I_CDEVENTO == T01590Gratproc.T01058_I_CDEVENTO, T01592Gratafastservproc.T01590_D_DTINIAVALIACAO == T01590Gratproc.T01590_D_DTINIAVALIACAO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01590_D_DTINIAVALIACAO])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01592Gratafastservproc.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01592Gratafastservproc.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01592Gratafastservproc.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01592Gratafastservproc.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
 
 class T01593Gratdesigservproc(Base):
@@ -12699,14 +12784,14 @@ class T01593Gratdesigservproc(Base):
     T01593_I_INDTIPO = Column(SmallInteger, nullable=False)
 
     # Relationships
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01593Gratdesigservproc.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01593Gratdesigservproc.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01593Gratdesigservproc.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01593Gratdesigservproc.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01593Gratdesigservproc.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01593Gratdesigservproc.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01593Gratdesigservproc.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01593Gratdesigservproc.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01590Gratproc = relationship('T01590Gratproc', 
-        primaryjoin='and_(T01593Gratdesigservproc.T01002_I_CDENT==T01590Gratproc.T01002_I_CDENT, T01593Gratdesigservproc.T01058_I_CDEVENTO==T01590Gratproc.T01058_I_CDEVENTO, T01593Gratdesigservproc.T01590_D_DTINIAVALIACAO==T01590Gratproc.T01590_D_DTINIAVALIACAO)',
+    t01590Gratproc = relationship('T01590Gratproc',
+        primaryjoin='and_(T01593Gratdesigservproc.T01002_I_CDENT == T01590Gratproc.T01002_I_CDENT, T01593Gratdesigservproc.T01058_I_CDEVENTO == T01590Gratproc.T01058_I_CDEVENTO, T01593Gratdesigservproc.T01590_D_DTINIAVALIACAO == T01590Gratproc.T01590_D_DTINIAVALIACAO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01590_D_DTINIAVALIACAO])
 
 class T01594Gratpenalservproc(Base):
@@ -12720,11 +12805,11 @@ class T01594Gratpenalservproc(Base):
     T01594_D_DTPENALID = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01594Gratpenalservproc.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01594Gratpenalservproc.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01594Gratpenalservproc.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01594Gratpenalservproc.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01590Gratproc = relationship('T01590Gratproc', 
-        primaryjoin='and_(T01594Gratpenalservproc.T01002_I_CDENT==T01590Gratproc.T01002_I_CDENT, T01594Gratpenalservproc.T01058_I_CDEVENTO==T01590Gratproc.T01058_I_CDEVENTO, T01594Gratpenalservproc.T01590_D_DTINIAVALIACAO==T01590Gratproc.T01590_D_DTINIAVALIACAO)',
+    t01590Gratproc = relationship('T01590Gratproc',
+        primaryjoin='and_(T01594Gratpenalservproc.T01002_I_CDENT == T01590Gratproc.T01002_I_CDENT, T01594Gratpenalservproc.T01058_I_CDEVENTO == T01590Gratproc.T01058_I_CDEVENTO, T01594Gratpenalservproc.T01590_D_DTINIAVALIACAO == T01590Gratproc.T01590_D_DTINIAVALIACAO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01590_D_DTINIAVALIACAO])
 
 class T01595Grattransfservproc(Base):
@@ -12746,14 +12831,14 @@ class T01595Grattransfservproc(Base):
     T01595_I_INDFORMAPGTO = Column(SmallInteger)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01595Grattransfservproc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01595Grattransfservproc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01595Grattransfservproc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01595Grattransfservproc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01595Grattransfservproc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01595Grattransfservproc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01595Grattransfservproc.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01595Grattransfservproc.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01595Grattransfservproc.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01595Grattransfservproc.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01590Gratproc = relationship('T01590Gratproc', 
-        primaryjoin='and_(T01595Grattransfservproc.T01002_I_CDENT==T01590Gratproc.T01002_I_CDENT, T01595Grattransfservproc.T01058_I_CDEVENTO==T01590Gratproc.T01058_I_CDEVENTO, T01595Grattransfservproc.T01590_D_DTINIAVALIACAO==T01590Gratproc.T01590_D_DTINIAVALIACAO)',
+    t01590Gratproc = relationship('T01590Gratproc',
+        primaryjoin='and_(T01595Grattransfservproc.T01002_I_CDENT == T01590Gratproc.T01002_I_CDENT, T01595Grattransfservproc.T01058_I_CDEVENTO == T01590Gratproc.T01058_I_CDEVENTO, T01595Grattransfservproc.T01590_D_DTINIAVALIACAO == T01590Gratproc.T01590_D_DTINIAVALIACAO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01590_D_DTINIAVALIACAO])
 
 class T01596Gratservproc(Base):
@@ -12777,14 +12862,14 @@ class T01596Gratservproc(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01596_I_MOTIVONAOREC])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01596Gratservproc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01596Gratservproc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01596Gratservproc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01596Gratservproc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01596Gratservproc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01596Gratservproc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01596Gratservproc.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01596Gratservproc.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01596Gratservproc.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01596Gratservproc.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01590Gratproc = relationship('T01590Gratproc', 
-        primaryjoin='and_(T01596Gratservproc.T01002_I_CDENT==T01590Gratproc.T01002_I_CDENT, T01596Gratservproc.T01058_I_CDEVENTO==T01590Gratproc.T01058_I_CDEVENTO, T01596Gratservproc.T01590_D_DTINIAVALIACAO==T01590Gratproc.T01590_D_DTINIAVALIACAO)',
+    t01590Gratproc = relationship('T01590Gratproc',
+        primaryjoin='and_(T01596Gratservproc.T01002_I_CDENT == T01590Gratproc.T01002_I_CDENT, T01596Gratservproc.T01058_I_CDEVENTO == T01590Gratproc.T01058_I_CDEVENTO, T01596Gratservproc.T01590_D_DTINIAVALIACAO == T01590Gratproc.T01590_D_DTINIAVALIACAO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01590_D_DTINIAVALIACAO])
 
 class T01597Histimpext(Base):
@@ -12797,8 +12882,8 @@ class T01597Histimpext(Base):
     T01597_S_NOMEARQUIVO = Column(String(100), nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01597Histimpext.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01597Histimpext.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01597Histimpext.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01597Histimpext.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01598Histocorpens(Base):
@@ -12816,11 +12901,11 @@ class T01598Histocorpens(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01598_I_CDASSUNTO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01598Histocorpens.T01598_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01598Histocorpens.T01598_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01598Histocorpens.T01598_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01598Histocorpens.T01598_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01598_I_ENTOPERADOR, T01598_I_MATOPERADOR])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01598Histocorpens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01598Histocorpens.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01598Histocorpens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01598Histocorpens.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
 
 class T01599Sicfalecido(Base):
@@ -12865,8 +12950,8 @@ class T01600Concursohist(Base):
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071ItemlistaByITpatoautor = relationship('T01071Itemlista', foreign_keys=[T01600_I_TPATOAUTOR])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01600Concursohist.T01600_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01600Concursohist.T01600_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01600Concursohist.T01600_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01600Concursohist.T01600_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01600_I_ENTOPERADOR, T01600_I_MATOPERADOR])
     t01071ItemlistaByITpedital = relationship('T01071Itemlista', foreign_keys=[T01600_I_TPEDITAL])
     t01071ItemlistaByITpvalidade = relationship('T01071Itemlista', foreign_keys=[T01600_I_TPVALIDADE])
@@ -12902,11 +12987,11 @@ class T01601Itemconcursohist(Base):
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01601_I_TIPORESOL])
     t01600Concursohist = relationship('T01600Concursohist', foreign_keys=[T01600_I_CDCONCHIST])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01601Itemconcursohist.T01601_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01601Itemconcursohist.T01601_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01601Itemconcursohist.T01601_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01601Itemconcursohist.T01601_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01601_I_ENTOPERADOR, T01601_I_MATOPERADOR])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01601Itemconcursohist.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01601Itemconcursohist.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01601Itemconcursohist.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01601Itemconcursohist.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01602Candidatohist(Base):
@@ -12953,8 +13038,8 @@ class T01602Candidatohist(Base):
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
     t01071ItemlistaByITiporesol = relationship('T01071Itemlista', foreign_keys=[T01602_I_TIPORESOL])
     t01601Itemconcursohist = relationship('T01601Itemconcursohist', foreign_keys=[T01601_I_CDITEMCONCHIST])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01602Candidatohist.T01602_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01602Candidatohist.T01602_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01602Candidatohist.T01602_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01602Candidatohist.T01602_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01602_I_ENTOPERADOR, T01602_I_MATOPERADOR])
     t01071ItemlistaByITpmutdemissao = relationship('T01071Itemlista', foreign_keys=[T01602_I_TPMUTDEMISSAO])
     t01071ItemlistaByITpatodesliga = relationship('T01071Itemlista', foreign_keys=[T01602_I_TPATODESLIGA])
@@ -12988,15 +13073,15 @@ class T01603Eventomatdiv(Base):
     T01158_I_CDFOLHA = Column(Integer, ForeignKey('RH.T01158_ABERTFOLHA.T01158_I_CDFOLHA'), nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01603Eventomatdiv.T01603_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01603Eventomatdiv.T01603_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01603Eventomatdiv.T01603_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01603Eventomatdiv.T01603_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01603_I_ENTOPERADOR, T01603_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01603Eventomatdiv.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01603Eventomatdiv.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01603Eventomatdiv.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01603Eventomatdiv.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01183Matrdiversa = relationship('T01183Matrdiversa', 
-        primaryjoin='and_(T01603Eventomatdiv.T01002_I_CDENT==T01183Matrdiversa.T01002_I_CDENT, T01603Eventomatdiv.T01183_I_MATRICULA==T01183Matrdiversa.T01183_I_MATRICULA)',
+    t01183Matrdiversa = relationship('T01183Matrdiversa',
+        primaryjoin='and_(T01603Eventomatdiv.T01002_I_CDENT == T01183Matrdiversa.T01002_I_CDENT, T01603Eventomatdiv.T01183_I_MATRICULA == T01183Matrdiversa.T01183_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01183_I_MATRICULA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERFACE])
     t01327Arquivorecebido = relationship('T01327Arquivorecebido', foreign_keys=[T01327_I_CDARQUIVO])
@@ -13015,8 +13100,8 @@ class T01604Parceventomatdiv(Base):
     T01604_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01604Parceventomatdiv.T01604_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01604Parceventomatdiv.T01604_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01604Parceventomatdiv.T01604_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01604Parceventomatdiv.T01604_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01604_I_ENTOPERADOR, T01604_I_MATOPERADOR])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01603Eventomatdiv = relationship('T01603Eventomatdiv', foreign_keys=[T01603_I_CDEVENTOMATDIV])
@@ -13043,8 +13128,8 @@ class T01605Prorrogcol(Base):
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01605_I_TPATO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01605Prorrogcol.T01605_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01605Prorrogcol.T01605_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01605Prorrogcol.T01605_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01605Prorrogcol.T01605_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01605_I_ENTOPERADOR, T01605_I_MATOPERADOR])
 
 class T01606Histtcconcurso(Base):
@@ -13069,11 +13154,11 @@ class T01606Histtcconcurso(Base):
     T01606_I_DEFFISICA = Column(Boolean, primary_key=True)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01606Histtcconcurso.T01606_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01606Histtcconcurso.T01606_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01606Histtcconcurso.T01606_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01606Histtcconcurso.T01606_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01606_I_ENTOPERADOR, T01606_I_MATOPERADOR])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01606Histtcconcurso.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01606Histtcconcurso.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01606Histtcconcurso.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01606Histtcconcurso.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01606_I_TPRESCONCURSOTC])
@@ -13103,11 +13188,11 @@ class T01608Tipounidativ(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01608_I_CDTPUNIDADE])
-    t01188Tpatividade = relationship('T01188Tpatividade', 
-        primaryjoin='and_(T01608Tipounidativ.T01002_I_CDENT==T01188Tpatividade.T01002_I_CDENT, T01608Tipounidativ.T01188_I_CDTPATIVI==T01188Tpatividade.T01188_I_CDTPATIVI)',
+    t01188Tpatividade = relationship('T01188Tpatividade',
+        primaryjoin='and_(T01608Tipounidativ.T01002_I_CDENT == T01188Tpatividade.T01002_I_CDENT, T01608Tipounidativ.T01188_I_CDTPATIVI == T01188Tpatividade.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01188_I_CDTPATIVI])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01608Tipounidativ.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01608Tipounidativ.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01608Tipounidativ.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01608Tipounidativ.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01608Tipounidativ.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01608Tipounidativ.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01609Funcionalidade(Base):
@@ -13140,8 +13225,8 @@ class T01611Usuario(Base):
     T01611_S_RESPOSTA = Column(String(100))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01611Usuario.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01611Usuario.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01611Usuario.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01611Usuario.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01612Perfilusuario(Base):
@@ -13154,8 +13239,8 @@ class T01612Perfilusuario(Base):
 
     # Relationships
     t01610Perfil = relationship('T01610Perfil', foreign_keys=[T01610_I_CDPERFIL])
-    t01611Usuario = relationship('T01611Usuario', 
-        primaryjoin='and_(T01612Perfilusuario.T01002_I_CDENT==T01611Usuario.T01002_I_CDENT, T01612Perfilusuario.T01001_I_MATRICULA==T01611Usuario.T01001_I_MATRICULA)',
+    t01611Usuario = relationship('T01611Usuario',
+        primaryjoin='and_(T01612Perfilusuario.T01002_I_CDENT == T01611Usuario.T01002_I_CDENT, T01612Perfilusuario.T01001_I_MATRICULA == T01611Usuario.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01613Funcionalidperfil(Base):
@@ -13212,8 +13297,8 @@ class T01616Itemassinaturarit(Base):
     # Relationships
     t01193Rit = relationship('T01193Rit', foreign_keys=[T01193_I_CDCONTRIT])
     t01615Itemassinatura = relationship('T01615Itemassinatura', foreign_keys=[T01615_I_CDITEMASSINATURA])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01616Itemassinaturarit.T01616_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01616Itemassinaturarit.T01616_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01616Itemassinaturarit.T01616_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01616Itemassinaturarit.T01616_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01616_I_ENTOPERADOR, T01616_I_MATOPERADOR])
 
 class T01617Simulacaofolha(Base):
@@ -13267,8 +13352,8 @@ class T01620Simulacaofiltrovalor(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01620_I_CDFILTROINTERNO])
-    t01619Simulacaofiltro = relationship('T01619Simulacaofiltro', 
-        primaryjoin='and_(T01620Simulacaofiltrovalor.T01617_I_CDSIMULACAO==T01619Simulacaofiltro.T01617_I_CDSIMULACAO, T01620Simulacaofiltrovalor.T01619_I_CDFILTRO==T01619Simulacaofiltro.T01619_I_CDFILTRO)',
+    t01619Simulacaofiltro = relationship('T01619Simulacaofiltro',
+        primaryjoin='and_(T01620Simulacaofiltrovalor.T01617_I_CDSIMULACAO == T01619Simulacaofiltro.T01617_I_CDSIMULACAO, T01620Simulacaofiltrovalor.T01619_I_CDFILTRO == T01619Simulacaofiltro.T01619_I_CDFILTRO)',
         foreign_keys=[T01617_I_CDSIMULACAO, T01619_I_CDFILTRO])
 
 class T01621Simulacaoacaoespecif(Base):
@@ -13284,8 +13369,8 @@ class T01621Simulacaoacaoespecif(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01621_I_CDACAOINTERNA])
-    t01619Simulacaofiltro = relationship('T01619Simulacaofiltro', 
-        primaryjoin='and_(T01621Simulacaoacaoespecif.T01617_I_CDSIMULACAO==T01619Simulacaofiltro.T01617_I_CDSIMULACAO, T01621Simulacaoacaoespecif.T01619_I_CDFILTRO==T01619Simulacaofiltro.T01619_I_CDFILTRO)',
+    t01619Simulacaofiltro = relationship('T01619Simulacaofiltro',
+        primaryjoin='and_(T01621Simulacaoacaoespecif.T01617_I_CDSIMULACAO == T01619Simulacaofiltro.T01617_I_CDSIMULACAO, T01621Simulacaoacaoespecif.T01619_I_CDFILTRO == T01619Simulacaofiltro.T01619_I_CDFILTRO)',
         foreign_keys=[T01617_I_CDSIMULACAO, T01619_I_CDFILTRO])
 
 class T01622Listagemgrupo(Base):
@@ -13367,8 +13452,8 @@ class T01626Simulacalculo(Base):
     # Relationships
     t01580Agendaprocesso = relationship('T01580Agendaprocesso', foreign_keys=[T01580_I_CDPROCESSO])
     t01617Simulacaofolha = relationship('T01617Simulacaofolha', foreign_keys=[T01617_I_CDSIMULACAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01626Simulacalculo.T01626_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01626Simulacalculo.T01626_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01626Simulacalculo.T01626_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01626Simulacalculo.T01626_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01626_I_ENTOPERADOR, T01626_I_MATOPERADOR])
 
 class T01627Simulacalculoserv(Base):
@@ -13381,8 +13466,8 @@ class T01627Simulacalculoserv(Base):
 
     # Relationships
     t01626Simulacalculo = relationship('T01626Simulacalculo', foreign_keys=[T01626_I_CDSOLICITACAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01627Simulacalculoserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01627Simulacalculoserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01627Simulacalculoserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01627Simulacalculoserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01628Pesoquadroform(Base):
@@ -13430,14 +13515,14 @@ class T01630Histvalorpond(Base):
     T01630_I_INDTIPOREG = Column(String(1), nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01630Histvalorpond.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01630Histvalorpond.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01630Histvalorpond.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01630Histvalorpond.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01546Inscricaorem = relationship('T01546Inscricaorem', 
-        primaryjoin='and_(T01630Histvalorpond.T01542_I_CODCONCURSOREM==T01546Inscricaorem.T01542_I_CODCONCURSOREM, T01630Histvalorpond.T01546_I_CODINSCRICAOREM==T01546Inscricaorem.T01546_I_CODINSCRICAOREM)',
+    t01546Inscricaorem = relationship('T01546Inscricaorem',
+        primaryjoin='and_(T01630Histvalorpond.T01542_I_CODCONCURSOREM == T01546Inscricaorem.T01542_I_CODCONCURSOREM, T01630Histvalorpond.T01546_I_CODINSCRICAOREM == T01546Inscricaorem.T01546_I_CODINSCRICAOREM)',
         foreign_keys=[T01542_I_CODCONCURSOREM, T01546_I_CODINSCRICAOREM])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01630Histvalorpond.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01630Histvalorpond.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01630Histvalorpond.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01630Histvalorpond.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01630Histvalorpond.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01630Histvalorpond.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01631Indiceapos(Base):
@@ -13462,8 +13547,8 @@ class T01632Inspriscovd(Base):
     T01632_I_EXPOSTOAGENTES = Column(SmallInteger)
 
     # Relationships
-    t01255Gratriscovd = relationship('T01255Gratriscovd', 
-        primaryjoin='and_(T01632Inspriscovd.T01255_I_NUMPROT==T01255Gratriscovd.T01255_I_NUMPROT, T01632Inspriscovd.T01255_I_ANOPROT==T01255Gratriscovd.T01255_I_ANOPROT)',
+    t01255Gratriscovd = relationship('T01255Gratriscovd',
+        primaryjoin='and_(T01632Inspriscovd.T01255_I_NUMPROT == T01255Gratriscovd.T01255_I_NUMPROT, T01632Inspriscovd.T01255_I_ANOPROT == T01255Gratriscovd.T01255_I_ANOPROT)',
         foreign_keys=[T01255_I_NUMPROT, T01255_I_ANOPROT])
 
 class T01633Dimloctrabhist(Base):
@@ -13491,17 +13576,17 @@ class T01633Dimloctrabhist(Base):
     # Relationships
     t01542Concursorem = relationship('T01542Concursorem', foreign_keys=[T01542_I_CODCONCURSOREM])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01633_I_TURNO])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01633Dimloctrabhist.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01633Dimloctrabhist.T01004_I_UNIDLOCAL==T01004Unidfunc.T01004_I_CDUNIDFUN, T01633Dimloctrabhist.T01004_I_VERSAOLOCAL==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01633Dimloctrabhist.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01633Dimloctrabhist.T01004_I_UNIDLOCAL == T01004Unidfunc.T01004_I_CDUNIDFUN, T01633Dimloctrabhist.T01004_I_VERSAOLOCAL == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_UNIDLOCAL, T01004_I_VERSAOLOCAL])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01633Dimloctrabhist.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01633Dimloctrabhist.T01004_I_UNIDLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01633Dimloctrabhist.T01004_I_VERSAOLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01633Dimloctrabhist.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01633Dimloctrabhist.T01004_I_UNIDLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01633Dimloctrabhist.T01004_I_VERSAOLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_UNIDLOT, T01004_I_VERSAOLOT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01633Dimloctrabhist.T01633_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01633Dimloctrabhist.T01633_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01633Dimloctrabhist.T01633_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01633Dimloctrabhist.T01633_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01633_I_ENTOPERADOR, T01633_I_MATOPERADOR])
-    t01187Tpatuacao = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01633Dimloctrabhist.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01633Dimloctrabhist.T01187_I_CDTPATUA==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187Tpatuacao = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01633Dimloctrabhist.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01633Dimloctrabhist.T01187_I_CDTPATUA == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA])
 
 class T01634Reajustaindice(Base):
@@ -13536,20 +13621,20 @@ class T01635Localmagist(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01635_I_TURNO])
-    t01186Grupfundef = relationship('T01186Grupfundef', 
-        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT==T01186Grupfundef.T01002_I_CDENT, T01635Localmagist.T01186_I_CDGRUPO==T01186Grupfundef.T01186_I_CDGRUPO)',
+    t01186Grupfundef = relationship('T01186Grupfundef',
+        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT == T01186Grupfundef.T01002_I_CDENT, T01635Localmagist.T01186_I_CDGRUPO == T01186Grupfundef.T01186_I_CDGRUPO)',
         foreign_keys=[T01002_I_CDENT, T01186_I_CDGRUPO])
-    t01188Tpatividade = relationship('T01188Tpatividade', 
-        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT==T01188Tpatividade.T01002_I_CDENT, T01635Localmagist.T01188_I_CDTPATIVI==T01188Tpatividade.T01188_I_CDTPATIVI)',
+    t01188Tpatividade = relationship('T01188Tpatividade',
+        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT == T01188Tpatividade.T01002_I_CDENT, T01635Localmagist.T01188_I_CDTPATIVI == T01188Tpatividade.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01188_I_CDTPATIVI])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01635Localmagist.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01635Localmagist.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01635Localmagist.T01004_I_CDLOCALTR==T01004Unidfunc.T01004_I_CDUNIDFUN, T01635Localmagist.T01004_I_VRLOCALTR==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01635Localmagist.T01004_I_CDLOCALTR == T01004Unidfunc.T01004_I_CDUNIDFUN, T01635Localmagist.T01004_I_VRLOCALTR == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDLOCALTR, T01004_I_VRLOCALTR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01635Localmagist.T01004_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01635Localmagist.T01004_I_VRORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01635Localmagist.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01635Localmagist.T01004_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01635Localmagist.T01004_I_VRORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDORGLOT, T01004_I_VRORGLOT])
 
 class T01636Auxiliopecunia(Base):
@@ -13570,11 +13655,11 @@ class T01636Auxiliopecunia(Base):
     # Relationships
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01636Auxiliopecunia.T01636_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01636Auxiliopecunia.T01636_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01636Auxiliopecunia.T01636_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01636Auxiliopecunia.T01636_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01636_I_ENTOPERADOR, T01636_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01636Auxiliopecunia.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01636Auxiliopecunia.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01636Auxiliopecunia.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01636Auxiliopecunia.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01637Resumoregprevid(Base):
@@ -13594,8 +13679,8 @@ class T01637Resumoregprevid(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01637_I_TIPOATO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01637Resumoregprevid.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01637Resumoregprevid.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01637Resumoregprevid.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01637Resumoregprevid.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01066Fonteincorp = relationship('T01066Fonteincorp', foreign_keys=[T01066_I_CDFONTE])
 
@@ -13623,14 +13708,14 @@ class T01639Hierarquadro(Base):
     T01639_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01639Hierarquadro.T01639_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01639Hierarquadro.T01639_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01639Hierarquadro.T01639_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01639Hierarquadro.T01639_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01639_I_ENTOPERADOR, T01639_I_MATOPERADOR])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01639Hierarquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01639Hierarquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01639Hierarquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01639Hierarquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01639Hierarquadro.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01639Hierarquadro.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01639Hierarquadro.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01639Hierarquadro.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01640Auxiliopecuniadet(Base):
@@ -13670,14 +13755,14 @@ class T01641Filtroarquivopens(Base):
     # Relationships
     t01071ItemlistaByIArquivo = relationship('T01071Itemlista', foreign_keys=[T01641_I_ARQUIVO])
     t01071ItemlistaByIFiltro = relationship('T01071Itemlista', foreign_keys=[T01641_I_FILTRO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01641Filtroarquivopens.T01641_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01641Filtroarquivopens.T01641_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01641Filtroarquivopens.T01641_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01641Filtroarquivopens.T01641_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01641_I_ENTOPERADOR, T01641_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01641Filtroarquivopens.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01641Filtroarquivopens.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01641Filtroarquivopens.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01641Filtroarquivopens.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01641Filtroarquivopens.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01641Filtroarquivopens.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01641Filtroarquivopens.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01641Filtroarquivopens.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01641Filtroarquivopens.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01641Filtroarquivopens.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
 
 class T01642Concursohomolog(Base):
@@ -13694,8 +13779,8 @@ class T01642Concursohomolog(Base):
     T01642_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01642Concursohomolog.T01642_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01642Concursohomolog.T01642_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01642Concursohomolog.T01642_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01642Concursohomolog.T01642_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01642_I_ENTOPERADOR, T01642_I_MATOPERADOR])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
 
@@ -13709,11 +13794,11 @@ class T01643Eventosubstituto(Base):
     T01643_I_TPCONTRACHEQ = Column(Numeric(4, 0), ForeignKey('RH.T01071_ITEMLISTA.T01071_I_CDITEM'), nullable=False)
 
     # Relationships
-    t01058EventosfolhaByICdent = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01643Eventosubstituto.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01643Eventosubstituto.T01643_I_EVENTOSEC==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058EventosfolhaByICdent = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01643Eventosubstituto.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01643Eventosubstituto.T01643_I_EVENTOSEC == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01643_I_EVENTOSEC])
-    t01058EventosfolhaByICdent = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01643Eventosubstituto.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01643Eventosubstituto.T01643_I_EVENTOPRI==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058EventosfolhaByICdent1 = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01643Eventosubstituto.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01643Eventosubstituto.T01643_I_EVENTOPRI == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01643_I_EVENTOPRI])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01643_I_TPCONTRACHEQ])
 
@@ -13733,14 +13818,14 @@ class T01645Docresponsavel(Base):
     T01004_I_VERSAO = Column(Numeric(2, 0), ForeignKey('RH.T01004_UNIDFUNC.T01004_I_VERSAO'), primary_key=True)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01645Docresponsavel.T01002_I_CDENTORIGEM==T01004Unidfunc.T01002_I_CDENT, T01645Docresponsavel.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01645Docresponsavel.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01645Docresponsavel.T01002_I_CDENTORIGEM == T01004Unidfunc.T01002_I_CDENT, T01645Docresponsavel.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01645Docresponsavel.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENTORIGEM, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01645Docresponsavel.T01645_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01645Docresponsavel.T01645_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01645Docresponsavel.T01645_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01645Docresponsavel.T01645_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01645_I_ENTOPERADOR, T01645_I_MATOPERADOR])
-    t01001ServidorByICdentresp = relationship('T01001Servidor', 
-        primaryjoin='and_(T01645Docresponsavel.T01002_I_CDENTRESP==T01001Servidor.T01002_I_CDENT, T01645Docresponsavel.T01001_I_CDMATRESP==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdentresp = relationship('T01001Servidor',
+        primaryjoin='and_(T01645Docresponsavel.T01002_I_CDENTRESP == T01001Servidor.T01002_I_CDENT, T01645Docresponsavel.T01001_I_CDMATRESP == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENTRESP, T01001_I_CDMATRESP])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTORIGEM])
     t01071ItemlistaByICdtpdoc = relationship('T01071Itemlista', foreign_keys=[T01645_I_CDTPDOC])
@@ -13764,8 +13849,8 @@ class T01646Desigext(Base):
     T01646_S_NUMATO = Column(String(20))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01646Desigext.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01646Desigext.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01646Desigext.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01646Desigext.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTDEST])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01646_I_TPATO])
@@ -13789,11 +13874,11 @@ class T01647Utilizcompetencia(Base):
     T01514_I_CDITEMFORMQUADROCONC = Column(Integer, ForeignKey('RH.T01514_ITEMFORMQUADROCONC.T01514_I_CDITEMFORMQUADROCONC'))
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01647Utilizcompetencia.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01647Utilizcompetencia.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01647Utilizcompetencia.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01647Utilizcompetencia.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntopcao = relationship('T01001Servidor', 
-        primaryjoin='and_(T01647Utilizcompetencia.T01647_I_ENTOPCAO==T01001Servidor.T01002_I_CDENT, T01647Utilizcompetencia.T01647_I_MATOPCAO==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntopcao = relationship('T01001Servidor',
+        primaryjoin='and_(T01647Utilizcompetencia.T01647_I_ENTOPCAO == T01001Servidor.T01002_I_CDENT, T01647Utilizcompetencia.T01647_I_MATOPCAO == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01647_I_ENTOPCAO, T01647_I_MATOPCAO])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01647_I_TIPOCOMPETENCIA])
@@ -13823,16 +13908,16 @@ class T01648Producao(Base):
 
     # Relationships
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01001ServidorByIEntavaliador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01648Producao.T01648_I_ENTAVALIADOR==T01001Servidor.T01002_I_CDENT, T01648Producao.T01648_I_MATAVALIADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntavaliador = relationship('T01001Servidor',
+        primaryjoin='and_(T01648Producao.T01648_I_ENTAVALIADOR == T01001Servidor.T01002_I_CDENT, T01648Producao.T01648_I_MATAVALIADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01648_I_ENTAVALIADOR, T01648_I_MATAVALIADOR])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01648Producao.T01648_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01648Producao.T01648_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01648Producao.T01648_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01648Producao.T01648_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01648_I_ENTOPERADOR, T01648_I_MATOPERADOR])
     t01071ItemlistaByICdclasse = relationship('T01071Itemlista', foreign_keys=[T01648_I_CDCLASSE])
     t01071ItemlistaByICdnivel = relationship('T01071Itemlista', foreign_keys=[T01648_I_CDNIVEL])
     t01125LocalextByICdlocal = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
-    t01125LocalextByICdlocal = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
+    t01125LocalextByICdlocal1 = relationship('T01125Localext', foreign_keys=[T01125_I_CDLOCAL])
 
 class T01649Desigespext(Base):
     __tablename__ = 'T01649_DESIGESPEXT'
@@ -13863,11 +13948,11 @@ class T01649Desigespext(Base):
 
     # Relationships
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01001ServidorByIEntavaliador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01649Desigespext.T01649_I_ENTAVALIADOR==T01001Servidor.T01002_I_CDENT, T01649Desigespext.T01649_I_MATAVALIADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntavaliador = relationship('T01001Servidor',
+        primaryjoin='and_(T01649Desigespext.T01649_I_ENTAVALIADOR == T01001Servidor.T01002_I_CDENT, T01649Desigespext.T01649_I_MATAVALIADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01649_I_ENTAVALIADOR, T01649_I_MATAVALIADOR])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01649Desigespext.T01649_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01649Desigespext.T01649_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01649Desigespext.T01649_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01649Desigespext.T01649_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01649_I_ENTOPERADOR, T01649_I_MATOPERADOR])
     t01071ItemlistaByICdclasse = relationship('T01071Itemlista', foreign_keys=[T01649_I_CDCLASSE])
     t01071ItemlistaByICdnivel = relationship('T01071Itemlista', foreign_keys=[T01649_I_CDNIVEL])
@@ -13897,8 +13982,8 @@ class T01651Concursoarq(Base):
     T01651_D_DTPUBLICACAO = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01651Concursoarq.T01651_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01651Concursoarq.T01651_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01651Concursoarq.T01651_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01651Concursoarq.T01651_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01651_I_ENTOPERADOR, T01651_I_MATOPERADOR])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
 
@@ -13913,11 +13998,11 @@ class T01652Chefia(Base):
     T01652_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01652Chefia.T01652_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01652Chefia.T01652_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01652Chefia.T01652_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01652Chefia.T01652_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01652_I_ENTOPERADOR, T01652_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01652Chefia.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01652Chefia.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01652Chefia.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01652Chefia.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01653Subordinado(Base):
@@ -13933,14 +14018,14 @@ class T01653Subordinado(Base):
     T01653_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01653Subordinado.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01653Subordinado.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01653Subordinado.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01653Subordinado.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01653Subordinado.T01653_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01653Subordinado.T01653_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01653Subordinado.T01653_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01653Subordinado.T01653_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01653_I_ENTOPERADOR, T01653_I_MATOPERADOR])
-    t01652Chefia = relationship('T01652Chefia', 
-        primaryjoin='and_(T01653Subordinado.T01652_I_CDENTCHEFIA==T01652Chefia.T01002_I_CDENT, T01653Subordinado.T01652_I_MATCHEFIA==T01652Chefia.T01001_I_MATRICULA)',
+    t01652Chefia = relationship('T01652Chefia',
+        primaryjoin='and_(T01653Subordinado.T01652_I_CDENTCHEFIA == T01652Chefia.T01002_I_CDENT, T01653Subordinado.T01652_I_MATCHEFIA == T01652Chefia.T01001_I_MATRICULA)',
         foreign_keys=[T01652_I_CDENTCHEFIA, T01652_I_MATCHEFIA])
 
 class T01654Gratavaliacao(Base):
@@ -13961,12 +14046,12 @@ class T01654Gratavaliacao(Base):
     T01654_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01654Gratavaliacao.T01654_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01654Gratavaliacao.T01654_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01654Gratavaliacao.T01654_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01654Gratavaliacao.T01654_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01654_I_ENTOPERADOR, T01654_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01654_I_GRUPO])
-    t01431Gratperiodicidadepgto = relationship('T01431Gratperiodicidadepgto', 
-        primaryjoin='and_(T01654Gratavaliacao.T01002_I_CDENT==T01431Gratperiodicidadepgto.T01002_I_CDENT, T01654Gratavaliacao.T01058_I_CDEVENTO==T01431Gratperiodicidadepgto.T01058_I_CDEVENTO, T01654Gratavaliacao.T01431_D_DTINIAVALIACAO==T01431Gratperiodicidadepgto.T01431_D_DTINIAVALIACAO)',
+    t01431Gratperiodicidadepgto = relationship('T01431Gratperiodicidadepgto',
+        primaryjoin='and_(T01654Gratavaliacao.T01002_I_CDENT == T01431Gratperiodicidadepgto.T01002_I_CDENT, T01654Gratavaliacao.T01058_I_CDEVENTO == T01431Gratperiodicidadepgto.T01058_I_CDEVENTO, T01654Gratavaliacao.T01431_D_DTINIAVALIACAO == T01431Gratperiodicidadepgto.T01431_D_DTINIAVALIACAO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01431_D_DTINIAVALIACAO])
 
 class T01655Gratformulario(Base):
@@ -13986,8 +14071,8 @@ class T01655Gratformulario(Base):
     T01655_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01655Gratformulario.T01655_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01655Gratformulario.T01655_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01655Gratformulario.T01655_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01655Gratformulario.T01655_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01655_I_ENTOPERADOR, T01655_I_MATOPERADOR])
     t01071ItemlistaByITipoformulario = relationship('T01071Itemlista', foreign_keys=[T01655_I_TIPOFORMULARIO])
     t01071ItemlistaByITiporesposta = relationship('T01071Itemlista', foreign_keys=[T01655_I_TIPORESPOSTA])
@@ -14006,8 +14091,8 @@ class T01656Gratfator(Base):
     T01656_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01656Gratfator.T01656_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01656Gratfator.T01656_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01656Gratfator.T01656_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01656Gratfator.T01656_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01656_I_ENTOPERADOR, T01656_I_MATOPERADOR])
     t01655Gratformulario = relationship('T01655Gratformulario', foreign_keys=[T01655_I_CDGRATFORM])
 
@@ -14024,8 +14109,8 @@ class T01657Gratcriterio(Base):
     T01657_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01657Gratcriterio.T01657_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01657Gratcriterio.T01657_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01657Gratcriterio.T01657_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01657Gratcriterio.T01657_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01657_I_ENTOPERADOR, T01657_I_MATOPERADOR])
     t01656Gratfator = relationship('T01656Gratfator', foreign_keys=[T01656_I_CDGRATFATOR])
 
@@ -14042,8 +14127,8 @@ class T01658Gratopcao(Base):
     T01658_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01658Gratopcao.T01658_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01658Gratopcao.T01658_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01658Gratopcao.T01658_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01658Gratopcao.T01658_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01658_I_ENTOPERADOR, T01658_I_MATOPERADOR])
     t01657Gratcriterio = relationship('T01657Gratcriterio', foreign_keys=[T01657_I_CDGRATCRITERIO])
 
@@ -14064,18 +14149,18 @@ class T01659Gratavaliado(Base):
     T01659_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01659Gratavaliado.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01659Gratavaliado.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01659Gratavaliado.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01659Gratavaliado.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01659Gratavaliado.T01659_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01659Gratavaliado.T01659_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01659Gratavaliado.T01659_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01659Gratavaliado.T01659_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01659_I_ENTOPERADOR, T01659_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01659Gratavaliado.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01659Gratavaliado.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01659Gratavaliado.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01659Gratavaliado.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01659Gratavaliado.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01659Gratavaliado.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01659_I_TIPOAVALIADO])
-    t01662Gratformavaliador = relationship('T01662Gratformavaliador', 
-        primaryjoin='and_(T01659Gratavaliado.T01655_I_CDGRATFORM==T01662Gratformavaliador.T01655_I_CDGRATFORM, T01659Gratavaliado.T01661_I_CDGRATAVALIADOR==T01662Gratformavaliador.T01661_I_CDGRATAVALIADOR)',
+    t01662Gratformavaliador = relationship('T01662Gratformavaliador',
+        primaryjoin='and_(T01659Gratavaliado.T01655_I_CDGRATFORM == T01662Gratformavaliador.T01655_I_CDGRATFORM, T01659Gratavaliado.T01661_I_CDGRATAVALIADOR == T01662Gratformavaliador.T01661_I_CDGRATAVALIADOR)',
         foreign_keys=[T01655_I_CDGRATFORM, T01661_I_CDGRATAVALIADOR])
 
 class T01660Gratresposta(Base):
@@ -14102,11 +14187,11 @@ class T01661Gratavaliador(Base):
     T01004_I_VERSAO = Column(Numeric(2, 0), ForeignKey('RH.T01004_UNIDFUNC.T01004_I_VERSAO'))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01661Gratavaliador.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01661Gratavaliador.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01661Gratavaliador.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01661Gratavaliador.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01661Gratavaliador.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01661Gratavaliador.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01661Gratavaliador.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01661Gratavaliador.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01661Gratavaliador.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01661Gratavaliador.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01662Gratformavaliador(Base):
@@ -14121,8 +14206,8 @@ class T01662Gratformavaliador(Base):
     T01662_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01662Gratformavaliador.T01662_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01662Gratformavaliador.T01662_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01662Gratformavaliador.T01662_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01662Gratformavaliador.T01662_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01662_I_ENTOPERADOR, T01662_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01662_I_TIPOAVALIADOR])
     t01655Gratformulario = relationship('T01655Gratformulario', foreign_keys=[T01655_I_CDGRATFORM])
@@ -14141,14 +14226,14 @@ class T01663Bancounicohierarq(Base):
     T01663_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01663Bancounicohierarq.T01663_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01663Bancounicohierarq.T01663_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01663Bancounicohierarq.T01663_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01663Bancounicohierarq.T01663_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01663_I_ENTOPERADOR, T01663_I_MATOPERADOR])
-    t01036ItemhierarqByICdentbanco = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01663Bancounicohierarq.T01002_I_CDENTBANCO==T01036Itemhierarq.T01002_I_CDENT, T01663Bancounicohierarq.T01036_I_CDHIERARQBANCO==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036ItemhierarqByICdentbanco = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01663Bancounicohierarq.T01002_I_CDENTBANCO == T01036Itemhierarq.T01002_I_CDENT, T01663Bancounicohierarq.T01036_I_CDHIERARQBANCO == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENTBANCO, T01036_I_CDHIERARQBANCO])
-    t01036ItemhierarqByICdentlog = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01663Bancounicohierarq.T01002_I_CDENTLOG==T01036Itemhierarq.T01002_I_CDENT, T01663Bancounicohierarq.T01036_I_CDHIERARQLOG==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036ItemhierarqByICdentlog = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01663Bancounicohierarq.T01002_I_CDENTLOG == T01036Itemhierarq.T01002_I_CDENT, T01663Bancounicohierarq.T01036_I_CDHIERARQLOG == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENTLOG, T01036_I_CDHIERARQLOG])
 
 class T01664Reabilitacaovt(Base):
@@ -14169,15 +14254,15 @@ class T01664Reabilitacaovt(Base):
     T01242_D_DTVIGLIN = Column(DateTime, ForeignKey('RH.T01242_LINHA.T01242_D_DTVIGLIN'), nullable=False)
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01664Reabilitacaovt.T01664_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01664Reabilitacaovt.T01664_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01664Reabilitacaovt.T01664_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01664Reabilitacaovt.T01664_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01664_I_ENTOPERADOR, T01664_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01664Reabilitacaovt.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01664Reabilitacaovt.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01664Reabilitacaovt.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01664Reabilitacaovt.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01242Linha = relationship('T01242Linha', 
-        primaryjoin='and_(T01664Reabilitacaovt.T01242_I_CDLINHA==T01242Linha.T01242_I_CDLINHA, T01664Reabilitacaovt.T01242_D_DTVIGLIN==T01242Linha.T01242_D_DTVIGLIN)',
+    t01242Linha = relationship('T01242Linha',
+        primaryjoin='and_(T01664Reabilitacaovt.T01242_I_CDLINHA == T01242Linha.T01242_I_CDLINHA, T01664Reabilitacaovt.T01242_D_DTVIGLIN == T01242Linha.T01242_D_DTVIGLIN)',
         foreign_keys=[T01242_I_CDLINHA, T01242_D_DTVIGLIN])
     t01324Interface = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERFACE])
 
@@ -14288,8 +14373,8 @@ class T01669Inscritos(Base):
     T01669_I_STATUSENVIO = Column(SmallInteger, nullable=False)
 
     # Relationships
-    t01476Itemconcurso = relationship('T01476Itemconcurso', 
-        primaryjoin='and_(T01669Inscritos.T01002_I_CDENT==T01476Itemconcurso.T01002_I_CDENT, T01669Inscritos.T01036_I_CDHIERARQ==T01476Itemconcurso.T01036_I_CDHIERARQ, T01669Inscritos.T01041_I_CONCURSO==T01476Itemconcurso.T01041_I_CONCURSO)',
+    t01476Itemconcurso = relationship('T01476Itemconcurso',
+        primaryjoin='and_(T01669Inscritos.T01002_I_CDENT == T01476Itemconcurso.T01002_I_CDENT, T01669Inscritos.T01036_I_CDHIERARQ == T01476Itemconcurso.T01036_I_CDHIERARQ, T01669Inscritos.T01041_I_CONCURSO == T01476Itemconcurso.T01041_I_CONCURSO)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ, T01041_I_CONCURSO])
     t01667Pesfisicaaux = relationship('T01667Pesfisicaaux', foreign_keys=[T01667_I_CDPESFISICAAUX])
 
@@ -14314,8 +14399,8 @@ class T01670Impedimento(Base):
 
     # Relationships
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01670Impedimento.T01670_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01670Impedimento.T01670_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01670Impedimento.T01670_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01670Impedimento.T01670_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01670_I_ENTOPERADOR, T01670_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01670_I_TPATO])
 
@@ -14335,8 +14420,8 @@ class T01671Parametrosconc(Base):
     T01671_S_LINK = Column(String(150))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01671Parametrosconc.T01671_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01671Parametrosconc.T01671_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01671Parametrosconc.T01671_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01671Parametrosconc.T01671_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01671_I_ENTOPERADOR, T01671_I_MATOPERADOR])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01671_I_CDTIPO])
@@ -14358,12 +14443,12 @@ class T01672Transfcandidato(Base):
     T01672_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01672Transfcandidato.T01672_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01672Transfcandidato.T01672_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01672Transfcandidato.T01672_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01672Transfcandidato.T01672_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01672_I_ENTOPERADOR, T01672_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTTRANSF])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01672Transfcandidato.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01672Transfcandidato.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01672Transfcandidato.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01672Transfcandidato.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
 
@@ -14382,11 +14467,11 @@ class T01673Resultado(Base):
     T01673_S_TEXTO = Column(String(300))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01673Resultado.T01673_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01673Resultado.T01673_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01673Resultado.T01673_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01673Resultado.T01673_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01673_I_ENTOPERADOR, T01673_I_MATOPERADOR])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01673Resultado.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01673Resultado.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01673Resultado.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01673Resultado.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01674Resultadoserv(Base):
@@ -14411,20 +14496,20 @@ class T01674Resultadoserv(Base):
     T01036_I_CDHIERARQ = Column(SmallInteger, ForeignKey('RH.T01036_ITEMHIERARQ.T01036_I_CDHIERARQ'))
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01674Resultadoserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01674Resultadoserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01674Resultadoserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01674Resultadoserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01674Resultadoserv.T01674_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01674Resultadoserv.T01674_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01674Resultadoserv.T01674_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01674Resultadoserv.T01674_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01674_I_ENTOPERADOR, T01674_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01674Resultadoserv.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01674Resultadoserv.T01004_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01674Resultadoserv.T01004_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01674Resultadoserv.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01674Resultadoserv.T01004_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01674Resultadoserv.T01004_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDLOCTRAB, T01004_I_VLOCTRAB])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01674Resultadoserv.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01674Resultadoserv.T01004_I_CDLOCTRABDEST==T01004Unidfunc.T01004_I_CDUNIDFUN, T01674Resultadoserv.T01004_I_VLOCTRABDEST==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01674Resultadoserv.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01674Resultadoserv.T01004_I_CDLOCTRABDEST == T01004Unidfunc.T01004_I_CDUNIDFUN, T01674Resultadoserv.T01004_I_VLOCTRABDEST == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDLOCTRABDEST, T01004_I_VLOCTRABDEST])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01674Resultadoserv.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01674Resultadoserv.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01674Resultadoserv.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01674Resultadoserv.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01674_I_STATUS])
     t01673Resultado = relationship('T01673Resultado', foreign_keys=[T01673_I_CDRESULTADO])
@@ -14447,8 +14532,8 @@ class T01675Chamada(Base):
     T01675_D_DTFECHAMENTO = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01675Chamada.T01675_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01675Chamada.T01675_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01675Chamada.T01675_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01675Chamada.T01675_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01675_I_ENTOPERADOR, T01675_I_MATOPERADOR])
     t01118Endereco = relationship('T01118Endereco', foreign_keys=[T01118_I_CDEND])
     t01673Resultado = relationship('T01673Resultado', foreign_keys=[T01673_I_CDRESULTADO])
@@ -14466,11 +14551,11 @@ class T01676Lotconcurso(Base):
     T01676_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01676Lotconcurso.T01676_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01676Lotconcurso.T01676_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01676Lotconcurso.T01676_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01676Lotconcurso.T01676_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01676_I_ENTOPERADOR, T01676_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01676Lotconcurso.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01676Lotconcurso.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01676Lotconcurso.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01676Lotconcurso.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01676Lotconcurso.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01676Lotconcurso.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
 
@@ -14499,11 +14584,11 @@ class T01677Condecoracao(Base):
 
     # Relationships
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01001ServidorByIEntavaliador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01677Condecoracao.T01677_I_ENTAVALIADOR==T01001Servidor.T01002_I_CDENT, T01677Condecoracao.T01677_I_MATAVALIADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntavaliador = relationship('T01001Servidor',
+        primaryjoin='and_(T01677Condecoracao.T01677_I_ENTAVALIADOR == T01001Servidor.T01002_I_CDENT, T01677Condecoracao.T01677_I_MATAVALIADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01677_I_ENTAVALIADOR, T01677_I_MATAVALIADOR])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01677Condecoracao.T01677_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01677Condecoracao.T01677_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01677Condecoracao.T01677_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01677Condecoracao.T01677_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01677_I_ENTOPERADOR, T01677_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTCONDECINT])
     t01071ItemlistaByICdclasse = relationship('T01071Itemlista', foreign_keys=[T01677_I_CDCLASSE])
@@ -14527,11 +14612,11 @@ class T01678Declaracaotc(Base):
     T01678_D_DTDECLARACAOTC = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01678Declaracaotc.T01678_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01678Declaracaotc.T01678_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01678Declaracaotc.T01678_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01678Declaracaotc.T01678_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01678_I_ENTOPERADOR, T01678_I_MATOPERADOR])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01678Declaracaotc.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01678Declaracaotc.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01678Declaracaotc.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01678Declaracaotc.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
 
@@ -14566,11 +14651,11 @@ class T01679Mapeamento(Base):
     T01679_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01679Mapeamento.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01679Mapeamento.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01679Mapeamento.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01679Mapeamento.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByICdent2 = relationship('T01001Servidor', 
-        primaryjoin='and_(T01679Mapeamento.T01002_I_CDENT2==T01001Servidor.T01002_I_CDENT, T01679Mapeamento.T01001_I_MATRICULA2==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent2 = relationship('T01001Servidor',
+        primaryjoin='and_(T01679Mapeamento.T01002_I_CDENT2 == T01001Servidor.T01002_I_CDENT, T01679Mapeamento.T01001_I_MATRICULA2 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT2, T01001_I_MATRICULA2])
 
 class T01680Acesso(Base):
@@ -14586,8 +14671,8 @@ class T01680Acesso(Base):
     T01680_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01680Acesso.T01680_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01680Acesso.T01680_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01680Acesso.T01680_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01680Acesso.T01680_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01680_I_ENTOPERADOR, T01680_I_MATOPERADOR])
     t01071ItemlistaByITpacessosistema = relationship('T01071Itemlista', foreign_keys=[T01680_I_TPACESSOSISTEMA])
     t01071ItemlistaByITpdetalhe = relationship('T01071Itemlista', foreign_keys=[T01680_I_TPDETALHE])
@@ -14622,8 +14707,8 @@ class T01682Acessogrupo(Base):
     T01682_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01682Acessogrupo.T01682_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01682Acessogrupo.T01682_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01682Acessogrupo.T01682_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01682Acessogrupo.T01682_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01682_I_ENTOPERADOR, T01682_I_MATOPERADOR])
     t01680Acesso = relationship('T01680Acesso', foreign_keys=[T01680_I_CDACESSOGRUPO])
 
@@ -14638,8 +14723,8 @@ class T01683Gruposervidor(Base):
     T01683_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01683Gruposervidor.T01683_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01683Gruposervidor.T01683_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01683Gruposervidor.T01683_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01683Gruposervidor.T01683_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01683_I_ENTOPERADOR, T01683_I_MATOPERADOR])
     t01681Acessoservidor = relationship('T01681Acessoservidor', foreign_keys=[T01680_I_CDACESSOSERVIDOR])
     t01682Acessogrupo = relationship('T01682Acessogrupo', foreign_keys=[T01680_I_CDACESSOGRUPO])
@@ -14656,11 +14741,11 @@ class T01684Itemconcursoexclud(Base):
     T01684_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01684Itemconcursoexclud.T01684_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01684Itemconcursoexclud.T01684_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01684Itemconcursoexclud.T01684_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01684Itemconcursoexclud.T01684_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01684_I_ENTOPERADOR, T01684_I_MATOPERADOR])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01684Itemconcursoexclud.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01684Itemconcursoexclud.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01684Itemconcursoexclud.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01684Itemconcursoexclud.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01041Concurso = relationship('T01041Concurso', foreign_keys=[T01041_I_CONCURSO])
 
@@ -14733,14 +14818,14 @@ class T01689Gratsimbunid(Base):
     T01689_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01689Gratsimbunid.T01689_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01689Gratsimbunid.T01689_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01689Gratsimbunid.T01689_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01689Gratsimbunid.T01689_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01689_I_ENTOPERADOR, T01689_I_MATOPERADOR])
-    t01430Gratunidfunc = relationship('T01430Gratunidfunc', 
-        primaryjoin='and_(T01689Gratsimbunid.T01002_I_CDENT==T01430Gratunidfunc.T01002_I_CDENT, T01689Gratsimbunid.T01058_I_CDEVENTO==T01430Gratunidfunc.T01058_I_CDEVENTO, T01689Gratsimbunid.T01004_I_CDUNIDFUN==T01430Gratunidfunc.T01004_I_CDUNIDFUN, T01689Gratsimbunid.T01004_I_VERSAO==T01430Gratunidfunc.T01004_I_VERSAO, T01689Gratsimbunid.T01430_D_DATAINICIO==T01430Gratunidfunc.T01430_D_DATAINICIO)',
+    t01430Gratunidfunc = relationship('T01430Gratunidfunc',
+        primaryjoin='and_(T01689Gratsimbunid.T01002_I_CDENT == T01430Gratunidfunc.T01002_I_CDENT, T01689Gratsimbunid.T01058_I_CDEVENTO == T01430Gratunidfunc.T01058_I_CDEVENTO, T01689Gratsimbunid.T01004_I_CDUNIDFUN == T01430Gratunidfunc.T01004_I_CDUNIDFUN, T01689Gratsimbunid.T01004_I_VERSAO == T01430Gratunidfunc.T01004_I_VERSAO, T01689Gratsimbunid.T01430_D_DATAINICIO == T01430Gratunidfunc.T01430_D_DATAINICIO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01004_I_CDUNIDFUN, T01004_I_VERSAO, T01430_D_DATAINICIO])
-    t01441Gratsimbolos = relationship('T01441Gratsimbolos', 
-        primaryjoin='and_(T01689Gratsimbunid.T01002_I_CDENT==T01441Gratsimbolos.T01002_I_CDENT, T01689Gratsimbunid.T01058_I_CDEVENTO==T01441Gratsimbolos.T01058_I_CDEVENTO, T01689Gratsimbunid.T01076_I_CDSIMBOLO==T01441Gratsimbolos.T01076_I_CDSIMBOLO)',
+    t01441Gratsimbolos = relationship('T01441Gratsimbolos',
+        primaryjoin='and_(T01689Gratsimbunid.T01002_I_CDENT == T01441Gratsimbolos.T01002_I_CDENT, T01689Gratsimbunid.T01058_I_CDEVENTO == T01441Gratsimbolos.T01058_I_CDEVENTO, T01689Gratsimbunid.T01076_I_CDSIMBOLO == T01441Gratsimbolos.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO, T01076_I_CDSIMBOLO])
 
 class T01690Acessoobjeto(Base):
@@ -14760,8 +14845,8 @@ class T01690Acessoobjeto(Base):
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01690_I_TPACESSO])
     t01680Acesso = relationship('T01680Acesso', foreign_keys=[T01680_I_CDACESSO])
     t01685Objeto = relationship('T01685Objeto', foreign_keys=[T01685_I_CDOBJETO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01690Acessoobjeto.T01690_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01690Acessoobjeto.T01690_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01690Acessoobjeto.T01690_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01690Acessoobjeto.T01690_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01690_I_ENTOPERADOR, T01690_I_MATOPERADOR])
 
 class T01691Procmapeamento(Base):
@@ -14790,8 +14875,8 @@ class T01692Quadromapeamento(Base):
     T01027_I_CDQUADRO = Column(Numeric(4, 0), ForeignKey('RH.T01027_QUADRO.T01027_I_CDQUADRO'), primary_key=True)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01692Quadromapeamento.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01692Quadromapeamento.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01692Quadromapeamento.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01692Quadromapeamento.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
     t01691Procmapeamento = relationship('T01691Procmapeamento', foreign_keys=[T01691_I_MAPEAMENTO])
 
@@ -14807,11 +14892,11 @@ class T01693Itemapeamento(Base):
     T01693_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01693Itemapeamento.T01693_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01693Itemapeamento.T01693_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01693Itemapeamento.T01693_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01693Itemapeamento.T01693_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01693_I_ENTOPERADOR, T01693_I_MATOPERADOR])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01693Itemapeamento.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01693Itemapeamento.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01693Itemapeamento.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01693Itemapeamento.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01691Procmapeamento = relationship('T01691Procmapeamento', foreign_keys=[T01691_I_MAPEAMENTO])
 
@@ -14833,8 +14918,8 @@ class T01695Itemgrumapeamento(Base):
     T01694_I_CODGRUPO = Column(Integer, ForeignKey('RH.T01694_GRUPOMAPEAMENTO.T01694_I_CODGRUPO'), primary_key=True)
 
     # Relationships
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01695Itemgrumapeamento.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01695Itemgrumapeamento.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01695Itemgrumapeamento.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01695Itemgrumapeamento.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01691Procmapeamento = relationship('T01691Procmapeamento', foreign_keys=[T01691_I_MAPEAMENTO])
     t01694Grupomapeamento = relationship('T01694Grupomapeamento', foreign_keys=[T01694_I_CODGRUPO])
@@ -14899,38 +14984,38 @@ class T01696Candmapeamento(Base):
 
     # Relationships
     t01000Pesfisica = relationship('T01000Pesfisica', foreign_keys=[T01000_I_CDPESFIS])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByICdentadmauto = relationship('T01001Servidor', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENTADMAUTO==T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULADMAUT0==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdentadmauto = relationship('T01001Servidor',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENTADMAUTO == T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULADMAUT0 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENTADMAUTO, T01001_I_MATRICULADMAUT0])
-    t01001ServidorByICdentadmnegoc = relationship('T01001Servidor', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENTADMNEGOC==T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULADMNEGOC==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdentadmnegoc = relationship('T01001Servidor',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENTADMNEGOC == T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULADMNEGOC == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENTADMNEGOC, T01001_I_MATRICULADMNEGOC])
-    t01001ServidorByICdentadmchefe = relationship('T01001Servidor', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENTADMCHEFE==T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULADMCHEFE==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdentadmchefe = relationship('T01001Servidor',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENTADMCHEFE == T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULADMCHEFE == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENTADMCHEFE, T01001_I_MATRICULADMCHEFE])
-    t01001ServidorByICdentresponsavel = relationship('T01001Servidor', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENTRESPONSAVEL==T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULARESPONSAVEL==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdentresponsavel = relationship('T01001Servidor',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENTRESPONSAVEL == T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULARESPONSAVEL == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENTRESPONSAVEL, T01001_I_MATRICULARESPONSAVEL])
-    t01001ServidorByICdent2 = relationship('T01001Servidor', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT2==T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULA2==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent2 = relationship('T01001Servidor',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT2 == T01001Servidor.T01002_I_CDENT, T01696Candmapeamento.T01001_I_MATRICULA2 == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT2, T01001_I_MATRICULA2])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01696Candmapeamento.T01696_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01696Candmapeamento.T01696_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01696Candmapeamento.T01696_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01696Candmapeamento.T01696_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01696_I_CDLOCTRAB, T01696_I_VLOCTRAB])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01696Candmapeamento.T01696_I_CDLOCTRABANT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01696Candmapeamento.T01696_I_VLOCTRABANT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01696Candmapeamento.T01696_I_CDLOCTRABANT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01696Candmapeamento.T01696_I_VLOCTRABANT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01696_I_CDLOCTRABANT, T01696_I_VLOCTRABANT])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01696Candmapeamento.T01696_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01696Candmapeamento.T01696_I_VORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent2 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01696Candmapeamento.T01696_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01696Candmapeamento.T01696_I_VORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01696_I_CDORGLOT, T01696_I_VORGLOT])
-    t01036ItemhierarqByICdent = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01696Candmapeamento.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036ItemhierarqByICdent = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01696Candmapeamento.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01036ItemhierarqByICdent = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01696Candmapeamento.T01036_I_CDHIERARQ2==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036ItemhierarqByICdent1 = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01696Candmapeamento.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01696Candmapeamento.T01036_I_CDHIERARQ2 == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ2])
     t01691Procmapeamento = relationship('T01691Procmapeamento', foreign_keys=[T01691_I_MAPEAMENTO])
     t01694GrupomapeamentoByICodgrupo = relationship('T01694Grupomapeamento', foreign_keys=[T01694_I_CODGRUPO])
@@ -14985,8 +15070,8 @@ class T01700Canditemformquadromap(Base):
     T01700_I_AVALRECURSO = Column(SmallInteger)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01700Canditemformquadromap.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01700Canditemformquadromap.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01700Canditemformquadromap.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01700Canditemformquadromap.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01691Procmapeamento = relationship('T01691Procmapeamento', foreign_keys=[T01691_I_MAPEAMENTO])
     t01699Itemformquadrmapeam = relationship('T01699Itemformquadrmapeam', foreign_keys=[T01699_I_CDITEMFORMQUADROMAP])
@@ -15027,8 +15112,8 @@ class T01702Paramapeamento(Base):
     T01702_S_NUMATO = Column(String(20))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01702Paramapeamento.T01702_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01702Paramapeamento.T01702_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01702Paramapeamento.T01702_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01702Paramapeamento.T01702_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01702_I_ENTOPERADOR, T01702_I_MATOPERADOR])
     t01071ItemlistaByISubtpconcint = relationship('T01071Itemlista', foreign_keys=[T01702_I_SUBTPCONCINT])
     t01071ItemlistaByITipoato = relationship('T01071Itemlista', foreign_keys=[T01702_I_TIPOATO])
@@ -15046,8 +15131,8 @@ class T01703Itemparamapeamento(Base):
     T01703_I_MATOPERADOR = Column(Numeric(7, 0), ForeignKey('RH.T01001_SERVIDOR.T01001_I_MATRICULA'))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01703Itemparamapeamento.T01703_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01703Itemparamapeamento.T01703_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01703Itemparamapeamento.T01703_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01703Itemparamapeamento.T01703_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01703_I_ENTOPERADOR, T01703_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01702_I_CDTIPO])
     t01702Paramapeamento = relationship('T01702Paramapeamento', foreign_keys=[T01702_I_CODPARAMAPEAMENTO])
@@ -15095,8 +15180,8 @@ class T01704Candidatohistvida(Base):
     # Relationships
     t01002EntidadeByICdentconvoc = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTCONVOC])
     t01002EntidadeByICdentnomea = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENTNOMEA])
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01704Candidatohistvida.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01704Candidatohistvida.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01704Candidatohistvida.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01704Candidatohistvida.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
     t01071ItemlistaByICddeficie = relationship('T01071Itemlista', foreign_keys=[T01704_I_CDDEFICIE])
     t01071ItemlistaByICdmotieli = relationship('T01071Itemlista', foreign_keys=[T01704_I_CDMOTIELI])
@@ -15186,14 +15271,14 @@ class T01708Unidfuncassocia(Base):
     T01708_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01708Unidfuncassocia.T01708_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01708Unidfuncassocia.T01708_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01708Unidfuncassocia.T01708_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01708Unidfuncassocia.T01708_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01708_I_ENTOPERADOR, T01708_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01708Unidfuncassocia.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01708Unidfuncassocia.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01708Unidfuncassocia.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01708Unidfuncassocia.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01708Unidfuncassocia.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01708Unidfuncassocia.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01004UnidfuncByICdentassocia = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01708Unidfuncassocia.T01002_I_CDENTASSOCIA==T01004Unidfunc.T01002_I_CDENT, T01708Unidfuncassocia.T01004_I_CDUNIDFUNASSOCIA==T01004Unidfunc.T01004_I_CDUNIDFUN, T01708Unidfuncassocia.T01004_I_VERSAOASSOCIA==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdentassocia = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01708Unidfuncassocia.T01002_I_CDENTASSOCIA == T01004Unidfunc.T01002_I_CDENT, T01708Unidfuncassocia.T01004_I_CDUNIDFUNASSOCIA == T01004Unidfunc.T01004_I_CDUNIDFUN, T01708Unidfuncassocia.T01004_I_VERSAOASSOCIA == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENTASSOCIA, T01004_I_CDUNIDFUNASSOCIA, T01004_I_VERSAOASSOCIA])
 
 class T01709Matriculaflgrupo(Base):
@@ -15217,15 +15302,15 @@ class T01709Matriculaflgrupo(Base):
     T01709_I_VARIACAO = Column(Numeric(5, 4))
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01709Matriculaflgrupo.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01709Matriculaflgrupo.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01709Matriculaflgrupo.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01709Matriculaflgrupo.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01709Matriculaflgrupo.T01709_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01709Matriculaflgrupo.T01709_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01709Matriculaflgrupo.T01709_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01709Matriculaflgrupo.T01709_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01709_I_ENTOPERADOR, T01709_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01709_I_TPATO])
-    t01710Grupomatricula = relationship('T01710Grupomatricula', 
-        primaryjoin='and_(T01709Matriculaflgrupo.T01002_I_CDENT==T01710Grupomatricula.T01002_I_CDENT, T01709Matriculaflgrupo.T01710_I_CDGRUPOMATRICULA==T01710Grupomatricula.T01710_I_CDGRUPOMATRICULA)',
+    t01710Grupomatricula = relationship('T01710Grupomatricula',
+        primaryjoin='and_(T01709Matriculaflgrupo.T01002_I_CDENT == T01710Grupomatricula.T01002_I_CDENT, T01709Matriculaflgrupo.T01710_I_CDGRUPOMATRICULA == T01710Grupomatricula.T01710_I_CDGRUPOMATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01710_I_CDGRUPOMATRICULA])
 
 class T01710Grupomatricula(Base):
@@ -15257,11 +15342,11 @@ class T01711Grupoavaliacao(Base):
     T01711_S_PROCEDURE = Column(String(30))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01711Grupoavaliacao.T01711_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01711Grupoavaliacao.T01711_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01711Grupoavaliacao.T01711_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01711Grupoavaliacao.T01711_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01711_I_ENTOPERADOR, T01711_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01711Grupoavaliacao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01711Grupoavaliacao.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01711Grupoavaliacao.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01711Grupoavaliacao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01711Grupoavaliacao.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01711Grupoavaliacao.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01712Grupounidade(Base):
@@ -15278,8 +15363,8 @@ class T01712Grupounidade(Base):
     T01712_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01712Grupounidade.T01712_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01712Grupounidade.T01712_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01712Grupounidade.T01712_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01712Grupounidade.T01712_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01712_I_ENTOPERADOR, T01712_I_MATOPERADOR])
     t01711Grupoavaliacao = relationship('T01711Grupoavaliacao', foreign_keys=[T01711_I_CDGRUPOAV])
 
@@ -15293,8 +15378,8 @@ class T01713Unidadegrupo(Base):
     T01004_I_VERSAO = Column(Numeric(2, 0), ForeignKey('RH.T01004_UNIDFUNC.T01004_I_VERSAO'), primary_key=True)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01713Unidadegrupo.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01713Unidadegrupo.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01713Unidadegrupo.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01713Unidadegrupo.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01713Unidadegrupo.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01713Unidadegrupo.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01712Grupounidade = relationship('T01712Grupounidade', foreign_keys=[T01712_I_CDGRUPOUNIDADE])
 
@@ -15345,23 +15430,23 @@ class T01715Servatuacao(Base):
     T01193_I_CDCONTRIT = Column(Integer, ForeignKey('RH.T01193_RIT.T01193_I_CDCONTRIT'))
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01715Servatuacao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01715Servatuacao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01715Servatuacao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01715Servatuacao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01715Servatuacao.T01715_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01715Servatuacao.T01715_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01715Servatuacao.T01715_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01715Servatuacao.T01715_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01715_I_ENTOPERADOR, T01715_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01715Servatuacao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01715Servatuacao.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01715Servatuacao.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01715Servatuacao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01715Servatuacao.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01715Servatuacao.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01715Servatuacao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01715Servatuacao.T01004_I_CDUNIDVAGA==T01004Unidfunc.T01004_I_CDUNIDFUN, T01715Servatuacao.T01004_I_VERSAOVAGA==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01715Servatuacao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01715Servatuacao.T01004_I_CDUNIDVAGA == T01004Unidfunc.T01004_I_CDUNIDFUN, T01715Servatuacao.T01004_I_VERSAOVAGA == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDVAGA, T01004_I_VERSAOVAGA])
     t01071ItemlistaByITpturnovaga = relationship('T01071Itemlista', foreign_keys=[T01715_I_TPTURNOVAGA])
     t01071ItemlistaByICddiaperman = relationship('T01071Itemlista', foreign_keys=[T01715_I_CDDIAPERMAN])
     t01071ItemlistaByITpturno = relationship('T01071Itemlista', foreign_keys=[T01715_I_TPTURNO])
-    t01186Grupfundef = relationship('T01186Grupfundef', 
-        primaryjoin='and_(T01715Servatuacao.T01002_I_CDENT==T01186Grupfundef.T01002_I_CDENT, T01715Servatuacao.T01186_I_CDGRUPO==T01186Grupfundef.T01186_I_CDGRUPO)',
+    t01186Grupfundef = relationship('T01186Grupfundef',
+        primaryjoin='and_(T01715Servatuacao.T01002_I_CDENT == T01186Grupfundef.T01002_I_CDENT, T01715Servatuacao.T01186_I_CDGRUPO == T01186Grupfundef.T01186_I_CDGRUPO)',
         foreign_keys=[T01002_I_CDENT, T01186_I_CDGRUPO])
     t01193Rit = relationship('T01193Rit', foreign_keys=[T01193_I_CDCONTRIT])
     t01717Atuaatividade = relationship('T01717Atuaatividade', foreign_keys=[T01717_I_CDATUAATIVIDADE])
@@ -15385,14 +15470,14 @@ class T01716Atuaatuacao(Base):
     T01716_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01716Atuaatuacao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01716Atuaatuacao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01716Atuaatuacao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01716Atuaatuacao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01716Atuaatuacao.T01716_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01716Atuaatuacao.T01716_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01716Atuaatuacao.T01716_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01716Atuaatuacao.T01716_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01716_I_ENTOPERADOR, T01716_I_MATOPERADOR])
-    t01187Tpatuacao = relationship('T01187Tpatuacao', 
-        primaryjoin='and_(T01716Atuaatuacao.T01002_I_CDENT==T01187Tpatuacao.T01002_I_CDENT, T01716Atuaatuacao.T01187_I_CDTPATUA==T01187Tpatuacao.T01187_I_CDTPATUA)',
+    t01187Tpatuacao = relationship('T01187Tpatuacao',
+        primaryjoin='and_(T01716Atuaatuacao.T01002_I_CDENT == T01187Tpatuacao.T01002_I_CDENT, T01716Atuaatuacao.T01187_I_CDTPATUA == T01187Tpatuacao.T01187_I_CDTPATUA)',
         foreign_keys=[T01002_I_CDENT, T01187_I_CDTPATUA])
 
 class T01717Atuaatividade(Base):
@@ -15411,14 +15496,14 @@ class T01717Atuaatividade(Base):
     T01717_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01717Atuaatividade.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01717Atuaatividade.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01717Atuaatividade.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01717Atuaatividade.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01717Atuaatividade.T01717_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01717Atuaatividade.T01717_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01717Atuaatividade.T01717_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01717Atuaatividade.T01717_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01717_I_ENTOPERADOR, T01717_I_MATOPERADOR])
-    t01188Tpatividade = relationship('T01188Tpatividade', 
-        primaryjoin='and_(T01717Atuaatividade.T01002_I_CDENT==T01188Tpatividade.T01002_I_CDENT, T01717Atuaatividade.T01188_I_CDTPATIVI==T01188Tpatividade.T01188_I_CDTPATIVI)',
+    t01188Tpatividade = relationship('T01188Tpatividade',
+        primaryjoin='and_(T01717Atuaatividade.T01002_I_CDENT == T01188Tpatividade.T01002_I_CDENT, T01717Atuaatividade.T01188_I_CDTPATIVI == T01188Tpatividade.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01188_I_CDTPATIVI])
 
 class T01718Atualocal(Base):
@@ -15438,14 +15523,14 @@ class T01718Atualocal(Base):
     T01718_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01718Atualocal.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01718Atualocal.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01718Atualocal.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01718Atualocal.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01718Atualocal.T01718_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01718Atualocal.T01718_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01718Atualocal.T01718_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01718Atualocal.T01718_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01718_I_ENTOPERADOR, T01718_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01718Atualocal.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01718Atualocal.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01718Atualocal.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01718Atualocal.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01718Atualocal.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01718Atualocal.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01719Prorrogarecep(Base):
@@ -15465,8 +15550,8 @@ class T01719Prorrogarecep(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01719_I_TPATO])
-    t01235Recepcao = relationship('T01235Recepcao', 
-        primaryjoin='and_(T01719Prorrogarecep.T01002_I_CDENT==T01235Recepcao.T01002_I_CDENT, T01719Prorrogarecep.T01000_I_CDPESFIS==T01235Recepcao.T01000_I_CDPESFIS, T01719Prorrogarecep.T01235_D_DTRECEP==T01235Recepcao.T01235_D_DTRECEP, T01719Prorrogarecep.T01235_I_SEQUENCIA==T01235Recepcao.T01235_I_SEQUENCIA)',
+    t01235Recepcao = relationship('T01235Recepcao',
+        primaryjoin='and_(T01719Prorrogarecep.T01002_I_CDENT == T01235Recepcao.T01002_I_CDENT, T01719Prorrogarecep.T01000_I_CDPESFIS == T01235Recepcao.T01000_I_CDPESFIS, T01719Prorrogarecep.T01235_D_DTRECEP == T01235Recepcao.T01235_D_DTRECEP, T01719Prorrogarecep.T01235_I_SEQUENCIA == T01235Recepcao.T01235_I_SEQUENCIA)',
         foreign_keys=[T01002_I_CDENT, T01000_I_CDPESFIS, T01235_D_DTRECEP, T01235_I_SEQUENCIA])
 
 class T01720Examecargo(Base):
@@ -15481,11 +15566,11 @@ class T01720Examecargo(Base):
     T01720_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01720Examecargo.T01720_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01720Examecargo.T01720_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01720Examecargo.T01720_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01720Examecargo.T01720_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01720_I_ENTOPERADOR, T01720_I_MATOPERADOR])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01720Examecargo.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01720Examecargo.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01720Examecargo.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01720Examecargo.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01720_I_CDEXAME])
 
@@ -15503,12 +15588,12 @@ class T01721Declaracaobem(Base):
     T01721_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01721Declaracaobem.T01721_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01721Declaracaobem.T01721_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01721Declaracaobem.T01721_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01721Declaracaobem.T01721_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01721_I_ENTOPERADOR, T01721_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01042Candidato = relationship('T01042Candidato', 
-        primaryjoin='and_(T01721Declaracaobem.T01041_I_CONCURSO==T01042Candidato.T01041_I_CONCURSO, T01721Declaracaobem.T01042_I_NRCONCURS==T01042Candidato.T01042_I_NRCONCURS)',
+    t01042Candidato = relationship('T01042Candidato',
+        primaryjoin='and_(T01721Declaracaobem.T01041_I_CONCURSO == T01042Candidato.T01041_I_CONCURSO, T01721Declaracaobem.T01042_I_NRCONCURS == T01042Candidato.T01042_I_NRCONCURS)',
         foreign_keys=[T01041_I_CONCURSO, T01042_I_NRCONCURS])
 
 class T01722Itemdeclaracaobem(Base):
@@ -15537,8 +15622,8 @@ class T01723Afastferias(Base):
     T01723_I_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01723Afastferias.T01723_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01723Afastferias.T01723_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01723Afastferias.T01723_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01723Afastferias.T01723_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01723_I_ENTOPERADOR, T01723_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01723_I_TIPOFERIAS])
 
@@ -15569,8 +15654,8 @@ class T01726Cargogt(Base):
     T01726_S_NUMATOEXT = Column(String(20))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01726Cargogt.T01726_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01726Cargogt.T01726_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01726Cargogt.T01726_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01726Cargogt.T01726_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01726_I_ENTOPERADOR, T01726_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071ItemlistaByITpatocria = relationship('T01071Itemlista', foreign_keys=[T01726_I_TPATOCRIA])
@@ -15591,8 +15676,8 @@ class T01727Grupogt(Base):
     T01727_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01727Grupogt.T01727_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01727Grupogt.T01727_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01727Grupogt.T01727_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01727Grupogt.T01727_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01727_I_ENTOPERADOR, T01727_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
 
@@ -15608,8 +15693,8 @@ class T01728Grupocargogt(Base):
     T01728_I_NUMVAGA = Column(SmallInteger)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01728Grupocargogt.T01728_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01728Grupocargogt.T01728_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01728Grupocargogt.T01728_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01728Grupocargogt.T01728_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01728_I_ENTOPERADOR, T01728_I_MATOPERADOR])
     t01726Cargogt = relationship('T01726Cargogt', foreign_keys=[T01726_I_CDCARGOGT])
     t01727Grupogt = relationship('T01727Grupogt', foreign_keys=[T01727_I_CDGRUPOGT])
@@ -15638,16 +15723,16 @@ class T01729Desiggt(Base):
     T01729_S_NUMATODISP = Column(String(20))
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01729Desiggt.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01729Desiggt.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01729Desiggt.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01729Desiggt.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01729Desiggt.T01729_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01729Desiggt.T01729_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01729Desiggt.T01729_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01729Desiggt.T01729_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01729_I_ENTOPERADOR, T01729_I_MATOPERADOR])
     t01071ItemlistaByITpatodesig = relationship('T01071Itemlista', foreign_keys=[T01729_I_TPATODESIG])
     t01071ItemlistaByITpatodisp = relationship('T01071Itemlista', foreign_keys=[T01729_I_TPATODISP])
-    t01728Grupocargogt = relationship('T01728Grupocargogt', 
-        primaryjoin='and_(T01729Desiggt.T01726_I_CDCARGOGT==T01728Grupocargogt.T01726_I_CDCARGOGT, T01729Desiggt.T01727_I_CDGRUPOGT==T01728Grupocargogt.T01727_I_CDGRUPOGT)',
+    t01728Grupocargogt = relationship('T01728Grupocargogt',
+        primaryjoin='and_(T01729Desiggt.T01726_I_CDCARGOGT == T01728Grupocargogt.T01726_I_CDCARGOGT, T01729Desiggt.T01727_I_CDGRUPOGT == T01728Grupocargogt.T01727_I_CDGRUPOGT)',
         foreign_keys=[T01726_I_CDCARGOGT, T01727_I_CDGRUPOGT])
 
 class T01730Eventofreq(Base):
@@ -15686,11 +15771,11 @@ class T01731Eventofreqquadro(Base):
     T01731_I_LIMITEMAXDIA = Column(SmallInteger)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01731Eventofreqquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01731Eventofreqquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01731Eventofreqquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01731Eventofreqquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01730Eventofreq = relationship('T01730Eventofreq', 
-        primaryjoin='and_(T01731Eventofreqquadro.T01002_I_CDENT==T01730Eventofreq.T01002_I_CDENT, T01731Eventofreqquadro.T01730_I_CDEVENTO==T01730Eventofreq.T01730_I_CDEVENTO)',
+    t01730Eventofreq = relationship('T01730Eventofreq',
+        primaryjoin='and_(T01731Eventofreqquadro.T01002_I_CDENT == T01730Eventofreq.T01002_I_CDENT, T01731Eventofreqquadro.T01730_I_CDEVENTO == T01730Eventofreq.T01730_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01730_I_CDEVENTO])
 
 class T01732Frequencialocal(Base):
@@ -15717,14 +15802,14 @@ class T01732Frequencialocal(Base):
     T01732_I_HRNOTURNAESPEC = Column(Numeric(5, 2))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01732Frequencialocal.T01732_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01732Frequencialocal.T01732_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01732Frequencialocal.T01732_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01732Frequencialocal.T01732_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01732_I_ENTOPERADOR, T01732_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01732Frequencialocal.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01732Frequencialocal.T01004_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01732Frequencialocal.T01004_I_VORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01732Frequencialocal.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01732Frequencialocal.T01004_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01732Frequencialocal.T01004_I_VORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDORGLOT, T01004_I_VORGLOT])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01732Frequencialocal.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01732Frequencialocal.T01004_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01732Frequencialocal.T01004_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01732Frequencialocal.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01732Frequencialocal.T01004_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01732Frequencialocal.T01004_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDLOCTRAB, T01004_I_VLOCTRAB])
     t01039Frequencia = relationship('T01039Frequencia', foreign_keys=[T01039_I_CDFREQ])
 
@@ -15746,14 +15831,14 @@ class T01733Faltalocal(Base):
     T01733_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01733Faltalocal.T01733_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01733Faltalocal.T01733_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01733Faltalocal.T01733_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01733Faltalocal.T01733_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01733_I_ENTOPERADOR, T01733_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01733Faltalocal.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01733Faltalocal.T01004_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, T01733Faltalocal.T01004_I_VORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01733Faltalocal.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01733Faltalocal.T01004_I_CDORGLOT == T01004Unidfunc.T01004_I_CDUNIDFUN, T01733Faltalocal.T01004_I_VORGLOT == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDORGLOT, T01004_I_VORGLOT])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01733Faltalocal.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01733Faltalocal.T01004_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, T01733Faltalocal.T01004_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01733Faltalocal.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01733Faltalocal.T01004_I_CDLOCTRAB == T01004Unidfunc.T01004_I_CDUNIDFUN, T01733Faltalocal.T01004_I_VLOCTRAB == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDLOCTRAB, T01004_I_VLOCTRAB])
     t01039Frequencia = relationship('T01039Frequencia', foreign_keys=[T01039_I_CDFREQ])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01733_I_CDTURNO])
@@ -15769,11 +15854,11 @@ class T01738Eventofreqhier(Base):
     T01738_I_LIMITEMAXDIA = Column(SmallInteger)
 
     # Relationships
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01738Eventofreqhier.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01738Eventofreqhier.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01738Eventofreqhier.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01738Eventofreqhier.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
-    t01730Eventofreq = relationship('T01730Eventofreq', 
-        primaryjoin='and_(T01738Eventofreqhier.T01002_I_CDENT==T01730Eventofreq.T01002_I_CDENT, T01738Eventofreqhier.T01730_I_CDEVENTO==T01730Eventofreq.T01730_I_CDEVENTO)',
+    t01730Eventofreq = relationship('T01730Eventofreq',
+        primaryjoin='and_(T01738Eventofreqhier.T01002_I_CDENT == T01730Eventofreq.T01002_I_CDENT, T01738Eventofreqhier.T01730_I_CDEVENTO == T01730Eventofreq.T01730_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01730_I_CDEVENTO])
 
 class T01739Eventofreqcc(Base):
@@ -15787,11 +15872,11 @@ class T01739Eventofreqcc(Base):
     T01739_I_LIMITEMAXDIA = Column(SmallInteger)
 
     # Relationships
-    t01075Cargoconfia = relationship('T01075Cargoconfia', 
-        primaryjoin='and_(T01739Eventofreqcc.T01002_I_CDENT==T01075Cargoconfia.T01002_I_CDENT, T01739Eventofreqcc.T01075_I_CDCGCONF==T01075Cargoconfia.T01075_I_CDCGCONF)',
+    t01075Cargoconfia = relationship('T01075Cargoconfia',
+        primaryjoin='and_(T01739Eventofreqcc.T01002_I_CDENT == T01075Cargoconfia.T01002_I_CDENT, T01739Eventofreqcc.T01075_I_CDCGCONF == T01075Cargoconfia.T01075_I_CDCGCONF)',
         foreign_keys=[T01002_I_CDENT, T01075_I_CDCGCONF])
-    t01730Eventofreq = relationship('T01730Eventofreq', 
-        primaryjoin='and_(T01739Eventofreqcc.T01002_I_CDENT==T01730Eventofreq.T01002_I_CDENT, T01739Eventofreqcc.T01730_I_CDEVENTO==T01730Eventofreq.T01730_I_CDEVENTO)',
+    t01730Eventofreq = relationship('T01730Eventofreq',
+        primaryjoin='and_(T01739Eventofreqcc.T01002_I_CDENT == T01730Eventofreq.T01002_I_CDENT, T01739Eventofreqcc.T01730_I_CDEVENTO == T01730Eventofreq.T01730_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01730_I_CDEVENTO])
 
 class T01740Eventofreqsimb(Base):
@@ -15805,11 +15890,11 @@ class T01740Eventofreqsimb(Base):
     T01740_I_LIMITEMAXMES = Column(SmallInteger)
 
     # Relationships
-    t01076Simbcgconf = relationship('T01076Simbcgconf', 
-        primaryjoin='and_(T01740Eventofreqsimb.T01002_I_CDENT==T01076Simbcgconf.T01002_I_CDENT, T01740Eventofreqsimb.T01076_I_CDSIMBOLO==T01076Simbcgconf.T01076_I_CDSIMBOLO)',
+    t01076Simbcgconf = relationship('T01076Simbcgconf',
+        primaryjoin='and_(T01740Eventofreqsimb.T01002_I_CDENT == T01076Simbcgconf.T01002_I_CDENT, T01740Eventofreqsimb.T01076_I_CDSIMBOLO == T01076Simbcgconf.T01076_I_CDSIMBOLO)',
         foreign_keys=[T01002_I_CDENT, T01076_I_CDSIMBOLO])
-    t01730Eventofreq = relationship('T01730Eventofreq', 
-        primaryjoin='and_(T01740Eventofreqsimb.T01002_I_CDENT==T01730Eventofreq.T01002_I_CDENT, T01740Eventofreqsimb.T01730_I_CDEVENTO==T01730Eventofreq.T01730_I_CDEVENTO)',
+    t01730Eventofreq = relationship('T01730Eventofreq',
+        primaryjoin='and_(T01740Eventofreqsimb.T01002_I_CDENT == T01730Eventofreq.T01002_I_CDENT, T01740Eventofreqsimb.T01730_I_CDEVENTO == T01730Eventofreq.T01730_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01730_I_CDEVENTO])
 
 class T01745Parametrosvt(Base):
@@ -15844,14 +15929,14 @@ class T01747Apuracaofreq(Base):
     T01747_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01747Apuracaofreq.T01747_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01747Apuracaofreq.T01747_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01747Apuracaofreq.T01747_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01747Apuracaofreq.T01747_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01747_I_ENTOPERADOR, T01747_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01747Apuracaofreq.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01747Apuracaofreq.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01747Apuracaofreq.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01747Apuracaofreq.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01747Apuracaofreq.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01747Apuracaofreq.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01747Apuracaofreq.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01747Apuracaofreq.T01004_I_CDUNIDFUNAPUR==T01004Unidfunc.T01004_I_CDUNIDFUN, T01747Apuracaofreq.T01004_I_VERSAOAPUR==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01747Apuracaofreq.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01747Apuracaofreq.T01004_I_CDUNIDFUNAPUR == T01004Unidfunc.T01004_I_CDUNIDFUN, T01747Apuracaofreq.T01004_I_VERSAOAPUR == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUNAPUR, T01004_I_VERSAOAPUR])
     t01038Refefreq = relationship('T01038Refefreq', foreign_keys=[T01038_I_CDREFEFRE])
 
@@ -15870,11 +15955,11 @@ class T01749Solicitautor(Base):
     T01001_I_MATAUTORIZADOR = Column(Numeric(7, 0), ForeignKey('RH.T01001_SERVIDOR.T01001_I_MATRICULA'))
 
     # Relationships
-    t01001ServidorByIEntautorizador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01749Solicitautor.T01002_I_ENTAUTORIZADOR==T01001Servidor.T01002_I_CDENT, T01749Solicitautor.T01001_I_MATAUTORIZADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntautorizador = relationship('T01001Servidor',
+        primaryjoin='and_(T01749Solicitautor.T01002_I_ENTAUTORIZADOR == T01001Servidor.T01002_I_CDENT, T01749Solicitautor.T01001_I_MATAUTORIZADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTAUTORIZADOR, T01001_I_MATAUTORIZADOR])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01749Solicitautor.T01749_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01749Solicitautor.T01749_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01749Solicitautor.T01749_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01749Solicitautor.T01749_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01749_I_ENTOPERADOR, T01749_I_MATOPERADOR])
     t01071ItemlistaByICdsituacao = relationship('T01071Itemlista', foreign_keys=[T01749_I_CDSITUACAO])
     t01071ItemlistaByITiposolicit = relationship('T01071Itemlista', foreign_keys=[T01749_I_TIPOSOLICIT])
@@ -15893,8 +15978,8 @@ class T01750Solicitautorhe(Base):
     T01752_I_CDMOTIVO = Column(Integer, ForeignKey('RH.T01752_MOTIVOHE.T01752_I_CDMOTIVO'))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01750Solicitautorhe.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01750Solicitautorhe.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01750Solicitautorhe.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01750Solicitautorhe.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01038Refefreq = relationship('T01038Refefreq', foreign_keys=[T01038_I_CDREFEFRE])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01750_I_CDSITUACAO])
@@ -15915,11 +16000,11 @@ class T01751Solautortipohe(Base):
 
     # Relationships
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01751_I_CDSITUACAO])
-    t01730Eventofreq = relationship('T01730Eventofreq', 
-        primaryjoin='and_(T01751Solautortipohe.T01002_I_CDENT==T01730Eventofreq.T01002_I_CDENT, T01751Solautortipohe.T01730_I_CDEVENTO==T01730Eventofreq.T01730_I_CDEVENTO)',
+    t01730Eventofreq = relationship('T01730Eventofreq',
+        primaryjoin='and_(T01751Solautortipohe.T01002_I_CDENT == T01730Eventofreq.T01002_I_CDENT, T01751Solautortipohe.T01730_I_CDEVENTO == T01730Eventofreq.T01730_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01730_I_CDEVENTO])
-    t01750Solicitautorhe = relationship('T01750Solicitautorhe', 
-        primaryjoin='and_(T01751Solautortipohe.T01749_I_CDSOLICITAUTOR==T01750Solicitautorhe.T01749_I_CDSOLICITAUTOR, T01751Solautortipohe.T01038_I_CDREFEFRE==T01750Solicitautorhe.T01038_I_CDREFEFRE, T01751Solautortipohe.T01002_I_CDENT==T01750Solicitautorhe.T01002_I_CDENT, T01751Solautortipohe.T01001_I_MATRICULA==T01750Solicitautorhe.T01001_I_MATRICULA)',
+    t01750Solicitautorhe = relationship('T01750Solicitautorhe',
+        primaryjoin='and_(T01751Solautortipohe.T01749_I_CDSOLICITAUTOR == T01750Solicitautorhe.T01749_I_CDSOLICITAUTOR, T01751Solautortipohe.T01038_I_CDREFEFRE == T01750Solicitautorhe.T01038_I_CDREFEFRE, T01751Solautortipohe.T01002_I_CDENT == T01750Solicitautorhe.T01002_I_CDENT, T01751Solautortipohe.T01001_I_MATRICULA == T01750Solicitautorhe.T01001_I_MATRICULA)',
         foreign_keys=[T01749_I_CDSOLICITAUTOR, T01038_I_CDREFEFRE, T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01752Motivohe(Base):
@@ -15964,8 +16049,8 @@ class T01761Condlicpatern(Base):
     T01761_I_NUMDIALICPAT = Column(Integer, nullable=False)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01761Condlicpatern.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01761Condlicpatern.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01761Condlicpatern.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01761Condlicpatern.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
 
 class T01762Formadesempesc(Base):
@@ -16005,11 +16090,11 @@ class T01764Itemassinaturaapo(Base):
     T01764_I_ENTOPERADOR = Column(Numeric(4, 0), ForeignKey('RH.T01001_SERVIDOR.T01002_I_CDENT'))
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01764Itemassinaturaapo.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01764Itemassinaturaapo.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01764Itemassinaturaapo.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01764Itemassinaturaapo.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01764Itemassinaturaapo.T01764_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01764Itemassinaturaapo.T01764_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01764Itemassinaturaapo.T01764_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01764Itemassinaturaapo.T01764_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01764_I_ENTOPERADOR, T01764_I_MATOPERADOR])
     t01615Itemassinatura = relationship('T01615Itemassinatura', foreign_keys=[T01615_I_CDITEMASSINATURA])
 
@@ -16036,8 +16121,8 @@ class T01766Servequipetrab(Base):
     T01766_D_DTFIM = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01766Servequipetrab.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01766Servequipetrab.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01766Servequipetrab.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01766Servequipetrab.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01763Equipetrab = relationship('T01763Equipetrab', foreign_keys=[T01763_I_CDEQUIPE])
 
@@ -16069,25 +16154,25 @@ class T01773Logatuacao(Base):
     T01773_D_DTOPERACAO = Column(DateTime, primary_key=True)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01773Logatuacao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01773Logatuacao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01773Logatuacao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01773Logatuacao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01773Logatuacao.T01773_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01773Logatuacao.T01773_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01773Logatuacao.T01773_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01773Logatuacao.T01773_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01773_I_ENTOPERADOR, T01773_I_MATOPERADOR])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01773Logatuacao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01773Logatuacao.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01773Logatuacao.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01773Logatuacao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01773Logatuacao.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01773Logatuacao.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01773Logatuacao.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01773Logatuacao.T01004_I_CDUNIDVAGA==T01004Unidfunc.T01004_I_CDUNIDFUN, T01773Logatuacao.T01004_I_VERSAOVAGA==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdent1 = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01773Logatuacao.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01773Logatuacao.T01004_I_CDUNIDVAGA == T01004Unidfunc.T01004_I_CDUNIDFUN, T01773Logatuacao.T01004_I_VERSAOVAGA == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDVAGA, T01004_I_VERSAOVAGA])
     t01071ItemlistaByICddiaperman = relationship('T01071Itemlista', foreign_keys=[T01773_I_CDDIAPERMAN])
     t01071ItemlistaByITpoperacao = relationship('T01071Itemlista', foreign_keys=[T01773_I_TPOPERACAO])
     t01071ItemlistaByITpturno = relationship('T01071Itemlista', foreign_keys=[T01773_I_TPTURNO])
     t01071ItemlistaByITpturnovaga = relationship('T01071Itemlista', foreign_keys=[T01773_I_TPTURNOVAGA])
     t01071ItemlistaByITpvaga = relationship('T01071Itemlista', foreign_keys=[T01773_I_TPVAGA])
-    t01186Grupfundef = relationship('T01186Grupfundef', 
-        primaryjoin='and_(T01773Logatuacao.T01002_I_CDENT==T01186Grupfundef.T01002_I_CDENT, T01773Logatuacao.T01186_I_CDGRUPO==T01186Grupfundef.T01186_I_CDGRUPO)',
+    t01186Grupfundef = relationship('T01186Grupfundef',
+        primaryjoin='and_(T01773Logatuacao.T01002_I_CDENT == T01186Grupfundef.T01002_I_CDENT, T01773Logatuacao.T01186_I_CDGRUPO == T01186Grupfundef.T01186_I_CDGRUPO)',
         foreign_keys=[T01002_I_CDENT, T01186_I_CDGRUPO])
     t01717Atuaatividade = relationship('T01717Atuaatividade', foreign_keys=[T01717_I_CDATUAATIVIDADE])
     t01774Motencerratua = relationship('T01774Motencerratua', foreign_keys=[T01774_I_CDMOTIVO])
@@ -16120,11 +16205,11 @@ class T01777Tipovaga(Base):
     T01777_I_INDTIP = Column(Boolean)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01777Tipovaga.T01777_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01777Tipovaga.T01777_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01777Tipovaga.T01777_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01777Tipovaga.T01777_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01777_I_ENTOPERADOR, T01777_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01777Tipovaga.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01777Tipovaga.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01777Tipovaga.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01777Tipovaga.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01777Tipovaga.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01777Tipovaga.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01777_I_TPCALCULOVAGA])
 
@@ -16148,8 +16233,8 @@ class T01779Tipovagaquadro(Base):
     T01777_I_CDTIPOVAGA = Column(Integer, ForeignKey('RH.T01777_TIPOVAGA.T01777_I_CDTIPOVAGA'), primary_key=True)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01779Tipovagaquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01779Tipovagaquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01779Tipovagaquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01779Tipovagaquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
     t01777Tipovaga = relationship('T01777Tipovaga', foreign_keys=[T01777_I_CDTIPOVAGA])
 
@@ -16193,12 +16278,12 @@ class T01828Geracaoproghorizontal(Base):
     T01828_D_DTALTERACAO = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01828Geracaoproghorizontal.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01828Geracaoproghorizontal.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01828Geracaoproghorizontal.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01828Geracaoproghorizontal.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01047Tipomutacao = relationship('T01047Tipomutacao', foreign_keys=[T01047_I_CDTPMUT])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01828Geracaoproghorizontal.T01828_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01828Geracaoproghorizontal.T01828_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01828Geracaoproghorizontal.T01828_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01828Geracaoproghorizontal.T01828_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01828_I_ENTOPERADOR, T01828_I_MATOPERADOR])
 
 class T01837Horaextraincorp(Base):
@@ -16216,11 +16301,11 @@ class T01837Horaextraincorp(Base):
     T01837_I_ADICNOTURNO = Column(SmallInteger)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01837Horaextraincorp.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01837Horaextraincorp.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01837Horaextraincorp.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01837Horaextraincorp.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01837Horaextraincorp.T01837_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01837Horaextraincorp.T01837_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01837Horaextraincorp.T01837_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01837Horaextraincorp.T01837_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01837_I_ENTOPERADOR, T01837_I_MATOPERADOR])
 
 class T01838Regradivquadro(Base):
@@ -16233,8 +16318,8 @@ class T01838Regradivquadro(Base):
     T01838_I_CONSIDERAR = Column(Boolean, nullable=False)
 
     # Relationships
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01838Regradivquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01838Regradivquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01838Regradivquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01838Regradivquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
 
@@ -16248,8 +16333,8 @@ class T01839Regradivtpafastam(Base):
     T01839_I_CONSIDERAR = Column(Boolean, nullable=False)
 
     # Relationships
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01839Regradivtpafastam.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01839Regradivtpafastam.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01839Regradivtpafastam.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01839Regradivtpafastam.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
 
@@ -16263,8 +16348,8 @@ class T01840Regradivgrpevento(Base):
     T01840_I_CONSIDERAR = Column(Boolean, nullable=False)
 
     # Relationships
-    t01333Grupoeventos = relationship('T01333Grupoeventos', 
-        primaryjoin='and_(T01840Regradivgrpevento.T01333_I_CDGREVENTO==T01333Grupoeventos.T01333_I_CDGREVENTO, T01840Regradivgrpevento.T01002_I_CDENT==T01333Grupoeventos.T01002_I_CDENT)',
+    t01333Grupoeventos = relationship('T01333Grupoeventos',
+        primaryjoin='and_(T01840Regradivgrpevento.T01333_I_CDGREVENTO == T01333Grupoeventos.T01333_I_CDGREVENTO, T01840Regradivgrpevento.T01002_I_CDENT == T01333Grupoeventos.T01002_I_CDENT)',
         foreign_keys=[T01333_I_CDGREVENTO, T01002_I_CDENT])
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
 
@@ -16279,8 +16364,8 @@ class T01841Regradivgrpmatr(Base):
 
     # Relationships
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
-    t01710Grupomatricula = relationship('T01710Grupomatricula', 
-        primaryjoin='and_(T01841Regradivgrpmatr.T01002_I_CDENT==T01710Grupomatricula.T01002_I_CDENT, T01841Regradivgrpmatr.T01710_I_CDGRUPOMATRICULA==T01710Grupomatricula.T01710_I_CDGRUPOMATRICULA)',
+    t01710Grupomatricula = relationship('T01710Grupomatricula',
+        primaryjoin='and_(T01841Regradivgrpmatr.T01002_I_CDENT == T01710Grupomatricula.T01002_I_CDENT, T01841Regradivgrpmatr.T01710_I_CDGRUPOMATRICULA == T01710Grupomatricula.T01710_I_CDGRUPOMATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01710_I_CDGRUPOMATRICULA])
 
 class T01846Regradivunidfunc(Base):
@@ -16294,8 +16379,8 @@ class T01846Regradivunidfunc(Base):
     T01846_I_CONSIDERAR = Column(Boolean, nullable=False)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01846Regradivunidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01846Regradivunidfunc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01846Regradivunidfunc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01846Regradivunidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01846Regradivunidfunc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01846Regradivunidfunc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
 
@@ -16309,8 +16394,8 @@ class T01847Servdivisaofolha(Base):
     T01407_I_CDDIVISAO = Column(Integer, ForeignKey('RH.T01407_DIVISAOFOLHAMODELO.T01407_I_CDDIVISAO'), primary_key=True)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01847Servdivisaofolha.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01847Servdivisaofolha.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01847Servdivisaofolha.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01847Servdivisaofolha.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01407Divisaofolhamodelo = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01407_I_CDDIVISAO])
@@ -16331,11 +16416,11 @@ class T01856Histverbaorc(Base):
     T01856_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01856Histverbaorc.T01856_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01856Histverbaorc.T01856_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01856Histverbaorc.T01856_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01856Histverbaorc.T01856_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01856_I_ENTOPERADOR, T01856_I_MATOPERADOR])
-    t01059Tpverbaorc = relationship('T01059Tpverbaorc', 
-        primaryjoin='and_(T01856Histverbaorc.T01059_I_CDVBORCAM==T01059Tpverbaorc.T01059_I_CDVBORCAM, T01856Histverbaorc.T01059_I_ANOVBORCAM==T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
+    t01059Tpverbaorc = relationship('T01059Tpverbaorc',
+        primaryjoin='and_(T01856Histverbaorc.T01059_I_CDVBORCAM == T01059Tpverbaorc.T01059_I_CDVBORCAM, T01856Histverbaorc.T01059_I_ANOVBORCAM == T01059Tpverbaorc.T01059_I_ANOVBORCAM)',
         foreign_keys=[T01059_I_CDVBORCAM, T01059_I_ANOVBORCAM])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01856_I_TPVBORCAM])
 
@@ -16352,11 +16437,11 @@ class T01867Eventoisencaomatdiv(Base):
     T01867_I_MATOPERADOR = Column(Numeric(7, 0), nullable=False)
 
     # Relationships
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01867Eventoisencaomatdiv.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01867Eventoisencaomatdiv.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01867Eventoisencaomatdiv.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01867Eventoisencaomatdiv.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
-    t01183Matrdiversa = relationship('T01183Matrdiversa', 
-        primaryjoin='and_(T01867Eventoisencaomatdiv.T01002_I_CDENT==T01183Matrdiversa.T01002_I_CDENT, T01867Eventoisencaomatdiv.T01183_I_MATRICULA==T01183Matrdiversa.T01183_I_MATRICULA)',
+    t01183Matrdiversa = relationship('T01183Matrdiversa',
+        primaryjoin='and_(T01867Eventoisencaomatdiv.T01002_I_CDENT == T01183Matrdiversa.T01002_I_CDENT, T01867Eventoisencaomatdiv.T01183_I_MATRICULA == T01183Matrdiversa.T01183_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01183_I_MATRICULA])
 
 class T01868Eventoreferencia(Base):
@@ -16374,14 +16459,14 @@ class T01868Eventoreferencia(Base):
     T01868_D_DTOPERACAO = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01868Eventoreferencia.T01868_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01868Eventoreferencia.T01868_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01868Eventoreferencia.T01868_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01868Eventoreferencia.T01868_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01868_I_ENTOPERADOR, T01868_I_MATOPERADOR])
-    t01015Referencia = relationship('T01015Referencia', 
-        primaryjoin='and_(T01868Eventoreferencia.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01868Eventoreferencia.T01015_I_CDREF==T01015Referencia.T01015_I_CDREF)',
+    t01015Referencia = relationship('T01015Referencia',
+        primaryjoin='and_(T01868Eventoreferencia.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01868Eventoreferencia.T01015_I_CDREF == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01015_I_CDREF])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01868Eventoreferencia.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01868Eventoreferencia.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01868Eventoreferencia.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01868Eventoreferencia.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01869Estagiario(Base):
@@ -16398,8 +16483,8 @@ class T01869Estagiario(Base):
     T01869_I_TIPOCONTRATO = Column(Integer)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01869Estagiario.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01869Estagiario.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01869Estagiario.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01869Estagiario.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01010Curso = relationship('T01010Curso', foreign_keys=[T01010_I_CDCURSO])
     t01023Instensino = relationship('T01023Instensino', foreign_keys=[T01023_I_CDINSTENS])
@@ -16436,8 +16521,8 @@ class T01872Anotacoesgerais(Base):
     T01872_D_DTALTUSUARIO = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01872Anotacoesgerais.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01872Anotacoesgerais.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01872Anotacoesgerais.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01872Anotacoesgerais.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01871Tipoanotacaogeral = relationship('T01871Tipoanotacaogeral', foreign_keys=[T01871_I_CDTIPOANOTACAO])
 
@@ -16461,11 +16546,11 @@ class T01873Necessidadesestag(Base):
     T01873_I_STATUS = Column(Boolean, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01873Necessidadesestag.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01873Necessidadesestag.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01873Necessidadesestag.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01873Necessidadesestag.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01190Dimloctrab = relationship('T01190Dimloctrab', 
-        primaryjoin='and_(T01873Necessidadesestag.T01002_I_CDENT==T01190Dimloctrab.T01002_I_CDENT, T01873Necessidadesestag.T01190_I_CDORGLOTNEC==T01190Dimloctrab.T01190_I_UNIDLOT, T01873Necessidadesestag.T01190_I_VERORGLOTNEC==T01190Dimloctrab.T01190_I_VERSAOLOT, T01873Necessidadesestag.T01190_I_CDUNIDESCNEC==T01190Dimloctrab.T01190_I_UNIDLOCAL, T01873Necessidadesestag.T01190_I_VERUNIDESCNEC==T01190Dimloctrab.T01190_I_VERLOCAL, T01873Necessidadesestag.T01190_I_CDTURNO==T01190Dimloctrab.T01190_I_TURNO, T01873Necessidadesestag.T01188_I_CDTPATIVI==T01190Dimloctrab.T01188_I_CDTPATIVI)',
+    t01190Dimloctrab = relationship('T01190Dimloctrab',
+        primaryjoin='and_(T01873Necessidadesestag.T01002_I_CDENT == T01190Dimloctrab.T01002_I_CDENT, T01873Necessidadesestag.T01190_I_CDORGLOTNEC == T01190Dimloctrab.T01190_I_UNIDLOT, T01873Necessidadesestag.T01190_I_VERORGLOTNEC == T01190Dimloctrab.T01190_I_VERSAOLOT, T01873Necessidadesestag.T01190_I_CDUNIDESCNEC == T01190Dimloctrab.T01190_I_UNIDLOCAL, T01873Necessidadesestag.T01190_I_VERUNIDESCNEC == T01190Dimloctrab.T01190_I_VERLOCAL, T01873Necessidadesestag.T01190_I_CDTURNO == T01190Dimloctrab.T01190_I_TURNO, T01873Necessidadesestag.T01188_I_CDTPATIVI == T01190Dimloctrab.T01188_I_CDTPATIVI)',
         foreign_keys=[T01002_I_CDENT, T01190_I_CDORGLOTNEC, T01190_I_VERORGLOTNEC, T01190_I_CDUNIDESCNEC, T01190_I_VERUNIDESCNEC, T01190_I_CDTURNO, T01188_I_CDTPATIVI])
     t01777Tipovaga = relationship('T01777Tipovaga', foreign_keys=[T01777_I_CDTIPOVAGA])
     t01870Motsubstestag = relationship('T01870Motsubstestag', foreign_keys=[T01870_I_CDMOTIVO])
@@ -16484,11 +16569,11 @@ class T01874Movestagiario(Base):
     T01874_D_DTMOVESTAG = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01874Movestagiario.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01874Movestagiario.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01874Movestagiario.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01874Movestagiario.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01874Movestagiario.T01874_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01874Movestagiario.T01874_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01874Movestagiario.T01874_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01874Movestagiario.T01874_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01874_I_ENTOPERADOR, T01874_I_MATOPERADOR])
     t01873Necessidadesestag = relationship('T01873Necessidadesestag', foreign_keys=[T01873_I_CDNECESSIDADE])
 
@@ -16518,8 +16603,8 @@ class T01876Relconsist(Base):
     T01876_S_ORGAO = Column(String(10), nullable=False)
 
     # Relationships
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01876Relconsist.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01876Relconsist.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01876Relconsist.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01876Relconsist.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01876Relconsist.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01876Relconsist.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01877Diasdescvt(Base):
@@ -16533,8 +16618,8 @@ class T01877Diasdescvt(Base):
     T01877_D_REFUTILIZACAO = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01877Diasdescvt.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01877Diasdescvt.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01877Diasdescvt.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01877Diasdescvt.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01878Estagiariorenova(Base):
@@ -16554,12 +16639,12 @@ class T01878Estagiariorenova(Base):
     T01878_D_DTATO = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01878Estagiariorenova.T01878_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01878Estagiariorenova.T01878_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01878Estagiariorenova.T01878_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01878Estagiariorenova.T01878_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01878_I_ENTOPERADOR, T01878_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01878_I_TPATO])
-    t01869Estagiario = relationship('T01869Estagiario', 
-        primaryjoin='and_(T01878Estagiariorenova.T01002_I_CDENT==T01869Estagiario.T01002_I_CDENT, T01878Estagiariorenova.T01001_I_MATRICULA==T01869Estagiario.T01001_I_MATRICULA)',
+    t01869Estagiario = relationship('T01869Estagiario',
+        primaryjoin='and_(T01878Estagiariorenova.T01002_I_CDENT == T01869Estagiario.T01002_I_CDENT, T01878Estagiariorenova.T01001_I_MATRICULA == T01869Estagiario.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01879Plantoesnormaisfms(Base):
@@ -16583,11 +16668,11 @@ class T01879Plantoesnormaisfms(Base):
     T02009_I_CODARQ = Column(Numeric(5, 0))
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01879Plantoesnormaisfms.T01879_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01879Plantoesnormaisfms.T01879_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01879Plantoesnormaisfms.T01879_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01879Plantoesnormaisfms.T01879_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01879_I_ENTOPERADOR, T01879_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01879Plantoesnormaisfms.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01879Plantoesnormaisfms.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01879Plantoesnormaisfms.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01879Plantoesnormaisfms.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01038Refefreq = relationship('T01038Refefreq', foreign_keys=[T01038_I_CDREFEFRE])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
@@ -16607,11 +16692,11 @@ class T01880Plantoesextrasfms(Base):
     T01158_I_CDFOLHA = Column(Integer, ForeignKey('RH.T01158_ABERTFOLHA.T01158_I_CDFOLHA'))
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01880Plantoesextrasfms.T01880_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01880Plantoesextrasfms.T01880_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01880Plantoesextrasfms.T01880_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01880Plantoesextrasfms.T01880_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01880_I_ENTOPERADOR, T01880_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01880Plantoesextrasfms.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01880Plantoesextrasfms.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01880Plantoesextrasfms.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01880Plantoesextrasfms.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01038Refefreq = relationship('T01038Refefreq', foreign_keys=[T01038_I_CDREFEFRE])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
@@ -16666,8 +16751,8 @@ class T01882Raisregistrozero(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01882Raisregistrozero.T01882_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01882Raisregistrozero.T01882_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01882Raisregistrozero.T01882_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01882Raisregistrozero.T01882_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01882_I_ENTOPERADOR, T01882_I_MATOPERADOR])
 
 class T01883Raisregistroum(Base):
@@ -16730,12 +16815,14 @@ class T01883Raisregistroum(Base):
     T01883_D_DTALTERACAO = Column(DateTime, nullable=False)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01883Raisregistroum.T01883_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01883Raisregistroum.T01883_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01883Raisregistroum.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01883Raisregistroum.T01883_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01883Raisregistroum.T01883_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01883_I_ENTOPERADOR, T01883_I_MATOPERADOR])
-    t01882Raisregistrozero = relationship('T01882Raisregistrozero', 
-        primaryjoin='and_(T01883Raisregistroum.T01002_I_CDENT==T01882Raisregistrozero.T01002_I_CDENT, T01883Raisregistroum.T01882_I_ANOBASE==T01882Raisregistrozero.T01882_I_ANOBASE, T01883Raisregistroum.T01882_I_DECLRETIFICADORA==T01882Raisregistrozero.T01882_I_DECLRETIFICADORA, T01883Raisregistroum.T01882_I_NRORETIFICACAO==T01882Raisregistrozero.T01882_I_NRORETIFICACAO)',
+    t01882Raisregistrozero = relationship('T01882Raisregistrozero',
+        primaryjoin='and_(T01883Raisregistroum.T01002_I_CDENT == T01882Raisregistrozero.T01002_I_CDENT, T01883Raisregistroum.T01882_I_ANOBASE == T01882Raisregistrozero.T01882_I_ANOBASE, T01883Raisregistroum.T01882_I_DECLRETIFICADORA == T01882Raisregistrozero.T01882_I_DECLRETIFICADORA, T01883Raisregistroum.T01882_I_NRORETIFICACAO == T01882Raisregistrozero.T01882_I_NRORETIFICACAO)',
         foreign_keys=[T01002_I_CDENT, T01882_I_ANOBASE, T01882_I_DECLRETIFICADORA, T01882_I_NRORETIFICACAO])
 
 class T01884Raisregistrodois(Base):
@@ -16841,12 +16928,14 @@ class T01884Raisregistrodois(Base):
     T01884_I_CDCATEGORIA = Column(Numeric(3, 0))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01882Raisregistrozero = relationship('T01882Raisregistrozero', 
-        primaryjoin='and_(T01884Raisregistrodois.T01002_I_CDENT==T01882Raisregistrozero.T01002_I_CDENT, T01884Raisregistrodois.T01882_I_ANOBASE==T01882Raisregistrozero.T01882_I_ANOBASE, T01884Raisregistrodois.T01882_I_DECLRETIFICADORA==T01882Raisregistrozero.T01882_I_DECLRETIFICADORA, T01884Raisregistrodois.T01882_I_NRORETIFICACAO==T01882Raisregistrozero.T01882_I_NRORETIFICACAO)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01884Raisregistrodois.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01882Raisregistrozero = relationship('T01882Raisregistrozero',
+        primaryjoin='and_(T01884Raisregistrodois.T01002_I_CDENT == T01882Raisregistrozero.T01002_I_CDENT, T01884Raisregistrodois.T01882_I_ANOBASE == T01882Raisregistrozero.T01882_I_ANOBASE, T01884Raisregistrodois.T01882_I_DECLRETIFICADORA == T01882Raisregistrozero.T01882_I_DECLRETIFICADORA, T01884Raisregistrodois.T01882_I_NRORETIFICACAO == T01882Raisregistrozero.T01882_I_NRORETIFICACAO)',
         foreign_keys=[T01002_I_CDENT, T01882_I_ANOBASE, T01882_I_DECLRETIFICADORA, T01882_I_NRORETIFICACAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01884Raisregistrodois.T01884_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01884Raisregistrodois.T01884_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01884Raisregistrodois.T01884_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01884Raisregistrodois.T01884_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01884_I_ENTOPERADOR, T01884_I_MATOPERADOR])
 
 class T01885Raisregistronove(Base):
@@ -16866,12 +16955,14 @@ class T01885Raisregistronove(Base):
     T01885_D_DTALTERACAO = Column(DateTime)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01885Raisregistronove.T01885_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01885Raisregistronove.T01885_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01885Raisregistronove.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01885Raisregistronove.T01885_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01885Raisregistronove.T01885_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01885_I_ENTOPERADOR, T01885_I_MATOPERADOR])
-    t01882Raisregistrozero = relationship('T01882Raisregistrozero', 
-        primaryjoin='and_(T01885Raisregistronove.T01002_I_CDENT==T01882Raisregistrozero.T01002_I_CDENT, T01885Raisregistronove.T01882_I_ANOBASE==T01882Raisregistrozero.T01882_I_ANOBASE, T01885Raisregistronove.T01882_I_DECLRETIFICADORA==T01882Raisregistrozero.T01882_I_DECLRETIFICADORA, T01885Raisregistronove.T01882_I_NRORETIFICACAO==T01882Raisregistrozero.T01882_I_NRORETIFICACAO)',
+    t01882Raisregistrozero = relationship('T01882Raisregistrozero',
+        primaryjoin='and_(T01885Raisregistronove.T01002_I_CDENT == T01882Raisregistrozero.T01002_I_CDENT, T01885Raisregistronove.T01882_I_ANOBASE == T01882Raisregistrozero.T01882_I_ANOBASE, T01885Raisregistronove.T01882_I_DECLRETIFICADORA == T01882Raisregistrozero.T01882_I_DECLRETIFICADORA, T01885Raisregistronove.T01882_I_NRORETIFICACAO == T01882Raisregistrozero.T01882_I_NRORETIFICACAO)',
         foreign_keys=[T01002_I_CDENT, T01882_I_ANOBASE, T01882_I_DECLRETIFICADORA, T01882_I_NRORETIFICACAO])
 
 class T01886Dirfcabecalho(Base):
@@ -17025,8 +17116,8 @@ class T01891Histcargogt(Base):
     T01891_S_NUMATOEXT = Column(String(20))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01891Histcargogt.T01891_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01891Histcargogt.T01891_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01891Histcargogt.T01891_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01891Histcargogt.T01891_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01891_I_ENTOPERADOR, T01891_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01726Cargogt = relationship('T01726Cargogt', foreign_keys=[T01726_I_CDCARGOGT])
@@ -17052,14 +17143,14 @@ class T01892Eventovalor(Base):
     T01892_I_INDUF = Column(Numeric(1, 0))
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01892Eventovalor.T01892_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01892Eventovalor.T01892_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01892Eventovalor.T01892_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01892Eventovalor.T01892_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01892_I_ENTOPERADOR, T01892_I_MATOPERADOR])
-    t01001ServidorByIEntoperalt = relationship('T01001Servidor', 
-        primaryjoin='and_(T01892Eventovalor.T01892_I_ENTOPERALT==T01001Servidor.T01002_I_CDENT, T01892Eventovalor.T01892_I_MATOPERALT==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperalt = relationship('T01001Servidor',
+        primaryjoin='and_(T01892Eventovalor.T01892_I_ENTOPERALT == T01001Servidor.T01002_I_CDENT, T01892Eventovalor.T01892_I_MATOPERALT == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01892_I_ENTOPERALT, T01892_I_MATOPERALT])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01892Eventovalor.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01892Eventovalor.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01892Eventovalor.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01892Eventovalor.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01892_I_TPREGISTRO])
 
@@ -17080,11 +17171,11 @@ class T01893Grnotificacao(Base):
     T01893_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByIEntoperalt = relationship('T01001Servidor', 
-        primaryjoin='and_(T01893Grnotificacao.T01893_I_ENTOPERALT==T01001Servidor.T01002_I_CDENT, T01893Grnotificacao.T01893_I_MATOPERALT==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperalt = relationship('T01001Servidor',
+        primaryjoin='and_(T01893Grnotificacao.T01893_I_ENTOPERALT == T01001Servidor.T01002_I_CDENT, T01893Grnotificacao.T01893_I_MATOPERALT == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01893_I_ENTOPERALT, T01893_I_MATOPERALT])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01893Grnotificacao.T01893_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01893Grnotificacao.T01893_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01893Grnotificacao.T01893_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01893Grnotificacao.T01893_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01893_I_ENTOPERADOR, T01893_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01893_I_STATUSREG])
@@ -17109,17 +17200,17 @@ class T01894Integrantegr(Base):
     T01894_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01894Integrantegr.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01894Integrantegr.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01894Integrantegr.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01894Integrantegr.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperalt = relationship('T01001Servidor', 
-        primaryjoin='and_(T01894Integrantegr.T01894_I_ENTOPERALT==T01001Servidor.T01002_I_CDENT, T01894Integrantegr.T01894_I_MATOPERALT==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperalt = relationship('T01001Servidor',
+        primaryjoin='and_(T01894Integrantegr.T01894_I_ENTOPERALT == T01001Servidor.T01002_I_CDENT, T01894Integrantegr.T01894_I_MATOPERALT == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01894_I_ENTOPERALT, T01894_I_MATOPERALT])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01894Integrantegr.T01894_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01894Integrantegr.T01894_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01894Integrantegr.T01894_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01894Integrantegr.T01894_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01894_I_ENTOPERADOR, T01894_I_MATOPERADOR])
-    t01029Telpesfis = relationship('T01029Telpesfis', 
-        primaryjoin='and_(T01894Integrantegr.T01000_I_CDPESFIS==T01029Telpesfis.T01000_I_CDPESFIS, T01894Integrantegr.T01029_I_CDTEL==T01029Telpesfis.T01029_I_CDTEL)',
+    t01029Telpesfis = relationship('T01029Telpesfis',
+        primaryjoin='and_(T01894Integrantegr.T01000_I_CDPESFIS == T01029Telpesfis.T01000_I_CDPESFIS, T01894Integrantegr.T01029_I_CDTEL == T01029Telpesfis.T01029_I_CDTEL)',
         foreign_keys=[T01000_I_CDPESFIS, T01029_I_CDTEL])
     t01071ItemlistaByIStatusreg = relationship('T01071Itemlista', foreign_keys=[T01894_I_STATUSREG])
     t01071ItemlistaByITpnotificacao = relationship('T01071Itemlista', foreign_keys=[T01894_I_TPNOTIFICACAO])
@@ -17164,8 +17255,8 @@ class T01896Notifprocesso(Base):
 
     # Relationships
     t01893Grnotificacao = relationship('T01893Grnotificacao', foreign_keys=[T01893_I_CDGRNOTIFICACAO])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01896Notifprocesso.T01896_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01896Notifprocesso.T01896_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01896Notifprocesso.T01896_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01896Notifprocesso.T01896_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01896_I_ENTOPERADOR, T01896_I_MATOPERADOR])
     t01071ItemlistaByICdprocesso = relationship('T01071Itemlista', foreign_keys=[T01896_I_CDPROCESSO])
     t01071ItemlistaByIStregistro = relationship('T01071Itemlista', foreign_keys=[T01896_I_STREGISTRO])
@@ -17183,11 +17274,11 @@ class T01897Smseventoinf(Base):
     T01897_I_CDENTNOTIFICA = Column(Numeric(4, 0))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01897Smseventoinf.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01897Smseventoinf.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01897Smseventoinf.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01897Smseventoinf.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01897Smseventoinf.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01897Smseventoinf.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01897Smseventoinf.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01897Smseventoinf.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
     t01895Histnotifica = relationship('T01895Histnotifica', foreign_keys=[T01895_I_CDHISTORICO])
@@ -17213,11 +17304,11 @@ class T01898Descprevidenciario(Base):
     T01898_I_INCIDENCIA = Column(Numeric(4, 0), ForeignKey('RH.T01071_ITEMLISTA.T01071_I_CDITEM'), nullable=False)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01898Descprevidenciario.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01898Descprevidenciario.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01898Descprevidenciario.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01898Descprevidenciario.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01898Descprevidenciario.T01898_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01898Descprevidenciario.T01898_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01898Descprevidenciario.T01898_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01898Descprevidenciario.T01898_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01898_I_ENTOPERADOR, T01898_I_MATOPERADOR])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01898_I_INCIDENCIA])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
@@ -17264,35 +17355,35 @@ class T01899Histmutacao(Base):
     T01899_S_NRATO = Column(String(20))
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01899Histmutacao.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01899Histmutacao.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperadorhist = relationship('T01001Servidor', 
-        primaryjoin='and_(T01899Histmutacao.T01899_I_ENTOPERADORHIST==T01001Servidor.T01002_I_CDENT, T01899Histmutacao.T01899_I_MATOPERADORHIST==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperadorhist = relationship('T01001Servidor',
+        primaryjoin='and_(T01899Histmutacao.T01899_I_ENTOPERADORHIST == T01001Servidor.T01002_I_CDENT, T01899Histmutacao.T01899_I_MATOPERADORHIST == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01899_I_ENTOPERADORHIST, T01899_I_MATOPERADORHIST])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01899Histmutacao.T01899_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01899Histmutacao.T01899_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01899Histmutacao.T01899_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01899Histmutacao.T01899_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01899_I_ENTOPERADOR, T01899_I_MATOPERADOR])
-    t01001ServidorByIEntopergravmut = relationship('T01001Servidor', 
-        primaryjoin='and_(T01899Histmutacao.T01899_I_ENTOPERGRAVMUT==T01001Servidor.T01002_I_CDENT, T01899Histmutacao.T01899_I_MATOPERGRAVMUT==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntopergravmut = relationship('T01001Servidor',
+        primaryjoin='and_(T01899Histmutacao.T01899_I_ENTOPERGRAVMUT == T01001Servidor.T01002_I_CDENT, T01899Histmutacao.T01899_I_MATOPERGRAVMUT == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01899_I_ENTOPERGRAVMUT, T01899_I_MATOPERGRAVMUT])
-    t01015Referencia = relationship('T01015Referencia', 
-        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT==T01015Referencia.T01002_I_CDENT, T01899Histmutacao.T01015_I_CDREF==T01015Referencia.T01015_I_CDREF)',
+    t01015Referencia = relationship('T01015Referencia',
+        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT == T01015Referencia.T01002_I_CDENT, T01899Histmutacao.T01015_I_CDREF == T01015Referencia.T01015_I_CDREF)',
         foreign_keys=[T01002_I_CDENT, T01015_I_CDREF])
-    t01016Cargahora = relationship('T01016Cargahora', 
-        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT==T01016Cargahora.T01002_I_CDENT, T01899Histmutacao.T01016_I_CDCGHORA==T01016Cargahora.T01016_I_CDCGHORA)',
+    t01016Cargahora = relationship('T01016Cargahora',
+        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT == T01016Cargahora.T01002_I_CDENT, T01899Histmutacao.T01016_I_CDCGHORA == T01016Cargahora.T01016_I_CDCGHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA])
-    t01025Padrao = relationship('T01025Padrao', 
-        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT==T01025Padrao.T01002_I_CDENT, T01899Histmutacao.T01025_I_CDPADRAO==T01025Padrao.T01025_I_CDPADRAO)',
+    t01025Padrao = relationship('T01025Padrao',
+        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT == T01025Padrao.T01002_I_CDENT, T01899Histmutacao.T01025_I_CDPADRAO == T01025Padrao.T01025_I_CDPADRAO)',
         foreign_keys=[T01002_I_CDENT, T01025_I_CDPADRAO])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01899Histmutacao.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01899Histmutacao.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
-    t01032Tipohorario = relationship('T01032Tipohorario', 
-        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT==T01032Tipohorario.T01002_I_CDENT, T01899Histmutacao.T01016_I_CDCGHORA==T01032Tipohorario.T01016_I_CDCGHORA, T01899Histmutacao.T01032_I_CDTPHORA==T01032Tipohorario.T01032_I_CDTPHORA)',
+    t01032Tipohorario = relationship('T01032Tipohorario',
+        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT == T01032Tipohorario.T01002_I_CDENT, T01899Histmutacao.T01016_I_CDCGHORA == T01032Tipohorario.T01016_I_CDCGHORA, T01899Histmutacao.T01032_I_CDTPHORA == T01032Tipohorario.T01032_I_CDTPHORA)',
         foreign_keys=[T01002_I_CDENT, T01016_I_CDCGHORA, T01032_I_CDTPHORA])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01899Histmutacao.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01899Histmutacao.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01899Histmutacao.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01047Tipomutacao = relationship('T01047Tipomutacao', foreign_keys=[T01047_I_CDTPMUT])
     t01071ItemlistaByICdturno = relationship('T01071Itemlista', foreign_keys=[T01899_I_CDTURNO])
@@ -17330,8 +17421,8 @@ class T01901Convenios(Base):
     T01901_I_ANOCONVENIO = Column(Numeric(4, 0))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01901Convenios.T01901_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01901Convenios.T01901_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01901Convenios.T01901_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01901Convenios.T01901_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01901_I_ENTOPERADOR, T01901_I_MATOPERADOR])
 
 class T01902Fruicoespa(Base):
@@ -17346,11 +17437,11 @@ class T01902Fruicoespa(Base):
     T01102_I_CDAFASTAM = Column(Numeric(4, 0), ForeignKey('RH.T01102_AFASTAMENTO.T01102_I_CDAFASTAM'))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01902Fruicoespa.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01902Fruicoespa.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01902Fruicoespa.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01902Fruicoespa.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01902Fruicoespa.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01902Fruicoespa.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01902Fruicoespa.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01902Fruicoespa.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01902Fruicoespa.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01902Fruicoespa.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01903Arquivoplante(Base):
@@ -17448,11 +17539,11 @@ class T01907Histmutadm(Base):
     T01907_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01907Histmutadm.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01907Histmutadm.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01907Histmutadm.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01907Histmutadm.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01907Histmutadm.T01907_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01907Histmutadm.T01907_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01907Histmutadm.T01907_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01907Histmutadm.T01907_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01907_I_ENTOPERADOR, T01907_I_MATOPERADOR])
 
 class T01908Reajsalarquadro(Base):
@@ -17464,9 +17555,11 @@ class T01908Reajsalarquadro(Base):
     T01147_I_CDREAJUSTE = Column(Integer, ForeignKey('RH.T01147_REAJSALARIAL.T01147_I_CDREAJUSTE'), primary_key=True)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01027Quadro = relationship('T01027Quadro', 
-        primaryjoin='and_(T01908Reajsalarquadro.T01002_I_CDENT==T01027Quadro.T01002_I_CDENT, T01908Reajsalarquadro.T01027_I_CDQUADRO==T01027Quadro.T01027_I_CDQUADRO)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01908Reajsalarquadro.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01027Quadro = relationship('T01027Quadro',
+        primaryjoin='and_(T01908Reajsalarquadro.T01002_I_CDENT == T01027Quadro.T01002_I_CDENT, T01908Reajsalarquadro.T01027_I_CDQUADRO == T01027Quadro.T01027_I_CDQUADRO)',
         foreign_keys=[T01002_I_CDENT, T01027_I_CDQUADRO])
     t01147Reajsalarial = relationship('T01147Reajsalarial', foreign_keys=[T01147_I_CDREAJUSTE])
 
@@ -17479,9 +17572,11 @@ class T01909Reajsalarhierarq(Base):
     T01147_I_CDREAJUSTE = Column(Integer, ForeignKey('RH.T01147_REAJSALARIAL.T01147_I_CDREAJUSTE'), primary_key=True)
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01909Reajsalarhierarq.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01909Reajsalarhierarq.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01909Reajsalarhierarq.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01909Reajsalarhierarq.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01909Reajsalarhierarq.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
     t01147Reajsalarial = relationship('T01147Reajsalarial', foreign_keys=[T01147_I_CDREAJUSTE])
 
@@ -17501,8 +17596,8 @@ class T01910Padraorefcompativeis(Base):
     T01910_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01910Padraorefcompativeis.T01910_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01910Padraorefcompativeis.T01910_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01910Padraorefcompativeis.T01910_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01910Padraorefcompativeis.T01910_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01910_I_ENTOPERADOR, T01910_I_MATOPERADOR])
     t01002EntidadeByICdentDest = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT_DEST])
     t01002EntidadeByICdentOrig = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT_ORIG])
@@ -17562,18 +17657,18 @@ class T01913Segundoturno(Base):
     T01158_I_CDFOLHAREF = Column(Integer, ForeignKey('RH.T01158_ABERTFOLHA.T01158_I_CDFOLHA'), nullable=False)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01913Segundoturno.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01913Segundoturno.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01913Segundoturno.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01913Segundoturno.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01913Segundoturno.T01913_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01913Segundoturno.T01913_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01913Segundoturno.T01913_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01913Segundoturno.T01913_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01913_I_ENTOPERADOR, T01913_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01913Segundoturno.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01913Segundoturno.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01913Segundoturno.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01913Segundoturno.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01913Segundoturno.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01913Segundoturno.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHAREF])
-    t01918Segturnocarreira = relationship('T01918Segturnocarreira', 
-        primaryjoin='and_(T01913Segundoturno.T01002_I_CDENT==T01918Segturnocarreira.T01002_I_CDENT, T01913Segundoturno.T01036_I_CDHIERARQ==T01918Segturnocarreira.T01036_I_CDHIERARQ)',
+    t01918Segturnocarreira = relationship('T01918Segturnocarreira',
+        primaryjoin='and_(T01913Segundoturno.T01002_I_CDENT == T01918Segturnocarreira.T01002_I_CDENT, T01913Segundoturno.T01036_I_CDHIERARQ == T01918Segturnocarreira.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01914Reflicenca(Base):
@@ -17589,8 +17684,8 @@ class T01914Reflicenca(Base):
     T01914_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01914Reflicenca.T01914_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01914Reflicenca.T01914_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01914Reflicenca.T01914_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01914Reflicenca.T01914_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01914_I_ENTOPERADOR, T01914_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
 
@@ -17613,8 +17708,8 @@ class T01915Reajgrupotrabalho(Base):
     T01158_I_CDFOLHA = Column(Integer, ForeignKey('RH.T01158_ABERTFOLHA.T01158_I_CDFOLHA'))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01915Reajgrupotrabalho.T01002_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01915Reajgrupotrabalho.T01001_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01915Reajgrupotrabalho.T01002_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01915Reajgrupotrabalho.T01001_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTOPERADOR, T01001_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01915_I_STATUS])
@@ -17634,8 +17729,8 @@ class T01916Reajgrupotrabalhohist(Base):
     T01916_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01916Reajgrupotrabalhohist.T01916_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01916Reajgrupotrabalhohist.T01916_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01916Reajgrupotrabalhohist.T01916_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01916Reajgrupotrabalhohist.T01916_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01916_I_ENTOPERADOR, T01916_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01726Cargogt = relationship('T01726Cargogt', foreign_keys=[T01726_I_CDCARGOGT])
@@ -17679,24 +17774,24 @@ class T01917Tiptid(Base):
     T01917_S_NUMATOINTERR = Column(String(20))
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01917Tiptid.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01917Tiptid.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01917Tiptid.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01917Tiptid.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01917Tiptid.T01917_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01917Tiptid.T01917_I_MATROPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01917Tiptid.T01917_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01917Tiptid.T01917_I_MATROPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01917_I_ENTOPERADOR, T01917_I_MATROPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01917Tiptid.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01917Tiptid.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01917Tiptid.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01917Tiptid.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01917Tiptid.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01917Tiptid.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
     t01071ItemlistaByICdturno = relationship('T01071Itemlista', foreign_keys=[T01917_I_CDTURNO])
     t01071ItemlistaByITpato = relationship('T01071Itemlista', foreign_keys=[T01917_I_TPATO])
     t01158AbertfolhaByICdfolhaint = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHAINT])
     t01158AbertfolhaByICdfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
-    t01194Motivorit = relationship('T01194Motivorit', 
-        primaryjoin='and_(T01917Tiptid.T01194_I_CDMOTIVO==T01194Motivorit.T01194_I_CDMOTIVO, T01917Tiptid.T01002_I_CDENT==T01194Motivorit.T01002_I_CDENT)',
+    t01194Motivorit = relationship('T01194Motivorit',
+        primaryjoin='and_(T01917Tiptid.T01194_I_CDMOTIVO == T01194Motivorit.T01194_I_CDMOTIVO, T01917Tiptid.T01002_I_CDENT == T01194Motivorit.T01002_I_CDENT)',
         foreign_keys=[T01194_I_CDMOTIVO, T01002_I_CDENT])
-    t01195Motinterrit = relationship('T01195Motinterrit', 
-        primaryjoin='and_(T01917Tiptid.T01195_I_CDMOTIVO==T01195Motinterrit.T01195_I_CDMOTIVO, T01917Tiptid.T01002_I_CDENT==T01195Motinterrit.T01002_I_CDENT)',
+    t01195Motinterrit = relationship('T01195Motinterrit',
+        primaryjoin='and_(T01917Tiptid.T01195_I_CDMOTIVO == T01195Motinterrit.T01195_I_CDMOTIVO, T01917Tiptid.T01002_I_CDENT == T01195Motinterrit.T01002_I_CDENT)',
         foreign_keys=[T01195_I_CDMOTIVO, T01002_I_CDENT])
     t01324InterfaceByICdinterengint = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENGINT])
     t01324InterfaceByICdintereng = relationship('T01324Interface', foreign_keys=[T01324_I_CDINTERENG])
@@ -17713,12 +17808,14 @@ class T01918Segturnocarreira(Base):
     T01918_I_VALOR = Column(Numeric(19, 4), nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01918Segturnocarreira.T01918_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01918Segturnocarreira.T01918_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01918Segturnocarreira.T01918_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01918Segturnocarreira.T01918_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01918_I_ENTOPERADOR, T01918_I_MATOPERADOR])
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01918Segturnocarreira.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01918Segturnocarreira.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01918Segturnocarreira.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01918Segturnocarreira.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01918Segturnocarreira.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01919Histsegturnocarreira(Base):
@@ -17734,8 +17831,8 @@ class T01919Histsegturnocarreira(Base):
     T01919_I_VALOR = Column(Numeric(19, 4), nullable=False)
 
     # Relationships
-    t01036Itemhierarq = relationship('T01036Itemhierarq', 
-        primaryjoin='and_(T01919Histsegturnocarreira.T01002_I_CDENT==T01036Itemhierarq.T01002_I_CDENT, T01919Histsegturnocarreira.T01036_I_CDHIERARQ==T01036Itemhierarq.T01036_I_CDHIERARQ)',
+    t01036Itemhierarq = relationship('T01036Itemhierarq',
+        primaryjoin='and_(T01919Histsegturnocarreira.T01002_I_CDENT == T01036Itemhierarq.T01002_I_CDENT, T01919Histsegturnocarreira.T01036_I_CDHIERARQ == T01036Itemhierarq.T01036_I_CDHIERARQ)',
         foreign_keys=[T01002_I_CDENT, T01036_I_CDHIERARQ])
 
 class T01920Tpafastadm(Base):
@@ -17751,8 +17848,8 @@ class T01920Tpafastadm(Base):
     T01920_I_INDPERLIB = Column(Numeric(1, 0))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01920Tpafastadm.T01920_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01920Tpafastadm.T01920_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01920Tpafastadm.T01920_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01920Tpafastadm.T01920_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01920_I_ENTOPERADOR, T01920_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
 
@@ -17771,14 +17868,14 @@ class T01921Afastamentoadm(Base):
     T01921_D_ULTALTERACAO = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01921Afastamentoadm.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01921Afastamentoadm.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01921Afastamentoadm.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01921Afastamentoadm.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01921Afastamentoadm.T01921_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01921Afastamentoadm.T01921_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01921Afastamentoadm.T01921_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01921Afastamentoadm.T01921_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01921_I_ENTOPERADOR, T01921_I_MATOPERADOR])
-    t01920Tpafastadm = relationship('T01920Tpafastadm', 
-        primaryjoin='and_(T01921Afastamentoadm.T01002_I_CDENT==T01920Tpafastadm.T01002_I_CDENT, T01921Afastamentoadm.T01920_I_CDTPAFASTADM==T01920Tpafastadm.T01920_I_CDTPAFASTADM)',
+    t01920Tpafastadm = relationship('T01920Tpafastadm',
+        primaryjoin='and_(T01921Afastamentoadm.T01002_I_CDENT == T01920Tpafastadm.T01002_I_CDENT, T01921Afastamentoadm.T01920_I_CDTPAFASTADM == T01920Tpafastadm.T01920_I_CDTPAFASTADM)',
         foreign_keys=[T01002_I_CDENT, T01920_I_CDTPAFASTADM])
 
 class T01922Vincmatriculacessao(Base):
@@ -17792,11 +17889,11 @@ class T01922Vincmatriculacessao(Base):
     T01001_I_MATRICULADEST = Column(Numeric(7, 0), ForeignKey('RH.T01001_SERVIDOR.T01001_I_MATRICULA'), primary_key=True)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01922Vincmatriculacessao.T01002_I_CDENTDEST==T01001Servidor.T01002_I_CDENT, T01922Vincmatriculacessao.T01001_I_MATRICULADEST==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01922Vincmatriculacessao.T01002_I_CDENTDEST == T01001Servidor.T01002_I_CDENT, T01922Vincmatriculacessao.T01001_I_MATRICULADEST == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENTDEST, T01001_I_MATRICULADEST])
-    t01233Cessao = relationship('T01233Cessao', 
-        primaryjoin='and_(T01922Vincmatriculacessao.T01002_I_CDENT==T01233Cessao.T01002_I_CDENT, T01922Vincmatriculacessao.T01001_I_MATRICULA==T01233Cessao.T01001_I_MATRICULA, T01922Vincmatriculacessao.T01102_I_CDAFASTAM==T01233Cessao.T01102_I_CDAFASTAM)',
+    t01233Cessao = relationship('T01233Cessao',
+        primaryjoin='and_(T01922Vincmatriculacessao.T01002_I_CDENT == T01233Cessao.T01002_I_CDENT, T01922Vincmatriculacessao.T01001_I_MATRICULA == T01233Cessao.T01001_I_MATRICULA, T01922Vincmatriculacessao.T01102_I_CDAFASTAM == T01233Cessao.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
 
 class T01923Redistribuicao(Base):
@@ -17831,23 +17928,23 @@ class T01923Redistribuicao(Base):
     T01923_S_NRATO = Column(String(20))
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01923Redistribuicao.T01002_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01923Redistribuicao.T01001_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01923Redistribuicao.T01002_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01923Redistribuicao.T01001_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTOPERADOR, T01001_I_MATOPERADOR])
-    t01001ServidorByIEntoperadoralt = relationship('T01001Servidor', 
-        primaryjoin='and_(T01923Redistribuicao.T01002_I_ENTOPERADORALT==T01001Servidor.T01002_I_CDENT, T01923Redistribuicao.T01001_I_MATOPERADORALT==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperadoralt = relationship('T01001Servidor',
+        primaryjoin='and_(T01923Redistribuicao.T01002_I_ENTOPERADORALT == T01001Servidor.T01002_I_CDENT, T01923Redistribuicao.T01001_I_MATOPERADORALT == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTOPERADORALT, T01001_I_MATOPERADORALT])
-    t01004UnidfuncByICdentloctrabdestino = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01923Redistribuicao.T01002_I_CDENTLOCTRABDESTINO==T01004Unidfunc.T01002_I_CDENT, T01923Redistribuicao.T01004_I_CDLOCTRABDESTINO==T01004Unidfunc.T01004_I_CDUNIDFUN, T01923Redistribuicao.T01004_I_VERSAOLOCTRABDESTINO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdentloctrabdestino = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01923Redistribuicao.T01002_I_CDENTLOCTRABDESTINO == T01004Unidfunc.T01002_I_CDENT, T01923Redistribuicao.T01004_I_CDLOCTRABDESTINO == T01004Unidfunc.T01004_I_CDUNIDFUN, T01923Redistribuicao.T01004_I_VERSAOLOCTRABDESTINO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENTLOCTRABDESTINO, T01004_I_CDLOCTRABDESTINO, T01004_I_VERSAOLOCTRABDESTINO])
-    t01004UnidfuncByICdentloctraborigem = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01923Redistribuicao.T01002_I_CDENTLOCTRABORIGEM==T01004Unidfunc.T01002_I_CDENT, T01923Redistribuicao.T01004_I_CDLOCTRABORIGEM==T01004Unidfunc.T01004_I_CDUNIDFUN, T01923Redistribuicao.T01004_I_VERSAOLOCTRABORIGEM==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdentloctraborigem = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01923Redistribuicao.T01002_I_CDENTLOCTRABORIGEM == T01004Unidfunc.T01002_I_CDENT, T01923Redistribuicao.T01004_I_CDLOCTRABORIGEM == T01004Unidfunc.T01004_I_CDUNIDFUN, T01923Redistribuicao.T01004_I_VERSAOLOCTRABORIGEM == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENTLOCTRABORIGEM, T01004_I_CDLOCTRABORIGEM, T01004_I_VERSAOLOCTRABORIGEM])
-    t01004UnidfuncByICdentlotdestino = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01923Redistribuicao.T01002_I_CDENTLOTDESTINO==T01004Unidfunc.T01002_I_CDENT, T01923Redistribuicao.T01004_I_CDLOTDESTINO==T01004Unidfunc.T01004_I_CDUNIDFUN, T01923Redistribuicao.T01004_I_VERSAOLOTDESTINO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdentlotdestino = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01923Redistribuicao.T01002_I_CDENTLOTDESTINO == T01004Unidfunc.T01002_I_CDENT, T01923Redistribuicao.T01004_I_CDLOTDESTINO == T01004Unidfunc.T01004_I_CDUNIDFUN, T01923Redistribuicao.T01004_I_VERSAOLOTDESTINO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENTLOTDESTINO, T01004_I_CDLOTDESTINO, T01004_I_VERSAOLOTDESTINO])
-    t01004UnidfuncByICdentlotorigem = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01923Redistribuicao.T01002_I_CDENTLOTORIGEM==T01004Unidfunc.T01002_I_CDENT, T01923Redistribuicao.T01004_I_CDLOTORIGEM==T01004Unidfunc.T01004_I_CDUNIDFUN, T01923Redistribuicao.T01004_I_VERSAOLOTORIGEM==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004UnidfuncByICdentlotorigem = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01923Redistribuicao.T01002_I_CDENTLOTORIGEM == T01004Unidfunc.T01002_I_CDENT, T01923Redistribuicao.T01004_I_CDLOTORIGEM == T01004Unidfunc.T01004_I_CDUNIDFUN, T01923Redistribuicao.T01004_I_VERSAOLOTORIGEM == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENTLOTORIGEM, T01004_I_CDLOTORIGEM, T01004_I_VERSAOLOTORIGEM])
 
 class T01924Redistribuicaodetalhe(Base):
@@ -17865,11 +17962,11 @@ class T01924Redistribuicaodetalhe(Base):
     T01924_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01924Redistribuicaodetalhe.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01924Redistribuicaodetalhe.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01924Redistribuicaodetalhe.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01924Redistribuicaodetalhe.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01924Redistribuicaodetalhe.T01002_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01924Redistribuicaodetalhe.T01001_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01924Redistribuicaodetalhe.T01002_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01924Redistribuicaodetalhe.T01001_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_ENTOPERADOR, T01001_I_MATOPERADOR])
     t01923Redistribuicao = relationship('T01923Redistribuicao', foreign_keys=[T01923_I_CDREDISTRIBUICAO])
 
@@ -17887,11 +17984,11 @@ class T01925Recestagpa(Base):
     T01925_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01925Recestagpa.T01925_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01925Recestagpa.T01925_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01925Recestagpa.T01925_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01925Recestagpa.T01925_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01925_I_ENTOPERADOR, T01925_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01925Recestagpa.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01925Recestagpa.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01925Recestagpa.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01925Recestagpa.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01926Recestagfruicao(Base):
@@ -17907,8 +18004,8 @@ class T01926Recestagfruicao(Base):
     T01926_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01102Afastamento = relationship('T01102Afastamento', 
-        primaryjoin='and_(T01926Recestagfruicao.T01002_I_CDENT==T01102Afastamento.T01002_I_CDENT, T01926Recestagfruicao.T01001_I_MATRICULA==T01102Afastamento.T01001_I_MATRICULA, T01926Recestagfruicao.T01102_I_CDAFASTAM==T01102Afastamento.T01102_I_CDAFASTAM)',
+    t01102Afastamento = relationship('T01102Afastamento',
+        primaryjoin='and_(T01926Recestagfruicao.T01002_I_CDENT == T01102Afastamento.T01002_I_CDENT, T01926Recestagfruicao.T01001_I_MATRICULA == T01102Afastamento.T01001_I_MATRICULA, T01926Recestagfruicao.T01102_I_CDAFASTAM == T01102Afastamento.T01102_I_CDAFASTAM)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA, T01102_I_CDAFASTAM])
     t01925Recestagpa = relationship('T01925Recestagpa', foreign_keys=[T01925_I_CDPA])
 
@@ -17933,8 +18030,8 @@ class T01933Layoutarqcol(Base):
     T01933_S_DESCRICAO = Column(String(96))
 
     # Relationships
-    t01932Layoutarquivos = relationship('T01932Layoutarquivos', 
-        primaryjoin='and_(T01933Layoutarqcol.T01932_I_CDLAYOUTARQ==T01932Layoutarquivos.T01932_I_CDLAYOUTARQ, T01933Layoutarqcol.T01932_I_VERSAO==T01932Layoutarquivos.T01932_I_VERSAO)',
+    t01932Layoutarquivos = relationship('T01932Layoutarquivos',
+        primaryjoin='and_(T01933Layoutarqcol.T01932_I_CDLAYOUTARQ == T01932Layoutarquivos.T01932_I_CDLAYOUTARQ, T01933Layoutarqcol.T01932_I_VERSAO == T01932Layoutarquivos.T01932_I_VERSAO)',
         foreign_keys=[T01932_I_CDLAYOUTARQ, T01932_I_VERSAO])
 
 class T01934Itemarquivorecebido(Base):
@@ -18009,11 +18106,11 @@ class T01938Tetogrevento(Base):
     T01938_D_ULTALTERACAO = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01938Tetogrevento.T01938_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01938Tetogrevento.T01938_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01938Tetogrevento.T01938_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01938Tetogrevento.T01938_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01938_I_ENTOPERADOR, T01938_I_MATOPERADOR])
-    t01333Grupoeventos = relationship('T01333Grupoeventos', 
-        primaryjoin='and_(T01938Tetogrevento.T01333_I_CDGREVENTO==T01333Grupoeventos.T01333_I_CDGREVENTO, T01938Tetogrevento.T01002_I_CDENT==T01333Grupoeventos.T01002_I_CDENT)',
+    t01333Grupoeventos = relationship('T01333Grupoeventos',
+        primaryjoin='and_(T01938Tetogrevento.T01333_I_CDGREVENTO == T01333Grupoeventos.T01333_I_CDGREVENTO, T01938Tetogrevento.T01002_I_CDENT == T01333Grupoeventos.T01002_I_CDENT)',
         foreign_keys=[T01333_I_CDGREVENTO, T01002_I_CDENT])
 
 class T01939Afastadmcoinc(Base):
@@ -18028,12 +18125,14 @@ class T01939Afastadmcoinc(Base):
     T01939_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01939Afastadmcoinc.T01939_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01939Afastadmcoinc.T01939_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01939Afastadmcoinc.T01939_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01939Afastadmcoinc.T01939_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01939_I_ENTOPERADOR, T01939_I_MATOPERADOR])
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01920Tpafastadm = relationship('T01920Tpafastadm', 
-        primaryjoin='and_(T01939Afastadmcoinc.T01002_I_CDENT==T01920Tpafastadm.T01002_I_CDENT, T01939Afastadmcoinc.T01920_I_CDTPAFASTADM==T01920Tpafastadm.T01920_I_CDTPAFASTADM)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01939Afastadmcoinc.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01920Tpafastadm = relationship('T01920Tpafastadm',
+        primaryjoin='and_(T01939Afastadmcoinc.T01002_I_CDENT == T01920Tpafastadm.T01002_I_CDENT, T01939Afastadmcoinc.T01920_I_CDTPAFASTADM == T01920Tpafastadm.T01920_I_CDTPAFASTADM)',
         foreign_keys=[T01002_I_CDENT, T01920_I_CDTPAFASTADM])
 
 class T01940Reajevento(Base):
@@ -18057,8 +18156,8 @@ class T01940Reajevento(Base):
     T01940_I_DTCADASTRO = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01940Reajevento.T01940_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01940Reajevento.T01940_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01940Reajevento.T01940_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01940Reajevento.T01940_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01940_I_ENTOPERADOR, T01940_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01940_I_STATUS])
@@ -18076,8 +18175,8 @@ class T01941Reajeventoitem(Base):
     T01941_I_REVERTIDO = Column(Numeric(1, 0))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01941Reajeventoitem.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01941Reajeventoitem.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01941Reajeventoitem.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01941Reajeventoitem.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01355Eventoinfserv = relationship('T01355Eventoinfserv', foreign_keys=[T01355_I_CDEVENTOSERV])
@@ -18097,8 +18196,8 @@ class T01942Divisoesagrup(Base):
     T01942_I_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01942Divisoesagrup.T01942_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01942Divisoesagrup.T01942_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01942Divisoesagrup.T01942_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01942Divisoesagrup.T01942_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01942_I_ENTOPERADOR, T01942_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01407DivisaofolhamodeloByICddivprimaria = relationship('T01407Divisaofolhamodelo', foreign_keys=[T01942_I_CDDIVPRIMARIA])
@@ -18125,8 +18224,8 @@ class T01943Reajeventopens(Base):
     T01943_I_DTCADASTRO = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01943Reajeventopens.T01943_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01943Reajeventopens.T01943_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01943Reajeventopens.T01943_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01943Reajeventopens.T01943_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01943_I_ENTOPERADOR, T01943_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01943_I_STATUS])
@@ -18144,9 +18243,11 @@ class T01944Reajeventopensitem(Base):
     T01944_I_REVERTIDO = Column(Numeric(1, 0))
 
     # Relationships
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01229Pensionista = relationship('T01229Pensionista', 
-        primaryjoin='and_(T01944Reajeventopensitem.T01002_I_CDENT==T01229Pensionista.T01002_I_CDENT, T01944Reajeventopensitem.T01229_I_MATRICULA==T01229Pensionista.T01229_I_MATRICULA)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01944Reajeventopensitem.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01229Pensionista = relationship('T01229Pensionista',
+        primaryjoin='and_(T01944Reajeventopensitem.T01002_I_CDENT == T01229Pensionista.T01002_I_CDENT, T01944Reajeventopensitem.T01229_I_MATRICULA == T01229Pensionista.T01229_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01229_I_MATRICULA])
     t01506Eventoinfpens = relationship('T01506Eventoinfpens', foreign_keys=[T01506_I_CDEVENTOINFPOPENS])
     t01943Reajeventopens = relationship('T01943Reajeventopens', foreign_keys=[T01943_I_CDREAJEVENTOPENS])
@@ -18166,15 +18267,17 @@ class T01945Redsalmatricula(Base):
     T01945_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01945Redsalmatricula.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01945Redsalmatricula.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01945Redsalmatricula.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01945Redsalmatricula.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01945Redsalmatricula.T01945_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01945Redsalmatricula.T01945_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01945Redsalmatricula.T01945_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01945Redsalmatricula.T01945_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01945_I_ENTOPERADOR, T01945_I_MATOPERADOR])
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01945Redsalmatricula.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01945Redsalmatricula.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01945Redsalmatricula.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01945Redsalmatricula.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01945Redsalmatricula.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01946Permissaoespferias(Base):
@@ -18191,11 +18294,11 @@ class T01946Permissaoespferias(Base):
     T01946_I_DTCADASTRO = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01946Permissaoespferias.T01946_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01946Permissaoespferias.T01946_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01946Permissaoespferias.T01946_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01946Permissaoespferias.T01946_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01946_I_ENTOPERADOR, T01946_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01946Permissaoespferias.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01946Permissaoespferias.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01946Permissaoespferias.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01946Permissaoespferias.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01947Freqestag(Base):
@@ -18213,8 +18316,8 @@ class T01947Freqestag(Base):
     T01947_S_CONTRATO = Column(String(15))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01947Freqestag.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01947Freqestag.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01947Freqestag.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01947Freqestag.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01038RefefreqByICdrefefre = relationship('T01038Refefreq', foreign_keys=[T01038_I_CDREFEFRE])
     t01038RefefreqByICdrefefrepgto = relationship('T01038Refefreq', foreign_keys=[T01038_I_CDREFEFREPGTO])
@@ -18239,11 +18342,11 @@ class T01948Frequenciahe(Base):
     T02009_I_CODARQ = Column(Numeric(5, 0))
 
     # Relationships
-    t01001ServidorByIEntoper = relationship('T01001Servidor', 
-        primaryjoin='and_(T01948Frequenciahe.T01948_I_ENTOPER==T01001Servidor.T01002_I_CDENT, T01948Frequenciahe.T01948_I_MATOPER==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoper = relationship('T01001Servidor',
+        primaryjoin='and_(T01948Frequenciahe.T01948_I_ENTOPER == T01001Servidor.T01002_I_CDENT, T01948Frequenciahe.T01948_I_MATOPER == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01948_I_ENTOPER, T01948_I_MATOPER])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01948Frequenciahe.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01948Frequenciahe.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01948Frequenciahe.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01948Frequenciahe.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01039Frequencia = relationship('T01039Frequencia', foreign_keys=[T01039_I_CDFREQ])
     t01071ItemlistaByIIndtpfolha = relationship('T01071Itemlista', foreign_keys=[T01948_I_INDTPFOLHA])
@@ -18324,11 +18427,11 @@ class T01951Tetounidfunc(Base):
     T01951_D_ULTALTERACAO = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01951Tetounidfunc.T01951_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01951Tetounidfunc.T01951_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01951Tetounidfunc.T01951_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01951Tetounidfunc.T01951_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01951_I_ENTOPERADOR, T01951_I_MATOPERADOR])
-    t01004Unidfunc = relationship('T01004Unidfunc', 
-        primaryjoin='and_(T01951Tetounidfunc.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, T01951Tetounidfunc.T01004_I_CDUNIDFUN==T01004Unidfunc.T01004_I_CDUNIDFUN, T01951Tetounidfunc.T01004_I_VERSAO==T01004Unidfunc.T01004_I_VERSAO)',
+    t01004Unidfunc = relationship('T01004Unidfunc',
+        primaryjoin='and_(T01951Tetounidfunc.T01002_I_CDENT == T01004Unidfunc.T01002_I_CDENT, T01951Tetounidfunc.T01004_I_CDUNIDFUN == T01004Unidfunc.T01004_I_CDUNIDFUN, T01951Tetounidfunc.T01004_I_VERSAO == T01004Unidfunc.T01004_I_VERSAO)',
         foreign_keys=[T01002_I_CDENT, T01004_I_CDUNIDFUN, T01004_I_VERSAO])
 
 class T01952CagedRegistroA(Base):
@@ -18600,11 +18703,11 @@ class T01967Agendadesligserv(Base):
     T01967_S_NUMATO = Column(String(20))
 
     # Relationships
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01967Agendadesligserv.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01967Agendadesligserv.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01967Agendadesligserv.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01967Agendadesligserv.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01967Agendadesligserv.T01967_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01967Agendadesligserv.T01967_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01967Agendadesligserv.T01967_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01967Agendadesligserv.T01967_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01967_I_ENTOPERADOR, T01967_I_MATOPERADOR])
     t01935Motivodesligamento = relationship('T01935Motivodesligamento', foreign_keys=[T01935_I_CODMOTIVO])
 
@@ -18658,8 +18761,8 @@ class T01969Processoadmjud(Base):
     T01969_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01969Processoadmjud.T01969_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01969Processoadmjud.T01969_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01969Processoadmjud.T01969_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01969Processoadmjud.T01969_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01969_I_ENTOPERADOR, T01969_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
     t01125Localext = relationship('T01125Localext', foreign_keys=[T01969_I_CIDADEVARA])
@@ -18697,11 +18800,11 @@ class T01971Operadoraplansaude(Base):
     T01971_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01971Operadoraplansaude.T01971_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01971Operadoraplansaude.T01971_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01971Operadoraplansaude.T01971_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01971Operadoraplansaude.T01971_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01971_I_ENTOPERADOR, T01971_I_MATOPERADOR])
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01971Operadoraplansaude.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01971Operadoraplansaude.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01971Operadoraplansaude.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01971Operadoraplansaude.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
 
 class T01972Preadmissao(Base):
@@ -18729,8 +18832,8 @@ class T01972Preadmissao(Base):
     T01972_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01972Preadmissao.T01972_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01972Preadmissao.T01972_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01972Preadmissao.T01972_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01972Preadmissao.T01972_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01972_I_ENTOPERADOR, T01972_I_MATOPERADOR])
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
 
@@ -18752,8 +18855,8 @@ class T01973Histplantoesnormaisfms(Base):
     T02009_I_CODARQ = Column(Numeric(5, 0))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01973Histplantoesnormaisfms.T01973_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01973Histplantoesnormaisfms.T01973_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01973Histplantoesnormaisfms.T01973_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01973Histplantoesnormaisfms.T01973_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01973_I_ENTOPERADOR, T01973_I_MATOPERADOR])
     t01879Plantoesnormaisfms = relationship('T01879Plantoesnormaisfms', foreign_keys=[T01879_I_CDPLANTAO])
 
@@ -18776,11 +18879,11 @@ class T01974Temporario(Base):
     T01974_S_NUMATO = Column(String(20))
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01974Temporario.T01974_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01974Temporario.T01974_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01974Temporario.T01974_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01974Temporario.T01974_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01974_I_ENTOPERADOR, T01974_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01974Temporario.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01974Temporario.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01974Temporario.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01974Temporario.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01974_I_TPATO])
 
@@ -18798,8 +18901,8 @@ class T01975Avisoprevio(Base):
     T01975_D_DTULTALT = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01975Avisoprevio.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01975Avisoprevio.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01975Avisoprevio.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01975Avisoprevio.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T01071_I_CDITEM])
 
@@ -18825,8 +18928,8 @@ class T01976Licencasmedicasipmt(Base):
     T01976_I_VALORPMT = Column(Numeric(18, 2))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01976Licencasmedicasipmt.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01976Licencasmedicasipmt.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01976Licencasmedicasipmt.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01976Licencasmedicasipmt.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01158Abertfolha = relationship('T01158Abertfolha', foreign_keys=[T01158_I_CDFOLHA])
 
@@ -18852,12 +18955,14 @@ class T01978Tpafastxisencao(Base):
     T01102_I_MATOPERADOR = Column(Numeric(7, 0), ForeignKey('RH.T01001_SERVIDOR.T01001_I_MATRICULA'), nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T01978Tpafastxisencao.T01102_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01978Tpafastxisencao.T01102_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T01978Tpafastxisencao.T01102_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01978Tpafastxisencao.T01102_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01102_I_ENTOPERADOR, T01102_I_MATOPERADOR])
-    t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01095Tpafastam = relationship('T01095Tpafastam', 
-        primaryjoin='and_(T01978Tpafastxisencao.T01002_I_CDENT==T01095Tpafastam.T01002_I_CDENT, T01978Tpafastxisencao.T01095_I_CDTPAFAST==T01095Tpafastam.T01095_I_CDTPAFAST)',
+    t01002Entidade = relationship('T01002Entidade',
+        primaryjoin='and_(T01978Tpafastxisencao.T01002_I_CDENT == T01002Entidade.T01002_I_CDENT)',
+        foreign_keys=[T01002_I_CDENT])
+    t01095Tpafastam = relationship('T01095Tpafastam',
+        primaryjoin='and_(T01978Tpafastxisencao.T01002_I_CDENT == T01095Tpafastam.T01002_I_CDENT, T01978Tpafastxisencao.T01095_I_CDTPAFAST == T01095Tpafastam.T01095_I_CDTPAFAST)',
         foreign_keys=[T01002_I_CDENT, T01095_I_CDTPAFAST])
 
 class T01979Tpafastxisencaoeventos(Base):
@@ -18870,8 +18975,8 @@ class T01979Tpafastxisencaoeventos(Base):
     T01058_I_CDEVENTO = Column(Integer, ForeignKey('RH.T01058_EVENTOSFOLHA.T01058_I_CDEVENTO'), nullable=False)
 
     # Relationships
-    t01058Eventosfolha = relationship('T01058Eventosfolha', 
-        primaryjoin='and_(T01979Tpafastxisencaoeventos.T01002_I_CDENT==T01058Eventosfolha.T01002_I_CDENT, T01979Tpafastxisencaoeventos.T01058_I_CDEVENTO==T01058Eventosfolha.T01058_I_CDEVENTO)',
+    t01058Eventosfolha = relationship('T01058Eventosfolha',
+        primaryjoin='and_(T01979Tpafastxisencaoeventos.T01002_I_CDENT == T01058Eventosfolha.T01002_I_CDENT, T01979Tpafastxisencaoeventos.T01058_I_CDEVENTO == T01058Eventosfolha.T01058_I_CDEVENTO)',
         foreign_keys=[T01002_I_CDENT, T01058_I_CDEVENTO])
     t01978Tpafastxisencao = relationship('T01978Tpafastxisencao', foreign_keys=[T01978_I_CDAFASTXISENCAO])
 
@@ -18910,11 +19015,11 @@ class T01981Faltasantigas(Base):
     T01981_I_MATOPERADORALT = Column(Numeric(7, 0))
 
     # Relationships
-    t01001ServidorByIEntoperador = relationship('T01001Servidor', 
-        primaryjoin='and_(T01981Faltasantigas.T01981_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T01981Faltasantigas.T01981_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByIEntoperador = relationship('T01001Servidor',
+        primaryjoin='and_(T01981Faltasantigas.T01981_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T01981Faltasantigas.T01981_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01981_I_ENTOPERADOR, T01981_I_MATOPERADOR])
-    t01001ServidorByICdent = relationship('T01001Servidor', 
-        primaryjoin='and_(T01981Faltasantigas.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T01981Faltasantigas.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001ServidorByICdent = relationship('T01001Servidor',
+        primaryjoin='and_(T01981Faltasantigas.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T01981Faltasantigas.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T01982Identtceevento(Base):
@@ -19298,8 +19403,8 @@ class T02007EventosInterface(Base):
 
     # Relationships
     t01002Entidade = relationship('T01002Entidade', foreign_keys=[T01002_I_CDENT])
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T02007EventosInterface.T02007_I_ENTOPERADOR==T01001Servidor.T01002_I_CDENT, T02007EventosInterface.T02007_I_MATOPERADOR==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T02007EventosInterface.T02007_I_ENTOPERADOR == T01001Servidor.T01002_I_CDENT, T02007EventosInterface.T02007_I_MATOPERADOR == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T02007_I_ENTOPERADOR, T02007_I_MATOPERADOR])
 
 class T02008Procedimentosdiagnserv(Base):
@@ -19627,8 +19732,8 @@ class T02022Benefconcedidos(Base):
     T02022_D_DTINDEFERIDO = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T02022Benefconcedidos.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T02022Benefconcedidos.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T02022Benefconcedidos.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T02022Benefconcedidos.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t01071Itemlista = relationship('T01071Itemlista', foreign_keys=[T02022_I_TPBENEFICIO])
 
@@ -19648,8 +19753,8 @@ class T02023Processoservidor(Base):
     T02023_D_DTULTALT = Column(DateTime, nullable=False)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T02023Processoservidor.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T02023Processoservidor.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T02023Processoservidor.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T02023Processoservidor.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
 
 class T03000SecModule(Base):
@@ -19759,8 +19864,8 @@ class T03008LogGurhuWeb(Base):
     T03008_S_DADOS_EXCLUIDOS = Column(String(1024))
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T03008LogGurhuWeb.T01002_I_CDENT==T01001Servidor.T01002_I_CDENT, T03008LogGurhuWeb.T01001_I_MATRICULA==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T03008LogGurhuWeb.T01002_I_CDENT == T01001Servidor.T01002_I_CDENT, T03008LogGurhuWeb.T01001_I_MATRICULA == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T01002_I_CDENT, T01001_I_MATRICULA])
     t03000SecModule = relationship('T03000SecModule', foreign_keys=[T03000_I_ID_MODULE])
 
@@ -19788,8 +19893,8 @@ class T03011HistSenhaweb(Base):
     T03011_I_DTSENHAWEB = Column(DateTime)
 
     # Relationships
-    t01001Servidor = relationship('T01001Servidor', 
-        primaryjoin='and_(T03011HistSenhaweb.T03011_I_CDENT_USER_ACAO==T01001Servidor.T01002_I_CDENT, T03011HistSenhaweb.T03011_I_MATRICULA_ACAO==T01001Servidor.T01001_I_MATRICULA)',
+    t01001Servidor = relationship('T01001Servidor',
+        primaryjoin='and_(T03011HistSenhaweb.T03011_I_CDENT_USER_ACAO == T01001Servidor.T01002_I_CDENT, T03011HistSenhaweb.T03011_I_MATRICULA_ACAO == T01001Servidor.T01001_I_MATRICULA)',
         foreign_keys=[T03011_I_CDENT_USER_ACAO, T03011_I_MATRICULA_ACAO])
 
 class Tb0001IntItemestrut(Base):
