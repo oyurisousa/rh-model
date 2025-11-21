@@ -5,7 +5,7 @@ Generated: 2025-11-21T17:27:45.141Z
 Total de tabelas: 902
 """
 
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Numeric, Float, Text, Date, Time, BigInteger, SmallInteger, LargeBinary, ForeignKey, Index, UniqueConstraint
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Numeric, Float, Text, Date, Time, BigInteger, SmallInteger, LargeBinary, ForeignKey, Index, UniqueConstraint, and_
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -215,12 +215,16 @@ class T01001Servidor(Base):
     T01001_I_DECISAOJUDINSS = Column(Integer)
 
     # Relationships
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', foreign_keys=[T01002_I_CDENT])
-    t01004UnidfuncByICdorglot = relationship('T01004Unidfunc', foreign_keys=[T01001_I_CDORGLOT])
-    t01004UnidfuncByIVorglot = relationship('T01004Unidfunc', foreign_keys=[T01001_I_VORGLOT])
-    t01004UnidfuncByICdent = relationship('T01004Unidfunc', foreign_keys=[T01002_I_CDENT])
-    t01004UnidfuncByICdloctrab = relationship('T01004Unidfunc', foreign_keys=[T01001_I_CDLOCTRAB])
-    t01004UnidfuncByIVloctrab = relationship('T01004Unidfunc', foreign_keys=[T01001_I_VLOCTRAB])
+    t01004Unidfunc_orglot = relationship('T01004Unidfunc', 
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, '
+                    'T01001Servidor.T01001_I_CDORGLOT==T01004Unidfunc.T01004_I_CDUNIDFUN, '
+                    'T01001Servidor.T01001_I_VORGLOT==T01004Unidfunc.T01004_I_VERSAO)',
+        foreign_keys=[T01002_I_CDENT, T01001_I_CDORGLOT, T01001_I_VORGLOT])
+    t01004Unidfunc_loctrab = relationship('T01004Unidfunc', 
+        primaryjoin='and_(T01001Servidor.T01002_I_CDENT==T01004Unidfunc.T01002_I_CDENT, '
+                    'T01001Servidor.T01001_I_CDLOCTRAB==T01004Unidfunc.T01004_I_CDUNIDFUN, '
+                    'T01001Servidor.T01001_I_VLOCTRAB==T01004Unidfunc.T01004_I_VERSAO)',
+        foreign_keys=[T01002_I_CDENT, T01001_I_CDLOCTRAB, T01001_I_VLOCTRAB])
     t01027QuadroByICdent = relationship('T01027Quadro', foreign_keys=[T01002_I_CDENT])
     t01027QuadroByICdquadro = relationship('T01027Quadro', foreign_keys=[T01027_I_CDQUADRO])
     t01071ItemlistaByICdvinculo = relationship('T01071Itemlista', foreign_keys=[T01001_I_CDVINCULO])

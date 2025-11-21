@@ -132,7 +132,7 @@ Generated: ${new Date().toISOString()}
 Total de tabelas: ${tables.length}
 """
 
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Numeric, Float, Text, Date, Time, BigInteger, SmallInteger, LargeBinary, ForeignKey, Index, UniqueConstraint
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Numeric, Float, Text, Date, Time, BigInteger, SmallInteger, LargeBinary, ForeignKey, Index, UniqueConstraint, and_
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -181,18 +181,20 @@ Base = declarative_base()
                 ORDER BY c.ORDINAL_POSITION
             `);
 
-      // Busca Foreign Keys
+      // Busca Foreign Keys com informação de constraint (agrupa multi-coluna)
       const foreignKeys = await queryRunner.query(`
                 SELECT 
                     fk.name AS FK_NAME,
                     COL_NAME(fc.parent_object_id, fc.parent_column_id) AS COLUMN_NAME,
                     OBJECT_SCHEMA_NAME(fk.referenced_object_id) AS REFERENCED_SCHEMA,
                     OBJECT_NAME(fk.referenced_object_id) AS REFERENCED_TABLE,
-                    COL_NAME(fc.referenced_object_id, fc.referenced_column_id) AS REFERENCED_COLUMN
+                    COL_NAME(fc.referenced_object_id, fc.referenced_column_id) AS REFERENCED_COLUMN,
+                    fc.constraint_column_id AS COLUMN_ORDER
                 FROM sys.foreign_keys AS fk
                 INNER JOIN sys.foreign_key_columns AS fc 
                     ON fk.object_id = fc.constraint_object_id
                 WHERE fk.parent_object_id = OBJECT_ID('${tableSchema}.${tableName}')
+                ORDER BY fk.name, fc.constraint_column_id
             `);
 
       // Busca Unique Constraints (SQL Server 2005 compatible)
@@ -331,30 +333,71 @@ Base = declarative_base()
       // Gera relationships para FKs
       if (foreignKeys.length > 0) {
         pythonModels += "\n    # Relationships\n";
-        
-        // Agrupa FKs pela tabela referenciada para detectar duplicatas
-        const relNameCount = new Map<string, number>();
-        
+
+        // Agrupa FKs por constraint (para detectar FK compostas)
+        const fkGroups = new Map<string, any[]>();
         for (const fk of foreignKeys) {
-          const baseRelName = toCamelCase(fk.REFERENCED_TABLE);
-          const refClass = toPascalCase(fk.REFERENCED_TABLE);
-          
+          const fkName = fk.FK_NAME;
+          if (!fkGroups.has(fkName)) {
+            fkGroups.set(fkName, []);
+          }
+          fkGroups.get(fkName)!.push(fk);
+        }
+
+        // Conta nomes de relacionamentos para evitar duplicatas
+        const relNameCount = new Map<string, number>();
+
+        for (const [fkName, fkCols] of fkGroups) {
+          const firstFK = fkCols[0];
+          const baseRelName = toCamelCase(firstFK.REFERENCED_TABLE);
+          const refClass = toPascalCase(firstFK.REFERENCED_TABLE);
+          const isComposite = fkCols.length > 1;
+
           // Conta quantas vezes essa tabela já foi referenciada
           const count = relNameCount.get(baseRelName) || 0;
           relNameCount.set(baseRelName, count + 1);
-          
-          // Se for duplicada, adiciona sufixo baseado na coluna FK
+
+          // Gera nome único para o relacionamento
           let finalRelName = baseRelName;
-          if (count > 0 || foreignKeys.filter((f: any) => toCamelCase(f.REFERENCED_TABLE) === baseRelName).length > 1) {
-            // Usa o nome da coluna FK para diferenciar
-            const colSuffix = fk.COLUMN_NAME.replace(new RegExp(`^${tableSchema.toUpperCase()}_?|^${tableName.toUpperCase()}_?|^T\\d+_`, 'gi'), '')
-              .split('_')
-              .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-              .join('');
-            finalRelName = baseRelName + 'By' + colSuffix;
+          const sameTables = Array.from(fkGroups.values()).filter(
+            (cols) => cols[0].REFERENCED_TABLE === firstFK.REFERENCED_TABLE
+          );
+
+          if (sameTables.length > 1) {
+            // Múltiplos relacionamentos para a mesma tabela - usa nome da primeira coluna FK
+            const colSuffix = firstFK.COLUMN_NAME.replace(
+              new RegExp(`^${firstFK.REFERENCED_TABLE}_?|^T\\d+_`, "gi"),
+              ""
+            )
+              .split("_")
+              .map(
+                (w: string) =>
+                  w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+              )
+              .join("");
+            finalRelName = baseRelName + "By" + colSuffix;
           }
-          
-          pythonModels += `    ${finalRelName} = relationship('${refClass}', foreign_keys=[${fk.COLUMN_NAME}])\n`;
+
+          if (isComposite) {
+            // FK Composta - usa primaryjoin explícito
+            const localCols = fkCols.map((fk) => fk.COLUMN_NAME);
+            const remoteCols = fkCols.map((fk) => fk.REFERENCED_COLUMN);
+
+            // Gera condições para primaryjoin
+            const conditions = fkCols
+              .map(
+                (fk, idx) =>
+                  `${className}.${fk.COLUMN_NAME}==${refClass}.${fk.REFERENCED_COLUMN}`
+              )
+              .join(", ");
+
+            pythonModels += `    ${finalRelName} = relationship('${refClass}', \n`;
+            pythonModels += `        primaryjoin='and_(${conditions})',\n`;
+            pythonModels += `        foreign_keys=[${localCols.join(", ")}])\n`;
+          } else {
+            // FK Simples
+            pythonModels += `    ${finalRelName} = relationship('${refClass}', foreign_keys=[${firstFK.COLUMN_NAME}])\n`;
+          }
         }
       }
     }
